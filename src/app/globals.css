@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  /* Default Theme (Original) */
-  .theme-default {
+  :root {
     --background: 60 56% 91%;
     --foreground: 25 30% 20%;
     --card: 60 40% 98%;
@@ -27,7 +26,7 @@
     --radius: 0.5rem;
   }
  
-  .dark .theme-default {
+  .dark {
     --background: 25 15% 10%;
     --foreground: 60 50% 92%;
     --card: 25 15% 12%;
@@ -70,7 +69,6 @@
     --border: 90 20% 85%;
     --input: 90 20% 85%;
     --ring: 130 40% 35%;
-    --radius: 0.5rem;
   }
 
   .dark .theme-forest {
@@ -116,7 +114,6 @@
     --border: 210 30% 85%;
     --input: 210 30% 85%;
     --ring: 220 60% 50%;
-    --radius: 0.5rem;
   }
   
   .dark .theme-ocean {
@@ -162,7 +159,6 @@
     --border: 30 40% 88%;
     --input: 30 40% 88%;
     --ring: 340 65% 55%;
-    --radius: 0.5rem;
   }
   
   .dark .theme-sunset {
@@ -187,12 +183,6 @@
     --ring: 340 65% 65%;
   }
 
-  :root {
-    @apply theme-default;
-  }
-}
- 
-@layer base {
   * {
     @apply border-border;
   }
