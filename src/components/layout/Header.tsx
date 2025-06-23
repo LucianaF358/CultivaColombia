@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { AgroColombiaIcon } from '@/components/icons';
+import { CultivaColombiaIcon } from '@/components/icons';
 import { logout } from '@/lib/actions';
 import { Heart, LogIn, LogOut, UserPlus } from 'lucide-react';
 import { useTransition } from 'react';
@@ -31,8 +31,8 @@ export function Header() {
     <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
-          <AgroColombiaIcon className="h-6 w-6" />
-          <span>AgroColombia</span>
+          <CultivaColombiaIcon className="h-6 w-6" />
+          <span>CultivaColombia</span>
         </Link>
         <nav className="flex items-center gap-4">
           {user ? (

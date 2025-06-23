@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'AgroColombia',
+  title: 'CultivaColombia',
   description: 'Fomentando la soberanía alimentaria en Colombia',
   icons: {
     icon: '/favicon.ico',

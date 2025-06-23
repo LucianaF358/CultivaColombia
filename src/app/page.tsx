@@ -10,7 +10,7 @@ export default async function Home() {
     <div className="container mx-auto px-4 py-8">
       <header className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-2">
-          Bienvenido a AgroColombia
+          Bienvenido a CultivaColombia
         </h1>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Descubre los cultivos ideales para tu región y clima. Fomentemos juntos la soberanía alimentaria en Colombia.
