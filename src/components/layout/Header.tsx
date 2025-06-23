@@ -16,6 +16,7 @@ import { CultivaColombiaIcon } from '@/components/icons';
 import { logout } from '@/lib/actions';
 import { Heart, LogIn, LogOut, UserPlus } from 'lucide-react';
 import { useTransition } from 'react';
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 
 export function Header() {
   const { user } = useAuth();
@@ -34,7 +35,8 @@ export function Header() {
           <CultivaColombiaIcon className="h-6 w-6" />
           <span>CultivaColombia</span>
         </Link>
-        <nav className="flex items-center gap-4">
+        <nav className="flex items-center gap-2">
+          <ThemeSwitcher />
           {user ? (
             <>
               <Button variant="ghost" asChild>
