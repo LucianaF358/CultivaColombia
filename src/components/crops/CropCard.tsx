@@ -3,7 +3,7 @@ import type { Crop } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { FavoriteButton } from './FavoriteButton';
-import { Mountain, Thermometer, Calendar, Leaf } from 'lucide-react';
+import { Mountain, Thermometer, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
 interface CropCardProps {
@@ -29,8 +29,7 @@ export function CropCard({ crop, isFavorite }: CropCardProps) {
           </div>
         </div>
         <CardHeader>
-          <CardTitle className="font-headline text-2xl text-primary flex items-center gap-2">
-            <Leaf className="h-5 w-5 text-accent" />
+          <CardTitle className="font-headline text-2xl text-primary">
             {crop.nombre}
           </CardTitle>
           <CardDescription className="line-clamp-2">{crop.descripcionDetallada}</CardDescription>
