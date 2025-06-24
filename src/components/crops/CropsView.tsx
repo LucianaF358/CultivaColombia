@@ -13,11 +13,13 @@ interface CropsViewProps {
   initialCrops: Crop[];
   regions: string[];
   climates: string[];
+  types: string[];
 }
 
-export function CropsView({ initialCrops, regions, climates }: CropsViewProps) {
+export function CropsView({ initialCrops, regions, climates, types }: CropsViewProps) {
   const [regionFilter, setRegionFilter] = useState('all');
   const [climateFilter, setClimateFilter] = useState('all');
+  const [typeFilter, setTypeFilter] = useState('all');
   const [favoriteCropIds, setFavoriteCropIds] = useState<Set<string>>(new Set());
   const { user } = useAuth();
 
@@ -44,15 +46,16 @@ export function CropsView({ initialCrops, regions, climates }: CropsViewProps) {
     return initialCrops.filter(crop => {
       const regionMatch = regionFilter === 'all' || crop.region === regionFilter;
       const climateMatch = climateFilter === 'all' || crop.clima === climateFilter;
-      return regionMatch && climateMatch;
+      const typeMatch = typeFilter === 'all' || crop.tipo === typeFilter;
+      return regionMatch && climateMatch && typeMatch;
     });
-  }, [initialCrops, regionFilter, climateFilter]);
+  }, [initialCrops, regionFilter, climateFilter, typeFilter]);
 
   return (
     <section>
-      <div className="mb-8 p-6 bg-card rounded-lg shadow-sm flex flex-col md:flex-row gap-6 items-center">
+      <div className="mb-8 p-6 bg-card rounded-lg shadow-sm flex flex-col md:flex-row flex-wrap gap-6 items-center">
         <h2 className="text-xl font-semibold text-card-foreground flex-shrink-0">Filtrar Cultivos</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:w-auto flex-grow">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto flex-grow">
           <div>
             <Label htmlFor="region-filter" className="text-sm font-medium text-muted-foreground">Región</Label>
             <Select value={regionFilter} onValueChange={setRegionFilter}>
@@ -74,6 +77,18 @@ export function CropsView({ initialCrops, regions, climates }: CropsViewProps) {
               <SelectContent>
                 <SelectItem value="all">Todos los climas</SelectItem>
                 {climates.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="type-filter" className="text-sm font-medium text-muted-foreground">Tipo de Cultivo</Label>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger id="type-filter" className="w-full mt-1">
+                <SelectValue placeholder="Selecciona un tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos los tipos</SelectItem>
+                {types.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>

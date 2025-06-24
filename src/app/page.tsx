@@ -5,6 +5,7 @@ export default async function Home() {
   const crops = await getCrops();
   const regions = [...new Set(crops.map(crop => crop.region))];
   const climates = [...new Set(crops.map(crop => crop.clima))];
+  const types = [...new Set(crops.map(crop => crop.tipo))];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -20,6 +21,7 @@ export default async function Home() {
         initialCrops={crops}
         regions={regions}
         climates={climates}
+        types={types}
       />
     </div>
   );

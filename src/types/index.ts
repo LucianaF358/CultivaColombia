@@ -3,6 +3,7 @@ export type Crop = {
   nombre: string;
   nombreCientifico: string;
   familia: string;
+  tipo: string;
   region: string;
   clima: string;
   descripcionDetallada: string;
