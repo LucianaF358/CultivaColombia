@@ -16,7 +16,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Directa o por trasplante desde semilleros.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Sogata, Piricularia.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1536384423458-58d31a0a4c52?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'rice paddy'
   },
   { 
@@ -33,7 +33,7 @@ const crops: Crop[] = [
     tiempoSiembra: '1-2 semanas para germinar.',
     tiempoCosecha: '3-4 meses desde la siembra.',
     plagasComunes: 'Gusano cogollero, araña roja.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1551754642-1c0a0d5059a7?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'corn field'
   },
   {
@@ -50,7 +50,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, germina en 1-2 semanas.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Roya del tallo, pulgones.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1507633698048-8172c496c429?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'wheat field'
   },
   {
@@ -67,7 +67,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, 3-7 días para germinar.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mosca del sorgo, pulgón amarillo.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1629166233519-a1b734b46574?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'sorghum field'
   },
   {
@@ -84,7 +84,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Roya, oídio.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1590595906935-bee20f54b679?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'barley field'
   },
   {
@@ -101,7 +101,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Roya de la corona, carbón.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://images.unsplash.com/photo-1615566333986-56b3f4d62637?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'oat field'
   },
 
@@ -120,7 +120,7 @@ const crops: Crop[] = [
     tiempoSiembra: '3-4 semanas para brotar.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Gota, polilla guatemalteca.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1571945089011-9f7939c3a378?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'yellow potatoes'
   },
   {
@@ -137,7 +137,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Gota (Phytophthora infestans), gusano blanco.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1590165482129-1b8b21703d64?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'potato harvest'
   },
   {
@@ -154,7 +154,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos seleccionados.',
     tiempoCosecha: '6-7 meses.',
     plagasComunes: 'Gota, polilla guatemalteca, gusano blanco.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'red potatoes'
   },
   {
@@ -171,7 +171,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por estacas.',
     tiempoCosecha: '8-12 meses.',
     plagasComunes: 'Ácaros, mosca blanca.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1619898822089-0b7319e71a8f?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cassava root'
   },
   {
@@ -188,7 +188,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de trozos del tubérculo.',
     tiempoCosecha: '8-10 meses.',
     plagasComunes: 'Antracnosis, cochinillas.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1594291244834-4a57b545f479?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'yam root'
   },
   {
@@ -205,7 +205,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por cormos.',
     tiempoCosecha: '10-14 meses.',
     plagasComunes: 'Gusanos trozadores, nematodos.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1629837941551-f7a2d1d58855?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'arracacha root'
   },
   {
@@ -222,7 +222,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por esquejes de tallo (bejucos).',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Gorgojo de la batata, nematodos.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1588359218635-4a6b2834b6e8?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'sweet potato'
   },
   {
@@ -239,7 +239,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos.',
     tiempoCosecha: '7-8 meses.',
     plagasComunes: 'Gusano de la oca, mildeo.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1558501469-9a0d8c22789f?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'oca tubers'
   },
   
@@ -258,7 +258,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3-4 meses (seco).',
     plagasComunes: 'Antracnosis, mosca blanca.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1604117422891-3433e8519a9f?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cranberry beans'
   },
   {
@@ -275,7 +275,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3 meses (seco).',
     plagasComunes: 'Mosaico común del frijol, áfidos.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1582285190999-a47738b30e33?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'red beans'
   },
   {
@@ -292,7 +292,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, requiere soporte (tutorado).',
     tiempoCosecha: '2-3 meses.',
     plagasComunes: 'Pulgones, babosas.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1589468623097-77bbf4e25a2a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'green beans'
   },
   {
@@ -309,7 +309,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Chinches, gusano cogollero.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1522026852445-998a1089203a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'soybean field'
   },
   {
@@ -326,7 +326,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Pulgones, gorgojos.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1587590227218-643594042459?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'lentil plant'
   },
   {
@@ -343,7 +343,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Rabia del garbanzo, mosca minadora.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1596792348536-7c2c9f1d2432?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'chickpea plant'
   },
   {
@@ -360,7 +360,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa de semillas.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Gusano del maní, áfidos.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1632737159758-245340f1f945?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'peanut plant'
   },
   {
@@ -377,7 +377,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mildeo polvoroso, trips de la arveja.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1597980931215-46f5a34d70b0?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'pea plant'
   },
   {
@@ -394,7 +394,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Pulgón negro, mancha chocolate.',
-    imageUrl: 'https://placehold.co/600x402.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598511796113-d80c05763b0b?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'fava bean'
   },
 
@@ -413,7 +413,7 @@ const crops: Crop[] = [
     tiempoSiembra: '6-12 meses en vivero antes de trasplantar.',
     tiempoCosecha: '3-4 años para la primera cosecha.',
     plagasComunes: 'Broca del café, roya.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'coffee plant'
   },
   { 
@@ -430,7 +430,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por clones o semillas.',
     tiempoCosecha: '2-3 años para la primera cosecha.',
     plagasComunes: 'Broca del café, nematodos.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598488352220-a01a3b1f13b1?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'robusta coffee'
   },
   {
@@ -447,7 +447,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por esquejes (tallos).',
     tiempoCosecha: '12-16 meses.',
     plagasComunes: 'Diatraea (barrenador del tallo), carbón.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1528695846394-247545464149?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'sugar cane'
   },
   {
@@ -464,7 +464,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Vivero por 12-15 meses.',
     tiempoCosecha: '3-4 años para iniciar producción.',
     plagasComunes: 'Pudrición del cogollo, picudo de la palma.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1628258334105-2a0b3d6ef5f3?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'oil palm'
   },
   {
@@ -481,7 +481,7 @@ const crops: Crop[] = [
     tiempoSiembra: '4-6 meses en vivero.',
     tiempoCosecha: '3-5 años para la primera cosecha.',
     plagasComunes: 'Monilia, escoba de bruja.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1579582234934-31f6e2df1867?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cacao pod'
   },
   {
@@ -498,7 +498,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Picudo del algodonero, mosca blanca.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598993175225-97733a11e43e?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cotton plant'
   },
   {
@@ -515,7 +515,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semilleros.',
     tiempoCosecha: '3-4 meses después del trasplante.',
     plagasComunes: 'Mosaico del tabaco, gusano del cuerno.',
-    imageUrl: 'https://placehold.co/600x403.png',
+    imageUrl: 'https://images.unsplash.com/photo-1557312196-163b533a3d5e?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'tobacco plant'
   },
 
@@ -534,7 +534,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Se propaga por cormos o hijuelos.',
     tiempoCosecha: '9-12 meses después de la siembra.',
     plagasComunes: 'Picudo negro, Sigatoka negra.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1529180184639-d374431d17d5?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'banana tree'
   },
   { 
@@ -551,7 +551,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Se propaga por cormos o hijuelos.',
     tiempoCosecha: '9-12 meses después de la siembra.',
     plagasComunes: 'Picudo negro, Moko.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1603612282275-c632128b99b3?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'plantain tree'
   },
   {
@@ -568,7 +568,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por coronas o hijuelos.',
     tiempoCosecha: '18-24 meses.',
     plagasComunes: 'Cochinilla harinosa, barrenador del fruto.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'pineapple plant'
   },
   { 
@@ -585,7 +585,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Se propaga por injerto.',
     tiempoCosecha: '3-5 años para la primera cosecha.',
     plagasComunes: 'Mosca de la fruta, antracnosis.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1591078381831-8f55e5be2646?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'mango tree'
   },
   { 
@@ -602,7 +602,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla.',
     tiempoCosecha: '9-12 meses.',
     plagasComunes: 'Ácaros, virus de la mancha anular.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598103369689-37e7a858e388?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'papaya tree'
   },
   {
@@ -619,7 +619,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla o esquejes.',
     tiempoCosecha: '6-9 meses.',
     plagasComunes: 'Mosca del ovario, secadera.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1604557551949-858342416f40?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'passion fruit'
   },
   {
@@ -636,7 +636,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla o injerto.',
     tiempoCosecha: '1.5 - 2 años.',
     plagasComunes: 'Antracnosis, mosca de la fruta.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1606587978716-4b6845347271?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'tree tomato'
   },
   {
@@ -653,7 +653,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla.',
     tiempoCosecha: '6-8 meses.',
     plagasComunes: 'Pulgones, mosca blanca.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598416489370-3f433b934789?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cape gooseberry'
   },
   {
@@ -670,7 +670,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por acodos o estacas.',
     tiempoCosecha: '1 año para iniciar producción.',
     plagasComunes: 'Mildeo velloso, mosca de la fruta.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1589332571872-998ac20680cf?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'blackberry bush'
   },
   {
@@ -687,7 +687,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '6-8 meses.',
     plagasComunes: 'Nematodos, perforador del fruto.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1628176332168-e5f8d2843b00?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'lulo fruit'
   },
   {
@@ -704,7 +704,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla o acodo aéreo.',
     tiempoCosecha: '2-3 años.',
     plagasComunes: 'Mosca de la fruta, picudo de la guayaba.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1600021665483-028a0a99c45e?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'guava tree'
   },
   {
@@ -721,7 +721,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla.',
     tiempoCosecha: '10-12 meses.',
     plagasComunes: 'Pulgones, arañita roja.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1611193319409-a131b55017ea?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'sweet granadilla'
   },
   {
@@ -738,7 +738,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por esquejes.',
     tiempoCosecha: '1 - 1.5 años.',
     plagasComunes: 'Pudrición del tallo, mosca de la fruta.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1594056722378-d14457dd5f76?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'dragon fruit'
   },
   {
@@ -755,7 +755,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por estacas o injertos.',
     tiempoCosecha: '2-3 años para la primera cosecha.',
     plagasComunes: 'Mildeo, oídio.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598164099513-d421272d5473?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'grape vine'
   },
   {
@@ -772,7 +772,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por injerto.',
     tiempoCosecha: '3-4 años.',
     plagasComunes: 'HLB, ácaros, minador de los cítricos.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'orange tree'
   },
   {
@@ -789,7 +789,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por injerto.',
     tiempoCosecha: '2-3 años.',
     plagasComunes: 'Gomosis, mosca de la fruta.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1600329062458-4e92a433364c?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'tangerine tree'
   },
   {
@@ -806,7 +806,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por injerto o estacas.',
     tiempoCosecha: '2-3 años.',
     plagasComunes: 'HLB, minador de los cítricos.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1590169152220-6fb5a043c79a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'lemon tree'
   },
   {
@@ -823,7 +823,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra del fruto completo.',
     tiempoCosecha: '6-10 años.',
     plagasComunes: 'Anillo rojo, picudo de la palma.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'coconut tree'
   },
   {
@@ -840,7 +840,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mildeo polvoso, pulgones.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'watermelon patch'
   },
   {
@@ -857,7 +857,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa o trasplante.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mildeo velloso, mosca minadora.',
-    imageUrl: 'https://placehold.co/600x404.png',
+    imageUrl: 'https://images.unsplash.com/photo-1571575218413-5b128c7c18c3?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'melon patch'
   },
 
@@ -876,7 +876,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mosca blanca, tuta absoluta, gota.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1582284540020-8acbe03f4924?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'tomato plant'
   },
   {
@@ -893,7 +893,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante o siembra directa.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Mildeo velloso, trips.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1587334239273-2d334546a16d?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'onion patch'
   },
   {
@@ -910,7 +910,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por división de matas o semilla.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Roya, trips.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1596116857492-3a5f963a76e7?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'scallion patch'
   },
   {
@@ -927,7 +927,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mosca de la zanahoria, nematodos.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1590868309235-e0f030a71614?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'carrot patch'
   },
   {
@@ -944,7 +944,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa o trasplante.',
     tiempoCosecha: '2-3 meses.',
     plagasComunes: 'Pulgones, babosas, mildeo velloso.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1557844352-761f2565b576?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'lettuce patch'
   },
   {
@@ -961,7 +961,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mariposa blanca de la col, hernia de las coles.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1589923188900-85dae5233a0b?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cabbage patch'
   },
   {
@@ -978,7 +978,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Plantación de dientes individuales.',
     tiempoCosecha: '6-8 meses.',
     plagasComunes: 'Roya, nematodos del tallo.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1558985223-3b32a23e5954?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'garlic plant'
   },
   {
@@ -995,7 +995,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa o trasplante.',
     tiempoCosecha: '2-3 meses.',
     plagasComunes: 'Mildeo polvoso, araña roja.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1571680323222-171824a74a12?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cucumber plant'
   },
   {
@@ -1012,7 +1012,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '2-3 meses.',
     plagasComunes: 'Pulgones, mosca blanca.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1621873413364-3e3c23f218a5?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'string bean'
   },
   {
@@ -1029,7 +1029,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Pulgón de la col, mariposa blanca.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1587351177721-59173c3be995?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'broccoli plant'
   },
   {
@@ -1046,7 +1046,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Hernia de la col, pulgones.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598514983318-782169a212e4?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'cauliflower plant'
   },
   {
@@ -1063,7 +1063,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '45-60 días.',
     plagasComunes: 'Mildeo velloso, pulgones.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1576045057995-568f588f21ea?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'spinach patch'
   },
   {
@@ -1080,7 +1080,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Ácaros, mosca blanca, trips.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1599933563953-2b28c34f8101?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'bell pepper'
   },
   {
@@ -1097,7 +1097,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Araña roja, escarabajo de la patata.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598436034151-5c8a065755df?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'eggplant plant'
   },
   {
@@ -1114,7 +1114,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '30-45 días.',
     plagasComunes: 'Pulgones, gusanos grises.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1589923057979-37380962c64b?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'radish patch'
   },
   {
@@ -1131,7 +1131,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Trasplante desde semillero.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Septoriosis, mosca del apio.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1568916375027-1309328f411e?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'celery plant'
   },
   {
@@ -1148,7 +1148,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '40-60 días.',
     plagasComunes: 'Oídio, pulgones.',
-    imageUrl: 'https://placehold.co/600x405.png',
+    imageUrl: 'https://images.unsplash.com/photo-1595453664878-3696515865a7?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'zucchini plant'
   },
 
@@ -1167,7 +1167,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por esquejes o injertos.',
     tiempoCosecha: 'La producción inicia a los 4-6 meses.',
     plagasComunes: 'Ácaros, mildeo polvoso, botrytis.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'rose garden'
   },
   {
@@ -1184,7 +1184,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por esquejes.',
     tiempoCosecha: 'La producción inicia a los 5-6 meses.',
     plagasComunes: 'Trips, roya, fusarium.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1566982236314-5f1118318683?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'carnation flowers'
   },
   {
@@ -1201,7 +1201,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por esquejes.',
     tiempoCosecha: '3-4 meses desde el esqueje.',
     plagasComunes: 'Roya blanca, áfidos, trips.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1541108578440-83a223594119?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'chrysanthemum flowers'
   },
   {
@@ -1218,7 +1218,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por división de rizomas.',
     tiempoCosecha: 'Producción inicia a los 6-8 meses.',
     plagasComunes: 'Trips, babosas.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1601131498189-943081b83d1c?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'alstroemeria flowers'
   },
   {
@@ -1235,7 +1235,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por división de matas o in vitro.',
     tiempoCosecha: 'Producción inicia a los 4-5 meses.',
     plagasComunes: 'Mosca blanca, minador de la hoja.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1533616688484-4b4a69324578?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'gerbera daisy'
   },
   {
@@ -1252,7 +1252,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por división de pseudobulbos.',
     tiempoCosecha: ' ornamental, no aplica cosecha.',
     plagasComunes: 'Cochinillas, pulgones.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1518799739097-a72012b18c64?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'orchid flower'
   },
   {
@@ -1269,7 +1269,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Plantación de cormos (bulbos).',
     tiempoCosecha: 'La floración ocurre a los 3-4 meses.',
     plagasComunes: 'Trips, roya del gladiolo.',
-    imageUrl: 'https://placehold.co/600x406.png',
+    imageUrl: 'https://images.unsplash.com/photo-1564996110368-8830b5037d0d?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'gladiolus flowers'
   },
   
@@ -1288,7 +1288,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla, esqueje o división de mata.',
     tiempoCosecha: 'Cosecha continua de hojas.',
     plagasComunes: 'Pulgones, araña roja.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1598739304918-498b3c95f199?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'oregano plant'
   },
   {
@@ -1305,7 +1305,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla.',
     tiempoCosecha: 'Cosecha de hojas a partir de los 2-3 meses.',
     plagasComunes: 'Mildeo, caracoles.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1618195151520-e01362791167?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'basil plant'
   },
   {
@@ -1322,7 +1322,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por esquejes o división de estolones.',
     tiempoCosecha: 'Cosecha continua.',
     plagasComunes: 'Roya, mildeo polvoroso.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1596199337996-749e75a74a11?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'spearmint plant'
   },
   {
@@ -1339,7 +1339,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa o trasplante.',
     tiempoCosecha: 'Las flores se cosechan a los 2-3 meses.',
     plagasComunes: 'Pulgones.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1589923830638-03823f66838a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'chamomile flowers'
   },
   {
@@ -1356,7 +1356,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '40-60 días.',
     plagasComunes: 'Pulgones, hongos foliares.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1599511529124-7f1396b27464?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'coriander plant'
   },
   {
@@ -1373,7 +1373,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, remojar semillas antes.',
     tiempoCosecha: 'Cosecha de hojas a los 3 meses.',
     plagasComunes: 'Mosca del apio, septoriosis.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1518983549553-616c2b4c1075?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'parsley plant'
   },
   {
@@ -1390,7 +1390,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Plantación de trozos del rizoma.',
     tiempoCosecha: '8-10 meses.',
     plagasComunes: 'Bacteriosis, nematodos.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1629828236159-8135a507a783?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'ginger plant'
   },
   {
@@ -1407,7 +1407,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Plantación de trozos del rizoma.',
     tiempoCosecha: '9-10 meses.',
     plagasComunes: 'Pudrición del rizoma.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1581373449483-3a0b12658b18?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'turmeric plant'
   },
   {
@@ -1424,7 +1424,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla.',
     tiempoCosecha: 'Producción a los 2 años.',
     plagasComunes: 'Generalmente resistente a plagas.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1629577235252-870a45479f6a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'annatto tree'
   },
   {
@@ -1441,7 +1441,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses, cuando las semillas maduran.',
     plagasComunes: 'Pulgones.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1610955836098-9717141f2a3a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'anise plant'
   },
   {
@@ -1458,7 +1458,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por esquejes.',
     tiempoCosecha: 'Las vainas se cosechan 8-9 meses tras polinizar.',
     plagasComunes: 'Pudrición de raíces, antracnosis.',
-    imageUrl: 'https://placehold.co/600x407.png',
+    imageUrl: 'https://images.unsplash.com/photo-1606935614918-24c73c834d8e?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'vanilla orchid'
   },
 
@@ -1477,7 +1477,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '5-7 meses.',
     plagasComunes: 'Mildeo, polillas.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1516849933333-6cb20a062c33?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'quinoa field'
   },
   {
@@ -1494,7 +1494,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Pulgones, gusanos.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1615551381397-2d2d53a9926a?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'amaranth plant'
   },
   {
@@ -1511,7 +1511,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por hijuelos.',
     tiempoCosecha: 'Las hojas se cosechan a partir de los 2 años.',
     plagasComunes: 'Cochinilla algodonosa, pudrición de raíz.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1525498227091-c6301323933c?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'aloe vera'
   },
   {
@@ -1528,7 +1528,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla, la germinación es lenta.',
     tiempoCosecha: '3-5 años para empezar a producir.',
     plagasComunes: 'Picudo de la palma, Gualpa.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1628873839886-3530f0f5b40d?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'peach palm'
   },
   {
@@ -1545,7 +1545,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla o injerto.',
     tiempoCosecha: '3-4 años.',
     plagasComunes: 'Mosca de la fruta.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1596570691238-1d1838c895b6?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'feijoa fruit'
   },
   {
@@ -1562,7 +1562,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla o esqueje.',
     tiempoCosecha: '1 - 1.5 años.',
     plagasComunes: 'Pulgones, mosca del botón floral.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1618090742337-01048b7a4c9c?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'banana passionfruit'
   },
   {
@@ -1579,7 +1579,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por semilla (lento) o injerto.',
     tiempoCosecha: '5-8 años (semilla).',
     plagasComunes: 'Mosca de la fruta.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1628176332168-e5f8d2843b00?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'sapodilla tree'
   },
   {
@@ -1596,7 +1596,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por esquejes de raíz.',
     tiempoCosecha: '5-7 años.',
     plagasComunes: 'Antracnosis, cochinillas.',
-    imageUrl: 'https://placehold.co/600x408.png',
+    imageUrl: 'https://images.unsplash.com/photo-1601004838639-01f603a1a6b8?q=80&w=600&auto=format&fit=crop',
     dataAiHint: 'breadfruit tree'
   }
 ];
