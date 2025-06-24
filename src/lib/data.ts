@@ -1,3 +1,4 @@
+
 import type { Crop } from '@/types';
 
 const crops: Crop[] = [
@@ -1613,3 +1614,5 @@ export async function getCropById(id: string): Promise<Crop | undefined> {
   await new Promise(resolve => setTimeout(resolve, 100));
   return crops.find(crop => crop.id === id);
 }
+
+    
