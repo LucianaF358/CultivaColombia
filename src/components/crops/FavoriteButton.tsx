@@ -20,7 +20,10 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const handleFavorite = async () => {
+  const handleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (!user) {
       toast({
         title: 'Inicia sesión',

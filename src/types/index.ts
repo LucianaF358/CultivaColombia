@@ -1,10 +1,16 @@
 export type Crop = {
   id: string;
   nombre: string;
+  nombreCientifico: string;
+  familia: string;
   region: string;
   clima: string;
-  cuidados: string;
+  descripcionDetallada: string;
   temporada: string;
+  tipoDeSuelo: string;
+  tiempoSiembra: string;
+  tiempoCosecha: string;
+  plagasComunes: string;
   imageUrl: string;
   dataAiHint?: string;
 };
