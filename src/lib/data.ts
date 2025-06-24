@@ -16,7 +16,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Directa o por trasplante desde semilleros.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Sogata, Piricularia.',
-    imageUrl: 'https://images.pexels.com/photos/2346006/pexels-photo-2346006.jpeg', 
+    imageUrl: 'https://images.pexels.com/photos/156323/rice-paddy-fields-asia-farm-156323.jpeg', 
     dataAiHint: 'rice paddy'
   },
   { 
@@ -33,7 +33,7 @@ const crops: Crop[] = [
     tiempoSiembra: '1-2 semanas para germinar.',
     tiempoCosecha: '3-4 meses desde la siembra.',
     plagasComunes: 'Gusano cogollero, araña roja.',
-    imageUrl: 'https://images.pexels.com/photos/1586942/pexels-photo-1586942.jpeg', 
+    imageUrl: 'https://images.pexels.com/photos/547264/pexels-photo-547264.jpeg', 
     dataAiHint: 'corn field'
   },
   {
@@ -50,7 +50,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, germina en 1-2 semanas.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Roya del tallo, pulgones.',
-    imageUrl: 'https://images.pexels.com/photos/547234/pexels-photo-547234.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/433333/pexels-photo-433333.jpeg',
     dataAiHint: 'wheat field'
   },
   {
@@ -67,7 +67,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, 3-7 días para germinar.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mosca del sorgo, pulgón amarillo.',
-    imageUrl: 'https://images.pexels.com/photos/1999463/pexels-photo-1999463.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/259091/pexels-photo-259091.jpeg',
     dataAiHint: 'sorghum field'
   },
   {
@@ -84,7 +84,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Roya, oídio.',
-    imageUrl: 'https://images.pexels.com/photos/745988/pexels-photo-745988.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/163346/barley-field-cereals-agriculture-farmland-163346.jpeg',
     dataAiHint: 'barley field'
   },
   {
@@ -101,7 +101,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Roya de la corona, carbón.',
-    imageUrl: 'https://images.pexels.com/photos/2072453/pexels-photo-2072453.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/2072449/pexels-photo-2072449.jpeg',
     dataAiHint: 'oat field'
   },
 
@@ -120,7 +120,7 @@ const crops: Crop[] = [
     tiempoSiembra: '3-4 semanas para brotar.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Gota, polilla guatemalteca.',
-    imageUrl: 'https://images.pexels.com/photos/4117953/pexels-photo-4117953.jpeg', 
+    imageUrl: 'https://images.pexels.com/photos/8690060/pexels-photo-8690060.jpeg', 
     dataAiHint: 'yellow potatoes'
   },
   {
@@ -137,7 +137,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Gota (Phytophthora infestans), gusano blanco.',
-    imageUrl: 'https://images.pexels.com/photos/144248/potatoes-vegetables-erdfrucht-bio-144248.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/7194915/pexels-photo-7194915.jpeg',
     dataAiHint: 'potato harvest'
   },
   {
@@ -154,7 +154,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos seleccionados.',
     tiempoCosecha: '6-7 meses.',
     plagasComunes: 'Gota, polilla guatemalteca, gusano blanco.',
-    imageUrl: 'https://images.pexels.com/photos/2286776/pexels-photo-2286776.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/70741/potatoes-vegetables-market-fresh-70741.jpeg',
     dataAiHint: 'red potatoes'
   },
   {
@@ -171,8 +171,8 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por estacas.',
     tiempoCosecha: '8-12 meses.',
     plagasComunes: 'Ácaros, mosca blanca.',
-    imageUrl: 'https://images.pexels.com/photos/8968239/pexels-photo-8968239.jpeg',
-    dataAiHint: 'cassava plant'
+    imageUrl: 'https://images.pexels.com/photos/10668434/pexels-photo-10668434.jpeg',
+    dataAiHint: 'cassava root'
   },
   {
     id: '11',
@@ -189,7 +189,7 @@ const crops: Crop[] = [
     tiempoCosecha: '8-10 meses.',
     plagasComunes: 'Antracnosis, cochinillas.',
     imageUrl: 'https://images.pexels.com/photos/6945532/pexels-photo-6945532.jpeg',
-    dataAiHint: 'yam plant'
+    dataAiHint: 'yam root'
   },
   {
     id: '12',
@@ -222,7 +222,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Por esquejes de tallo (bejucos).',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Gorgojo de la batata, nematodos.',
-    imageUrl: 'https://images.pexels.com/photos/2641890/pexels-photo-2641890.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/1299443/pexels-photo-1299443.jpeg',
     dataAiHint: 'sweet potato'
   },
   {
@@ -259,7 +259,7 @@ const crops: Crop[] = [
     tiempoCosecha: '3-4 meses (seco).',
     plagasComunes: 'Antracnosis, mosca blanca.',
     imageUrl: 'https://images.pexels.com/photos/1059816/pexels-photo-1059816.jpeg',
-    dataAiHint: 'red beans'
+    dataAiHint: 'cranberry beans'
   },
   {
     id: '16',
@@ -275,8 +275,8 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '3 meses (seco).',
     plagasComunes: 'Mosaico común del frijol, áfidos.',
-    imageUrl: 'https://images.pexels.com/photos/6005438/pexels-photo-6005438.jpeg',
-    dataAiHint: 'small red beans'
+    imageUrl: 'https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg',
+    dataAiHint: 'red kidney beans'
   },
   {
     id: '17',
@@ -413,7 +413,7 @@ const crops: Crop[] = [
     tiempoSiembra: '6-12 meses en vivero antes de trasplantar.',
     tiempoCosecha: '3-4 años para la primera cosecha.',
     plagasComunes: 'Broca del café, roya.',
-    imageUrl: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/1695050/pexels-photo-1695050.jpeg',
     dataAiHint: 'coffee plant'
   },
   { 
@@ -1012,7 +1012,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '2-3 meses.',
     plagasComunes: 'Pulgones, mosca blanca.',
-    imageUrl: 'https://images.pexels.com/photos/128411/pexels-photo-128411.jpeg',
+    imageUrl: 'https://images.pexels.com/photos/264537/pexels-photo-264537.jpeg',
     dataAiHint: 'string bean'
   },
   {
