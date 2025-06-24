@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-type Theme = "theme-default" | "theme-forest" | "theme-ocean" | "theme-sunset";
-const THEMES: Theme[] = ["theme-default", "theme-forest", "theme-ocean", "theme-sunset"];
+type Theme = "theme-default" | "theme-forest" | "theme-ocean" | "theme-sunset" | "theme-desert" | "theme-mountain";
+const THEMES: Theme[] = ["theme-default", "theme-forest", "theme-ocean", "theme-sunset", "theme-desert", "theme-mountain"];
 
 type ThemeProviderProps = {
   children: ReactNode;
@@ -28,25 +28,34 @@ export function ThemeProvider({
   defaultTheme = "theme-default",
   storageKey = "cultiva-colombia-theme",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem(storageKey) as Theme | null;
-    if (storedTheme && THEMES.includes(storedTheme)) {
-      setTheme(storedTheme);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem(storageKey) as Theme | null;
+      if (storedTheme && THEMES.includes(storedTheme)) {
+        return storedTheme;
+      }
     }
-  }, [storageKey]);
+    return defaultTheme;
+  });
 
   useEffect(() => {
     const root = document.documentElement;
     
     // Remove old theme classes
     THEMES.forEach((t) => {
-      root.classList.remove(t);
+      if (t !== "theme-default") {
+        root.classList.remove(t);
+      }
     });
 
-    // Add new theme class
-    root.classList.add(theme);
+    // Add new theme class if it's not the default
+    if (theme !== "theme-default") {
+      root.classList.add(theme);
+    }
+    
+    // Also add a class for dark/light mode if you have one
+    // For example:
+    // document.body.classList.toggle('dark', isDarkMode);
 
   }, [theme]);
 

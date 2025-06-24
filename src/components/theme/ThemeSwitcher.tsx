@@ -34,6 +34,12 @@ export function ThemeSwitcher() {
         <DropdownMenuItem onClick={() => setTheme("theme-sunset")}>
           Atardecer
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("theme-desert")}>
+          Desierto
+        </DropdownMenuItem>
+         <DropdownMenuItem onClick={() => setTheme("theme-mountain")}>
+          Montaña
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
