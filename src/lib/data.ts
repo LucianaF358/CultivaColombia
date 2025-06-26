@@ -17,7 +17,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Directa o por trasplante desde semilleros.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Sogata, Piricularia.',
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://www.pexels.com/es-es/foto/cerrar-foto-de-planta-de-trigo-949211/',
     dataAiHint: 'rice paddy'
   },
   { 
