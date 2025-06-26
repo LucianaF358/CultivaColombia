@@ -6,6 +6,7 @@ export type Crop = {
   tipo: string;
   region: string;
   clima: string;
+  dificultad: 'Fácil' | 'Media' | 'Difícil';
   descripcionDetallada: string;
   temporada: string;
   tipoDeSuelo: string;
