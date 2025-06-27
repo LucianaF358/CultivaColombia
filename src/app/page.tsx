@@ -1,6 +1,5 @@
 import { getCrops } from '@/lib/data';
 import { CropsView } from '@/components/crops/CropsView';
-import { InteractiveMap } from '@/components/map/InteractiveMap';
 
 export default async function Home() {
   const crops = await getCrops();
@@ -18,10 +17,6 @@ export default async function Home() {
           Descubre los cultivos ideales para tu región y clima. Fomentemos juntos la soberanía alimentaria en Colombia.
         </p>
       </header>
-      
-      <div className="mb-16">
-        <InteractiveMap crops={crops} regions={regions} />
-      </div>
 
       <CropsView
         initialCrops={crops}
