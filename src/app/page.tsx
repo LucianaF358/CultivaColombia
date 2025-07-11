@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Leaf, Map } from 'lucide-react';
-import { InteractiveMap } from '@/components/map/InteractiveMap';
 
 export default async function Home() {
   const crops = await getCrops();
@@ -54,8 +53,6 @@ export default async function Home() {
         </Card>
       </div>
       
-      <InteractiveMap crops={crops} regions={regions} />
-
       <section id="explorer">
         <CropsView
           initialCrops={crops}
