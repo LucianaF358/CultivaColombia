@@ -37,7 +37,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
         <Sidebar side="left" collapsible="icon" className="z-40">
         <SidebarHeader className="flex flex-col gap-2 p-2">
             {/* Contenido para la barra expandida */}
-            <div className="flex w-full items-center justify-between group-data-[collapsible=icon]:hidden">
+            <div className="hidden w-full items-center justify-between group-data-[collapsible=icon]:hidden">
                 <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
                     <CultivaColombiaIcon className="h-6 w-6" />
                     <span>CultivaColombia</span>
@@ -75,15 +75,16 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 <SidebarMenuButton
                   asChild
                   isActive={pathname === item.href}
-                  className="group-data-[collapsible=icon]:justify-center"
                   tooltip={{
                     children: item.label,
                     className: "bg-primary text-primary-foreground",
                   }}
                 >
                   <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.label}</span>
+                    <div className="flex w-full items-center gap-2 group-data-[collapsible=icon]:justify-center">
+                        <item.icon />
+                        <span>{item.label}</span>
+                    </div>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -98,7 +99,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
         <SidebarWrapper>
-            {/* SidebarInset is crucial for the main content layout */}
         </SidebarWrapper>
         <SidebarInset>
             <Header />
