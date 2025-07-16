@@ -75,6 +75,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 <SidebarMenuButton
                   asChild
                   isActive={pathname === item.href}
+                  className="group-data-[collapsible=icon]:justify-center"
                   tooltip={{
                     children: item.label,
                     className: "bg-primary text-primary-foreground",
@@ -93,7 +94,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
     )
 }
 
-export function AppLayout({ children }: { children: React.ReactNode }) {
+export function AppLayout({ children }: { children: React.Node }) {
   return (
     <SidebarProvider>
         <SidebarWrapper>
