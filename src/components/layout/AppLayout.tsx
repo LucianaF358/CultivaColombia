@@ -75,16 +75,15 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 <SidebarMenuButton
                   asChild
                   isActive={pathname === item.href}
+                  className="group-data-[collapsible=icon]:justify-center"
                   tooltip={{
                     children: item.label,
                     className: "bg-primary text-primary-foreground",
                   }}
                 >
                   <Link href={item.href}>
-                    <div className="flex w-full items-center gap-2 group-data-[collapsible=icon]:justify-center">
-                        <item.icon />
-                        <span>{item.label}</span>
-                    </div>
+                    <item.icon />
+                    <span>{item.label}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
