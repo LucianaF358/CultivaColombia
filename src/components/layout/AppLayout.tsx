@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
-import { Home, Leaf, Map, Heart, Book, UserCircle, PanelLeft } from "lucide-react";
+import { Home, Leaf, Map, Heart, Book, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
 import { Button } from "../ui/button";
@@ -45,10 +45,10 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7"
+                    className="h-7 w-7 text-2xl"
                     onClick={toggleSidebar}
                 >
-                    <PanelLeft />
+                    ≡
                     <span className="sr-only">Toggle Sidebar</span>
                 </Button>
             </div>
@@ -60,10 +60,10 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7"
+                    className="h-7 w-7 text-2xl"
                     onClick={toggleSidebar}
                 >
-                    <PanelLeft />
+                    ≡
                     <span className="sr-only">Toggle Sidebar</span>
                 </Button>
             </div>
