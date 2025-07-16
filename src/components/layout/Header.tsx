@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { logout } from '@/lib/actions';
-import { LogOut, UserCircle } from 'lucide-react';
+import { LogOut, UserCircle, PanelLeft } from 'lucide-react';
 import { useTransition } from 'react';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { useSidebar } from '@/components/ui/sidebar';
@@ -43,7 +43,7 @@ export function Header() {
             onClick={toggleSidebar}
             aria-label="Abrir menú"
           >
-            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+            <PanelLeft />
           </Button>
         </div>
         

@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarProvider,
   SidebarInset,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
@@ -32,12 +33,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
-      <Sidebar side="left" collapsible="offcanvas">
-        <SidebarHeader>
+      <Sidebar side="left" collapsible="icon">
+        <SidebarHeader className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
             <CultivaColombiaIcon className="h-6 w-6" />
-            <span>CultivaColombia</span>
+            <span className="group-data-[collapsible=icon]:hidden">CultivaColombia</span>
           </Link>
+          <SidebarTrigger className="group-data-[collapsible=icon]:hidden" />
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
