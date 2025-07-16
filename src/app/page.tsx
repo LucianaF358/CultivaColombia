@@ -1,9 +1,9 @@
 import { getCrops } from '@/lib/data';
 import { CropsView } from '@/components/crops/CropsView';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Leaf, Map } from 'lucide-react';
+import { Leaf, Map, Search } from 'lucide-react';
 
 export default async function Home() {
   const crops = await getCrops();
@@ -12,13 +12,13 @@ export default async function Home() {
   const types = [...new Set(crops.map(crop => crop.tipo))];
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-16">
+    <div className="container mx-auto px-4 py-8 space-y-12">
       <header className="text-center">
         <h1 className="text-4xl md:text-5xl font-bold font-headline text-primary mb-2">
           Bienvenido a CultivaColombia
         </h1>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Descubre, diagnostica y fomenta la soberanía alimentaria en Colombia.
+          Tu asistente inteligente para la soberanía alimentaria en Colombia.
         </p>
       </header>
 
@@ -40,7 +40,7 @@ export default async function Home() {
         <Card className="flex flex-col items-center justify-center p-8 text-center bg-card/80 hover:shadow-xl transition-shadow">
            <CardHeader>
             <div className="mx-auto bg-primary/10 p-4 rounded-full mb-4">
-              <Map className="h-10 w-10 text-primary" />
+              <Search className="h-10 w-10 text-primary" />
             </div>
             <CardTitle className="text-2xl font-semibold">Explorar Cultivos</CardTitle>
           </CardHeader>
@@ -54,6 +54,10 @@ export default async function Home() {
       </div>
       
       <section id="explorer">
+         <header className="mb-8 text-center">
+            <h2 className="text-3xl font-bold font-headline text-primary">Explorador de Cultivos</h2>
+            <p className="text-muted-foreground mt-2">Encuentra el cultivo perfecto para tu tierra.</p>
+        </header>
         <CropsView
           initialCrops={crops}
           regions={regions}

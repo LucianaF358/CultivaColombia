@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { AuthProvider } from '@/lib/firebase/auth';
-import { Header } from '@/components/layout/Header';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import './globals.css';
+import { AppLayout } from '@/components/layout/AppLayout';
 
 export const metadata: Metadata = {
   title: 'CultivaColombia',
@@ -29,10 +29,9 @@ export default function RootLayout({
       <body className={cn('font-body antialiased min-h-screen flex flex-col bg-background')}>
         <ThemeProvider>
           <AuthProvider>
-            <Header />
-            <main className="flex-grow">
+            <AppLayout>
               {children}
-            </main>
+            </AppLayout>
             <Toaster />
           </AuthProvider>
         </ThemeProvider>
