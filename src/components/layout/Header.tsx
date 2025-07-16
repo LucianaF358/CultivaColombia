@@ -14,16 +14,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { logout } from '@/lib/actions';
-import { LogOut, UserCircle, PanelLeft } from 'lucide-react';
+import { LogOut, UserCircle } from 'lucide-react';
 import { useTransition } from 'react';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
-import { useSidebar } from '@/components/ui/sidebar';
 
 export function Header() {
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
-  const { toggleSidebar } = useSidebar();
-
 
   const handleLogout = () => {
     startTransition(() => {
@@ -32,20 +29,8 @@ export function Header() {
   };
 
   return (
-    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-30">
-      <div className="container mx-auto px-4 flex justify-between items-center h-16">
-        <div className="flex items-center gap-4">
-           {/* This button will be shown on mobile to open the sidebar */}
-           <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            aria-label="Abrir/Cerrar menú"
-          >
-            <PanelLeft />
-          </Button>
-        </div>
-        
+    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-20">
+      <div className="container mx-auto px-4 flex justify-end items-center h-16">
         <div className="flex items-center gap-4">
           <ThemeSwitcher />
           {user ? (
