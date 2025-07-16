@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -71,7 +70,6 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
             ))}
           </SidebarMenu>
         </SidebarContent>
-        {children}
       </Sidebar>
     )
 }
@@ -80,11 +78,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
         <SidebarWrapper>
-            <SidebarInset>
-                <Header />
-                <main className="flex-grow">{children}</main>
-            </SidebarInset>
+            {/* SidebarInset is crucial for the main content layout */}
         </SidebarWrapper>
+        <SidebarInset>
+            <Header />
+            <main className="flex-grow">{children}</main>
+        </SidebarInset>
     </SidebarProvider>
   );
 }
