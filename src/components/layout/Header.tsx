@@ -32,16 +32,15 @@ export function Header() {
   };
 
   return (
-    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-40">
+    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-30">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <div className="flex items-center gap-4">
            {/* This button will be shown on mobile to open the sidebar */}
            <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
             onClick={toggleSidebar}
-            aria-label="Abrir menú"
+            aria-label="Abrir/Cerrar menú"
           >
             <PanelLeft />
           </Button>
