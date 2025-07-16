@@ -11,13 +11,14 @@ import {
   SidebarMenuButton,
   SidebarProvider,
   SidebarInset,
-  SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
-import { Home, Leaf, Map, Heart, Book, UserCircle } from "lucide-react";
+import { Home, Leaf, Map, Heart, Book, UserCircle, PanelLeft } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
+import { Button } from "../ui/button";
 
 const menuItems = [
   { href: "/", label: "Inicio", icon: Home },
@@ -28,18 +29,26 @@ const menuItems = [
   { href: "/profile", label: "Mi Perfil", icon: UserCircle },
 ];
 
-export function AppLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+function SidebarWrapper({ children }: { children: React.ReactNode }) {
+    const { toggleSidebar } = useSidebar();
+    const pathname = usePathname();
 
-  return (
-    <SidebarProvider>
-      <Sidebar side="left" collapsible="icon" className="z-40">
+    return (
+        <Sidebar side="left" collapsible="icon" className="z-40">
         <SidebarHeader className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
             <CultivaColombiaIcon className="h-6 w-6" />
             <span className="group-data-[collapsible=icon]:hidden">CultivaColombia</span>
           </Link>
-          <SidebarTrigger className="group-data-[collapsible=icon]:hidden" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 group-data-[collapsible=icon]:hidden"
+            onClick={toggleSidebar}
+          >
+            <PanelLeft />
+            <span className="sr-only">Toggle Sidebar</span>
+          </Button>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
@@ -62,11 +71,20 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             ))}
           </SidebarMenu>
         </SidebarContent>
+        {children}
       </Sidebar>
-      <SidebarInset>
-        <Header />
-        <main className="flex-grow">{children}</main>
-      </SidebarInset>
+    )
+}
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+        <SidebarWrapper>
+            <SidebarInset>
+                <Header />
+                <main className="flex-grow">{children}</main>
+            </SidebarInset>
+        </SidebarWrapper>
     </SidebarProvider>
   );
 }
