@@ -33,7 +33,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
-      <Sidebar side="left" collapsible="icon">
+      <Sidebar side="left" collapsible="icon" className="z-40">
         <SidebarHeader className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
             <CultivaColombiaIcon className="h-6 w-6" />
