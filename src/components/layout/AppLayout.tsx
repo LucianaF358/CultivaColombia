@@ -30,12 +30,12 @@ const menuItems = [
 ];
 
 function SidebarWrapper({ children }: { children: React.ReactNode }) {
-    const { toggleSidebar, state } = useSidebar();
+    const { toggleSidebar } = useSidebar();
     const pathname = usePathname();
 
     return (
         <Sidebar side="left" collapsible="icon" className="z-40">
-        <SidebarHeader className="flex flex-col items-center gap-2 p-2">
+        <SidebarHeader className="flex flex-col gap-2 p-2">
             {/* Contenido para la barra expandida */}
             <div className="flex w-full items-center justify-between group-data-[collapsible=icon]:hidden">
                 <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
@@ -54,7 +54,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
             </div>
             {/* Contenido para la barra colapsada */}
              <div className="hidden flex-col items-center gap-2 group-data-[collapsible=icon]:flex">
-                <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
+                <Link href="/" className="flex items-center justify-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
                     <CultivaColombiaIcon className="h-6 w-6" />
                 </Link>
                 <Button
@@ -94,7 +94,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
     )
 }
 
-export function AppLayout({ children }: { children: React.Node }) {
+export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
         <SidebarWrapper>
