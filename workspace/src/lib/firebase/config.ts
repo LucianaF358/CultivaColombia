@@ -16,7 +16,7 @@ if (getApps().length === 0) {
   // Validate that the values are not empty before initializing.
   for (const key in firebaseConfig) {
       if (!(firebaseConfig as any)[key]) {
-          throw new Error(`Firebase configuration error: Missing value for NEXT_PUBLIC_FIREBASE_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}. Please check your .env file.`);
+          console.error(`Firebase configuration error: Missing value for NEXT_PUBLIC_FIREBASE_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}. Please check your .env file.`);
       }
   }
   app = initializeApp(firebaseConfig);
