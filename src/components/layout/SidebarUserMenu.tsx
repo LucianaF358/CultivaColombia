@@ -11,12 +11,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarSeparator,
+  sidebarMenuButtonVariants,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { UserCircle, Heart, LogIn, LogOut, Loader2, UserPlus } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+
 
 export function SidebarUserMenu() {
   const { user, loading } = useAuth();
+  const { isMobile, state } = useSidebar();
   const pathname = usePathname();
   const [isPending, startTransition] = React.useTransition();
 
@@ -63,20 +69,29 @@ export function SidebarUserMenu() {
                <>
                  {loggedInLinks.map((item) => (
                     <SidebarMenuItem key={item.href}>
-                        <SidebarMenuButton
-                            asChild
-                            isActive={pathname.startsWith(item.href)}
-                            className="group-data-[collapsible=icon]:justify-center"
-                            tooltip={{
-                                children: item.label,
-                                className: "bg-primary text-primary-foreground",
-                            }}
-                        >
-                            <Link href={item.href}>
-                                <item.icon />
-                                <span>{item.label}</span>
-                            </Link>
-                        </SidebarMenuButton>
+                         <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Link
+                                    href={item.href}
+                                    data-active={pathname.startsWith(item.href)}
+                                    className={cn(
+                                        sidebarMenuButtonVariants({ size: "default" }),
+                                        "group-data-[collapsible=icon]:justify-center"
+                                    )}
+                                >
+                                    <item.icon />
+                                    <span>{item.label}</span>
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent
+                                side="right"
+                                align="center"
+                                hidden={state !== "collapsed" || isMobile}
+                                className="bg-primary text-primary-foreground"
+                            >
+                               {item.label}
+                            </TooltipContent>
+                        </Tooltip>
                     </SidebarMenuItem>
                  ))}
                   <SidebarMenuItem>
@@ -98,20 +113,29 @@ export function SidebarUserMenu() {
                 <>
                     {loggedOutLinks.map((item) => (
                         <SidebarMenuItem key={item.href}>
-                           <SidebarMenuButton
-                                asChild
-                                isActive={pathname.startsWith(item.href)}
-                                className="group-data-[collapsible=icon]:justify-center"
-                                tooltip={{
-                                    children: item.label,
-                                    className: "bg-primary text-primary-foreground",
-                                }}
-                            >
-                               <Link href={item.href}>
-                                    <item.icon />
-                                    <span>{item.label}</span>
-                                </Link>
-                            </SidebarMenuButton>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Link
+                                        href={item.href}
+                                        data-active={pathname.startsWith(item.href)}
+                                        className={cn(
+                                            sidebarMenuButtonVariants({ size: "default" }),
+                                            "group-data-[collapsible=icon]:justify-center"
+                                        )}
+                                    >
+                                        <item.icon />
+                                        <span>{item.label}</span>
+                                    </Link>
+                                </TooltipTrigger>
+                                <TooltipContent
+                                    side="right"
+                                    align="center"
+                                    hidden={state !== "collapsed" || isMobile}
+                                    className="bg-primary text-primary-foreground"
+                                >
+                                {item.label}
+                                </TooltipContent>
+                            </Tooltip>
                         </SidebarMenuItem>
                     ))}
                 </>
