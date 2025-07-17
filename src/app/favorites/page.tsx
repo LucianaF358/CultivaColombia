@@ -1,15 +1,17 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 import { getFavoriteCrops } from '@/lib/firebase/firestore';
-import { getCropById, getCrops } from '@/lib/data';
+import { getCrops } from '@/lib/data';
 import type { Crop } from '@/types';
 import { CropCard } from '@/components/crops/CropCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Heart } from 'lucide-react';
 
 export default function FavoritesPage() {
   const { user, loading: authLoading } = useAuth();
@@ -44,8 +46,8 @@ export default function FavoritesPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8">
-        <h1 className="text-4xl font-bold font-headline text-primary">Mis Cultivos Favoritos</h1>
-        <p className="text-muted-foreground mt-2">Tu lista personal de cultivos para consultar cuando quieras.</p>
+        <h1 className="text-4xl font-bold font-headline text-primary">Mis Favoritos</h1>
+        <p className="text-muted-foreground mt-2">Tu lista personal de cultivos guardados para consultar cuando quieras.</p>
       </header>
       
       {favoriteCrops.length > 0 ? (
@@ -55,9 +57,14 @@ export default function FavoritesPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 border-2 border-dashed rounded-lg">
-          <h2 className="text-2xl font-semibold text-card-foreground">No tienes cultivos favoritos</h2>
-          <p className="text-muted-foreground mt-2 mb-4">Explora los cultivos y marca los que te interesen.</p>
+        <div className="text-center py-16 border-2 border-dashed rounded-lg flex flex-col items-center">
+          <Heart className="h-16 w-16 text-muted-foreground/50 mb-4" />
+          <h2 className="text-2xl font-semibold text-card-foreground">Aún no tienes favoritos</h2>
+          <p className="text-muted-foreground mt-2 mb-4 max-w-md">
+            Explora los cultivos y haz clic en el icono del corazón (
+            <Heart className="inline-block h-4 w-4 text-accent" />
+            ) para añadirlos a esta lista.
+          </p>
           <Button asChild>
             <Link href="/">Explorar Cultivos</Link>
           </Button>

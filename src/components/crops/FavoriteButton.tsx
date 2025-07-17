@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useTransition } from 'react';
@@ -26,8 +27,8 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
 
     if (!user) {
       toast({
-        title: 'Inicia sesión',
-        description: 'Debes iniciar sesión para guardar cultivos favoritos.',
+        title: 'Inicia sesión para guardar',
+        description: 'Debes iniciar sesión para añadir cultivos a tus favoritos.',
         variant: 'destructive',
         action: <Button onClick={() => router.push('/login')}>Iniciar sesión</Button>
       });
@@ -38,8 +39,8 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
       try {
         await toggleFavorite(user.uid, cropId, !isFavorite);
         toast({
-            title: isFavorite ? 'Eliminado de favoritos' : 'Añadido a favoritos',
-            description: `El cultivo ha sido ${isFavorite ? 'eliminado de' : 'añadido a'} tus favoritos.`,
+            title: isFavorite ? 'Eliminado de Mis Favoritos' : 'Añadido a Mis Favoritos',
+            description: `El cultivo ha sido ${isFavorite ? 'eliminado de' : 'añadido a'} tu lista.`,
         })
       } catch (error) {
         toast({

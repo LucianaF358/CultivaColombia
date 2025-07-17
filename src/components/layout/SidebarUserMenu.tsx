@@ -18,7 +18,6 @@ import Link from 'next/link';
 export function SidebarUserMenu() {
   const { user, loading } = useAuth();
   const pathname = usePathname();
-  const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
   const handleLogout = () => {
@@ -29,7 +28,7 @@ export function SidebarUserMenu() {
 
   const loggedInLinks = [
     { href: "/profile", label: "Mi Perfil", icon: UserCircle },
-    { href: "/favorites", label: "Mis Cultivos", icon: Heart },
+    { href: "/favorites", label: "Mis Favoritos", icon: Heart },
   ];
 
   if (loading) {
