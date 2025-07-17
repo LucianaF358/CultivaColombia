@@ -12,6 +12,7 @@ import {
   SidebarProvider,
   SidebarInset,
   useSidebar,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
@@ -88,11 +89,9 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
-            <SidebarMenuItem>
-                <SidebarUserMenu />
-            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
+        <SidebarUserMenu />
       </Sidebar>
     )
 }
