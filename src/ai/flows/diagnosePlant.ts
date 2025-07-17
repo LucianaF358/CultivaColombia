@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A plant problem diagnosis AI agent.
@@ -86,15 +87,19 @@ const diagnosePlantFlow = ai.defineFlow(
           if (attempt < maxRetries) {
             // Wait for 2 seconds before retrying
             await new Promise(resolve => setTimeout(resolve, 2000));
+          } else {
+            // If it's the last attempt, re-throw the error to be caught by the final catch block.
+             throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError.message}`);
           }
         } else {
-          // If it's another type of error, break the loop and rethrow
+          // If it's another type of error, rethrow immediately
           throw error;
         }
       }
     }
     
-    // If all retries fail, throw the last captured error
+    // This line is now primarily for handling the case where the loop exits unexpectedly,
+    // or to be extra safe. The final error is re-thrown inside the loop now.
     throw new Error(`Failed to diagnose plant after ${maxRetries} attempts. Last error: ${lastError.message}`);
   }
 );
