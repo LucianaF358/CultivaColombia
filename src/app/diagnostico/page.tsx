@@ -7,14 +7,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, Bot, Sprout, Siren, HeartPulse, ShieldCheck, AlertTriangle } from 'lucide-react';
 import Image from 'next/image';
+import { diagnosePlant, type DiagnosePlantOutput } from '@/ai/flows/diagnosePlant';
+import { useToast } from '@/hooks/use-toast';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Skeleton } from '@/components/ui/skeleton';
+
+function DiagnosisResultSkeleton() {
+  return (
+    <Card className="mt-8">
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-8 w-8 rounded-full" />
+          <Skeleton className="h-6 w-48" />
+        </div>
+        <Skeleton className="h-4 w-full mt-2" />
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+      </CardContent>
+    </Card>
+  );
+}
+
 
 export default function DiagnosticoPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [result, setResult] = useState<DiagnosePlantOutput | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -22,6 +49,7 @@ export default function DiagnosticoPage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
+        setResult(null); // Reset result when a new image is uploaded
       };
       reader.readAsDataURL(file);
     }
@@ -30,17 +58,40 @@ export default function DiagnosticoPage() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!imagePreview) {
-      // Idealmente, usaríamos un toast para esto
-      alert("Por favor, sube una imagen.");
+      toast({
+        title: "Imagen requerida",
+        description: "Por favor, sube una imagen para el diagnóstico.",
+        variant: 'destructive'
+      });
       return;
     }
     setIsLoading(true);
-    // Lógica de la IA aquí
-    console.log("Enviando a la IA:", { image: imagePreview, description });
-    // Simular una llamada a la API
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsLoading(false);
+    setResult(null);
+
+    try {
+      const diagnosisResult = await diagnosePlant({
+        photoDataUri: imagePreview,
+        description,
+      });
+      setResult(diagnosisResult);
+    } catch (error) {
+      console.error("Error diagnosing plant:", error);
+      toast({
+        title: 'Error en el diagnóstico',
+        description: 'No se pudo analizar la planta. Por favor, intenta de nuevo.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const clearForm = () => {
+    setImagePreview(null);
+    setDescription('');
+    setResult(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -81,8 +132,7 @@ export default function DiagnosticoPage() {
                         className="absolute top-2 right-2 rounded-full bg-background/70"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setImagePreview(null);
-                          if (fileInputRef.current) fileInputRef.current.value = "";
+                          clearForm();
                         }}
                       >
                         <X className="h-4 w-4" />
@@ -114,6 +164,85 @@ export default function DiagnosticoPage() {
             </form>
           </CardContent>
         </Card>
+
+        {isLoading && <DiagnosisResultSkeleton />}
+
+        {result && (
+          <Card className="mt-8 animate-in fade-in-50">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <Bot className="h-8 w-8 text-primary" />
+                <div>
+                  <CardTitle className="text-2xl">Resultado del Diagnóstico</CardTitle>
+                  <CardDescription>Análisis generado por la IA de CultivaColombia.</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {!result.isPlant ? (
+                 <div className="text-center py-8">
+                  <AlertTriangle className="mx-auto h-12 w-12 text-destructive" />
+                  <h3 className="mt-4 text-lg font-semibold">No se detectó una planta</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">La imagen no parece ser de una planta. Por favor, intenta con otra foto.</p>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center p-4 border rounded-lg">
+                    <div className="flex-shrink-0">
+                      {result.isHealthy ? 
+                        <ShieldCheck className="h-10 w-10 text-green-600"/> : 
+                        <Siren className="h-10 w-10 text-destructive"/>
+                      }
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                         Planta Identificada: <span className="font-bold text-primary">{result.plantName || "No identificada"}</span>
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {result.isHealthy ? 'Tu planta parece estar en buen estado de salud.' : `Se ha detectado un problema: ${result.diagnosis?.problem || 'No especificado'}`}
+                      </p>
+                    </div>
+                  </div>
+
+                  {!result.isHealthy && result.diagnosis && (
+                     <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger>
+                            <div className="flex items-center gap-2"><Siren className="h-5 w-5"/>Daños Observados</div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                              {result.diagnosis.damages?.map((item, index) => <li key={index}>{item}</li>)}
+                            </ul>
+                          </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2">
+                          <AccordionTrigger>
+                            <div className="flex items-center gap-2"><Sprout className="h-5 w-5"/>Posibles Causas</div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                              {result.diagnosis.causes?.map((item, index) => <li key={index}>{item}</li>)}
+                            </ul>
+                          </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-3">
+                           <AccordionTrigger>
+                              <div className="flex items-center gap-2"><HeartPulse className="h-5 w-5"/>Cuidados y Recomendaciones</div>
+                           </AccordionTrigger>
+                          <AccordionContent>
+                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                              {result.diagnosis.careNeeded?.map((item, index) => <li key={index}>{item}</li>)}
+                            </ul>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
