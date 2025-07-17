@@ -133,6 +133,10 @@ export default function DiagnosticoPage() {
         description,
       });
       setResult(diagnosisResult);
+      toast({
+        title: '¡Diagnóstico listo!',
+        description: 'Revisa los resultados generados por la IA.',
+      });
     } catch (error) {
       console.error("Error diagnosing plant:", error);
       toast({
@@ -291,7 +295,7 @@ export default function DiagnosticoPage() {
                         <AccordionItem value="item-3">
                            <AccordionTrigger>
                               <div className="flex items-center gap-2"><HeartPulse className="h-5 w-5"/>Cuidados y Recomendaciones</div>
-                           </AccordionTrigger>
+                           </Trigger>
                           <AccordionContent>
                              <MarkdownContent content={result.diagnosis.careNeeded} />
                           </AccordionContent>
