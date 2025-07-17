@@ -39,14 +39,21 @@ function DiagnosisResultSkeleton() {
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
 
-  // Process bullet points
-  const htmlContent = content.replace(/^- .+/gm, (match) => `<li>${match.substring(2)}</li>`)
-                           .replace(/(<li>.*<\/li>)+/g, (match) => `<ul>${match}</ul>`);
+  const createMarkup = (text: string) => {
+    // Reemplaza los guiones de Markdown por elementos <li> y envuelve los bloques en <ul>
+    const listRegex = /((?:^- .+\n?)+)/gm;
+    const processedText = text.replace(listRegex, (match) => {
+      const items = match.split('\n').filter(item => item.trim() !== '');
+      const listItems = items.map(item => `<li>${item.substring(2)}</li>`).join('');
+      return `<ul class="list-disc pl-5 space-y-1">${listItems}</ul>`;
+    });
+    return { __html: processedText };
+  };
 
   return (
-    <div 
+    <div
       className="text-muted-foreground space-y-2"
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
+      dangerouslySetInnerHTML={createMarkup(content)}
     />
   );
 }
