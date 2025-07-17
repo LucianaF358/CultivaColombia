@@ -69,29 +69,17 @@ export function SidebarUserMenu() {
                <>
                  {loggedInLinks.map((item) => (
                     <SidebarMenuItem key={item.href}>
-                         <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Link
-                                    href={item.href}
-                                    data-active={pathname.startsWith(item.href)}
-                                    className={cn(
-                                        sidebarMenuButtonVariants({ size: "default" }),
-                                        "group-data-[collapsible=icon]:justify-center"
-                                    )}
-                                >
-                                    <item.icon />
-                                    <span>{item.label}</span>
-                                </Link>
-                            </TooltipTrigger>
-                            <TooltipContent
-                                side="right"
-                                align="center"
-                                hidden={state !== "collapsed" || isMobile}
-                                className="bg-primary text-primary-foreground"
-                            >
-                               {item.label}
-                            </TooltipContent>
-                        </Tooltip>
+                        <Link
+                            href={item.href}
+                            data-active={pathname.startsWith(item.href)}
+                            className={cn(
+                                sidebarMenuButtonVariants({ size: "default" }),
+                                "group-data-[collapsible=icon]:justify-center"
+                            )}
+                        >
+                            <item.icon />
+                            <span>{item.label}</span>
+                        </Link>
                     </SidebarMenuItem>
                  ))}
                   <SidebarMenuItem>
@@ -121,29 +109,17 @@ export function SidebarUserMenu() {
                 <>
                     {loggedOutLinks.map((item) => (
                         <SidebarMenuItem key={item.href}>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Link
-                                        href={item.href}
-                                        data-active={pathname.startsWith(item.href)}
-                                        className={cn(
-                                            sidebarMenuButtonVariants({ size: "default" }),
-                                            "group-data-[collapsible=icon]:justify-center"
-                                        )}
-                                    >
-                                        <item.icon />
-                                        <span>{item.label}</span>
-                                    </Link>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    side="right"
-                                    align="center"
-                                    hidden={state !== "collapsed" || isMobile}
-                                    className="bg-primary text-primary-foreground"
-                                >
-                                {item.label}
-                                </TooltipContent>
-                            </Tooltip>
+                             <Link
+                                href={item.href}
+                                data-active={pathname.startsWith(item.href)}
+                                className={cn(
+                                    sidebarMenuButtonVariants({ size: "default" }),
+                                    "group-data-[collapsible=icon]:justify-center"
+                                )}
+                            >
+                                <item.icon />
+                                <span>{item.label}</span>
+                            </Link>
                         </SidebarMenuItem>
                     ))}
                 </>
