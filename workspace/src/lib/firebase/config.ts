@@ -1,3 +1,4 @@
+
 import { initializeApp, getApps, getApp, type FirebaseApp, type FirebaseOptions } from "firebase/app";
 
 const firebaseConfig: FirebaseOptions = {
