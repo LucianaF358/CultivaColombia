@@ -35,6 +35,29 @@ function DiagnosisResultSkeleton() {
   );
 }
 
+// Helper to render text with bullet points
+function MarkdownContent({ content }: { content: string | undefined }) {
+  if (!content) return null;
+
+  // Simple regex to convert markdown-style lists to HTML lists
+  const listItems = content.match(/^- .+/gm);
+  if (listItems) {
+    const textBefore = content.split(/^- .+/gm)[0];
+    return (
+      <div className="text-muted-foreground space-y-2">
+        {textBefore && <p>{textBefore.trim()}</p>}
+        <ul className="list-disc pl-5 space-y-1">
+          {listItems.map((item, index) => (
+            <li key={index}>{item.substring(2)}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  return <p className="text-muted-foreground">{content}</p>;
+}
+
 
 export default function DiagnosticoPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -254,9 +277,7 @@ export default function DiagnosticoPage() {
                             <div className="flex items-center gap-2"><Siren className="h-5 w-5"/>Daños Observados</div>
                           </AccordionTrigger>
                           <AccordionContent>
-                            <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                              {result.diagnosis.damages?.map((item, index) => <li key={index}>{item}</li>)}
-                            </ul>
+                            <MarkdownContent content={result.diagnosis.damages} />
                           </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-2">
@@ -264,9 +285,7 @@ export default function DiagnosticoPage() {
                             <div className="flex items-center gap-2"><Sprout className="h-5 w-5"/>Posibles Causas</div>
                           </AccordionTrigger>
                           <AccordionContent>
-                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                              {result.diagnosis.causes?.map((item, index) => <li key={index}>{item}</li>)}
-                            </ul>
+                             <MarkdownContent content={result.diagnosis.causes} />
                           </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-3">
@@ -274,9 +293,7 @@ export default function DiagnosticoPage() {
                               <div className="flex items-center gap-2"><HeartPulse className="h-5 w-5"/>Cuidados y Recomendaciones</div>
                            </AccordionTrigger>
                           <AccordionContent>
-                             <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
-                              {result.diagnosis.careNeeded?.map((item, index) => <li key={index}>{item}</li>)}
-                            </ul>
+                             <MarkdownContent content={result.diagnosis.careNeeded} />
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>
