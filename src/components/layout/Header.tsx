@@ -17,10 +17,12 @@ import { logout } from '@/lib/actions';
 import { LogOut, UserCircle } from 'lucide-react';
 import { useTransition } from 'react';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+import { useSidebar } from '../ui/sidebar';
 
 export function Header() {
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
+  const { toggleSidebar } = useSidebar();
 
   const handleLogout = () => {
     startTransition(() => {
@@ -29,8 +31,18 @@ export function Header() {
   };
 
   return (
-    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-20">
-      <div className="container mx-auto px-4 flex justify-end items-center h-16">
+    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-30">
+      <div className="container mx-auto px-4 flex justify-between items-center h-16">
+        <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden h-7 w-7 text-2xl"
+            onClick={toggleSidebar}
+        >
+            ≡
+            <span className="sr-only">Toggle Sidebar</span>
+        </Button>
+        <div className="flex-1" />
         <div className="flex items-center gap-4">
           <ThemeSwitcher />
           {user ? (
