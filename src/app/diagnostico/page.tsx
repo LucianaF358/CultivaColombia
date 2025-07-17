@@ -83,7 +83,7 @@ export default function DiagnosticoPage() {
             variant: 'destructive'
         });
     }
-  }
+  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
