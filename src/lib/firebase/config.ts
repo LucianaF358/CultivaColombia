@@ -13,19 +13,18 @@ const firebaseConfig: FirebaseOptions = {
 };
 
 // This function ensures that Firebase is initialized only once.
-function createFirebaseApp(config: FirebaseOptions): FirebaseApp {
-  if (getApps().length > 0) {
-    return getApp();
-  }
+let app: FirebaseApp;
 
-  // Validate the config
-  for (const key in config) {
-      if (!config[key as keyof FirebaseOptions]) {
+if (getApps().length === 0) {
+  // Validate the config before initialization
+  for (const key of Object.keys(firebaseConfig)) {
+      if (!(firebaseConfig as any)[key]) {
           throw new Error(`Firebase configuration error: Missing value for ${key}. Please check your configuration.`);
       }
   }
-
-  return initializeApp(config);
+  app = initializeApp(firebaseConfig);
+} else {
+  app = getApp();
 }
 
-export const app = createFirebaseApp(firebaseConfig);
+export { app };
