@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
-import { useRouter } from 'next/navigation';
 import { getCrops } from '@/lib/data';
 import type { Crop } from '@/types';
 import { CropCard } from '@/components/crops/CropCard';
@@ -11,28 +10,19 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
-import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { app } from '@/lib/firebase/config';
 
 export default function FavoritesPage() {
   const { user, loading: authLoading } = useAuth();
-  const router = useRouter();
   const [favoriteCrops, setFavoriteCrops] = useState<Crop[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingCrops, setLoadingCrops] = useState(true);
 
-  // Effect to redirect unauthenticated users
   useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/login');
-    }
-  }, [user, authLoading, router]);
-
-  // Effect to listen for real-time favorite changes
-  useEffect(() => {
-    let unsubscribe = () => {};
+    let unsubscribe: Unsubscribe = () => {};
 
     if (user) {
-      setLoading(true);
+      setLoadingCrops(true);
       const db = getFirestore(app);
       const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
 
@@ -41,29 +31,45 @@ export default function FavoritesPage() {
         const allCrops = await getCrops();
         const crops = allCrops.filter(crop => favoriteIds.includes(crop.id));
         setFavoriteCrops(crops);
-        setLoading(false);
+        setLoadingCrops(false);
       }, (error) => {
         console.error("Error fetching favorite crops:", error);
-        setLoading(false);
+        setLoadingCrops(false);
       });
 
     } else if (!authLoading) {
-      // If user is not logged in and auth is not loading, clear favorites and stop loading.
       setFavoriteCrops([]);
-      setLoading(false);
+      setLoadingCrops(false);
     }
 
-    // Cleanup subscription on component unmount or when user changes
     return () => unsubscribe();
   }, [user, authLoading]);
 
-  if (authLoading || (loading && user)) {
+  // While auth is loading, or if the user is logged in but we are still fetching their crops
+  if (authLoading || (user && loadingCrops)) {
     return <FavoritesSkeleton />;
   }
 
+  // After loading, if there's no user, show a prompt to log in
   if (!user) {
-    // Render nothing or a redirect message while router pushes
-    return null;
+      return (
+          <div className="container mx-auto px-4 py-8">
+              <header className="mb-8">
+                  <h1 className="text-4xl font-bold font-headline text-primary">Mis Favoritos</h1>
+                   <p className="text-muted-foreground mt-2">Inicia sesión para ver tus cultivos guardados.</p>
+              </header>
+              <div className="text-center py-16 border-2 border-dashed rounded-lg flex flex-col items-center">
+                  <Heart className="h-16 w-16 text-muted-foreground/50 mb-4" />
+                  <h2 className="text-2xl font-semibold text-card-foreground">Inicia sesión para ver tus favoritos</h2>
+                  <p className="text-muted-foreground mt-2 mb-4 max-w-md">
+                      Una vez que inicies sesión, podrás ver aquí los cultivos que has guardado.
+                  </p>
+                  <Button asChild>
+                      <Link href="/login">Iniciar Sesión</Link>
+                  </Button>
+              </div>
+          </div>
+      );
   }
 
   return (
