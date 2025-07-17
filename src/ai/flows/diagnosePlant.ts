@@ -78,28 +78,24 @@ const diagnosePlantFlow = ai.defineFlow(
         if (!output) {
           throw new Error("The AI model did not return a valid output.");
         }
-        return output;
+        return output; // Success, exit the loop and flow
       } catch (error: any) {
         lastError = error;
-        // Check if the error is a 503 Service Unavailable
-        if (error.cause?.status === 503 || (error.message && error.message.includes('503'))) {
-          attempt++;
-          if (attempt < maxRetries) {
-            // Wait for 2 seconds before retrying
-            await new Promise(resolve => setTimeout(resolve, 2000));
-          } else {
-            // If it's the last attempt, re-throw the error to be caught by the final catch block.
-             throw new Error(`Failed after ${maxRetries} attempts. Last error: ${lastError.message}`);
-          }
+        attempt++;
+        
+        const isServiceUnavailable = error.cause?.status === 503 || (error.message && error.message.includes('503'));
+
+        if (isServiceUnavailable && attempt < maxRetries) {
+          // Wait for 2 seconds before retrying
+          await new Promise(resolve => setTimeout(resolve, 2000));
         } else {
-          // If it's another type of error, rethrow immediately
+          // Not a retriable error or max retries reached, rethrow to be caught outside the loop.
           throw error;
         }
       }
     }
     
-    // This line is now primarily for handling the case where the loop exits unexpectedly,
-    // or to be extra safe. The final error is re-thrown inside the loop now.
-    throw new Error(`Failed to diagnose plant after ${maxRetries} attempts. Last error: ${lastError.message}`);
+    // This part is reached only if the loop completes due to max retries for a 503 error.
+    throw new Error(`Failed to diagnose plant after ${maxRetries} attempts due to service unavailability. Last error: ${lastError?.message}`);
   }
 );
