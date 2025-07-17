@@ -31,6 +31,11 @@ export function SidebarUserMenu() {
     { href: "/favorites", label: "Mis Favoritos", icon: Heart },
   ];
 
+  const loggedOutLinks = [
+      { href: "/login", label: "Iniciar Sesión", icon: LogIn },
+      { href: "/signup", label: "Registrarse", icon: UserPlus },
+  ]
+
   if (loading) {
     return (
         <SidebarFooter>
@@ -58,20 +63,20 @@ export function SidebarUserMenu() {
                <>
                  {loggedInLinks.map((item) => (
                     <SidebarMenuItem key={item.href}>
-                        <SidebarMenuButton
-                            asChild
-                            isActive={pathname.startsWith(item.href)}
-                            className="group-data-[collapsible=icon]:justify-center"
-                             tooltip={{
-                                children: item.label,
-                                className: "bg-primary text-primary-foreground",
-                            }}
-                        >
-                            <Link href={item.href}>
-                               <item.icon />
-                               <span>{item.label}</span>
-                            </Link>
-                        </SidebarMenuButton>
+                        <Link href={item.href} passHref legacyBehavior>
+                            <SidebarMenuButton
+                                as="a"
+                                isActive={pathname.startsWith(item.href)}
+                                className="group-data-[collapsible=icon]:justify-center"
+                                tooltip={{
+                                    children: item.label,
+                                    className: "bg-primary text-primary-foreground",
+                                }}
+                            >
+                                <item.icon />
+                                <span>{item.label}</span>
+                            </SidebarMenuButton>
+                        </Link>
                     </SidebarMenuItem>
                  ))}
                   <SidebarMenuItem>
@@ -91,38 +96,24 @@ export function SidebarUserMenu() {
                </>
              ) : (
                 <>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton
-                            asChild
-                            isActive={pathname.startsWith('/login')}
-                            className="group-data-[collapsible=icon]:justify-center"
-                             tooltip={{
-                                children: "Iniciar Sesión",
-                                className: "bg-primary text-primary-foreground",
-                            }}
-                        >
-                            <Link href="/login">
-                                <LogIn />
-                                <span>Iniciar Sesión</span>
+                    {loggedOutLinks.map((item) => (
+                        <SidebarMenuItem key={item.href}>
+                            <Link href={item.href} passHref legacyBehavior>
+                                <SidebarMenuButton
+                                    as="a"
+                                    isActive={pathname.startsWith(item.href)}
+                                    className="group-data-[collapsible=icon]:justify-center"
+                                    tooltip={{
+                                        children: item.label,
+                                        className: "bg-primary text-primary-foreground",
+                                    }}
+                                >
+                                    <item.icon />
+                                    <span>{item.label}</span>
+                                </SidebarMenuButton>
                             </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton
-                            asChild
-                            isActive={pathname.startsWith('/signup')}
-                            className="group-data-[collapsible=icon]:justify-center"
-                            tooltip={{
-                                children: "Registrarse",
-                                className: "bg-primary text-primary-foreground",
-                            }}
-                        >
-                            <Link href="/signup">
-                                <UserPlus />
-                                <span>Registrarse</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
+                        </SidebarMenuItem>
+                    ))}
                 </>
              )}
         </SidebarMenu>
