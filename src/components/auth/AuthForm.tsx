@@ -49,7 +49,6 @@ export function AuthForm({ mode }: AuthFormProps) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     
-    // The Firebase app is already initialized in config.ts
     const auth = getAuth(app);
     
     try {
@@ -62,23 +61,18 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
       
       const idToken = await userCredential.user.getIdToken();
-      const sessionResult = await createSession(idToken);
+      await createSession(idToken);
       
-      if (sessionResult.success) {
-        toast({
-            title: mode === 'login' ? '¡Bienvenido de nuevo!' : '¡Cuenta creada con éxito!',
-            description: "Has iniciado sesión correctamente.",
-        });
-        router.push('/');
-        router.refresh();
-      } else {
-        throw new Error(sessionResult.message || 'Error al crear la sesión');
-      }
+      toast({
+          title: mode === 'login' ? '¡Bienvenido de nuevo!' : '¡Cuenta creada con éxito!',
+          description: "Has iniciado sesión correctamente.",
+      });
+      router.push('/');
+      router.refresh();
 
     } catch (error: any) {
         let errorMessage = 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.';
         
-        // Check for common Firebase auth errors
         if (error.code) {
             switch (error.code) {
                 case 'auth/user-not-found':
@@ -101,10 +95,6 @@ export function AuthForm({ mode }: AuthFormProps) {
                      break;
                 default:
                     errorMessage = `Error: ${error.message}`;
-            }
-        } else if (error.message) {
-            if (error.message.includes('INVALID_LOGIN_CREDENTIALS')) {
-                 errorMessage = 'El correo electrónico o la contraseña son incorrectos.';
             }
         }
         
