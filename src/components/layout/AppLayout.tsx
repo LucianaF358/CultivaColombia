@@ -72,20 +72,20 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
           <SidebarMenu>
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
-                <Link href={item.href} passHref legacyBehavior>
-                  <SidebarMenuButton
-                    as="a"
-                    isActive={pathname === item.href}
-                    className="group-data-[collapsible=icon]:justify-center"
-                    tooltip={{
-                      children: item.label,
-                      className: "bg-primary text-primary-foreground",
-                    }}
-                  >
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === item.href}
+                  className="group-data-[collapsible=icon]:justify-center"
+                  tooltip={{
+                    children: item.label,
+                    className: "bg-primary text-primary-foreground",
+                  }}
+                >
+                  <Link href={item.href}>
                     <item.icon />
                     <span>{item.label}</span>
-                  </SidebarMenuButton>
-                </Link>
+                  </Link>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
