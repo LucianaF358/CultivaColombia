@@ -12,7 +12,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import {
-  SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar';
 import { UserCircle, Heart, LogIn, LogOut, Loader2 } from 'lucide-react';
@@ -38,7 +37,6 @@ export function SidebarUserMenu() {
 
   if (loading) {
     return (
-       <SidebarMenuItem>
         <SidebarMenuButton
             disabled
             className="group-data-[collapsible=icon]:justify-center"
@@ -47,27 +45,28 @@ export function SidebarUserMenu() {
             <Loader2 className="animate-spin" />
             <span>Cargando...</span>
         </SidebarMenuButton>
-       </SidebarMenuItem>
     )
   }
 
+  const isUserMenuOpen = user 
+    ? loggedInLinks.some(link => pathname.startsWith(link.href)) 
+    : (pathname.startsWith('/login') || pathname.startsWith('/signup'));
+  
   return (
-    <Accordion type="single" collapsible className="w-full" defaultValue={user ? (loggedInLinks.some(link => pathname.startsWith(link.href)) ? 'user-menu' : undefined) : (pathname.startsWith('/login') ? 'user-menu' : undefined)}>
+    <Accordion type="single" collapsible className="w-full" defaultValue={isUserMenuOpen ? 'user-menu' : undefined}>
       <AccordionItem value="user-menu" className="border-none">
-         <SidebarMenuItem>
-            <AccordionTrigger asChild className="w-full hover:no-underline [&[data-state=open]>svg]:hidden">
-               <SidebarMenuButton
-                  className="w-full group-data-[collapsible=icon]:justify-center"
-                  tooltip={{
-                     children: "Cuenta",
-                     className: "bg-primary text-primary-foreground",
-                  }}
-               >
-                     <UserCircle />
-                     <span>Cuenta</span>
-               </SidebarMenuButton>
-            </AccordionTrigger>
-         </SidebarMenuItem>
+          <AccordionTrigger asChild>
+              <SidebarMenuButton
+                className="w-full group-data-[collapsible=icon]:justify-center"
+                tooltip={{
+                    children: "Cuenta",
+                    className: "bg-primary text-primary-foreground",
+                }}
+              >
+                    <UserCircle />
+                    <span>Cuenta</span>
+              </SidebarMenuButton>
+          </AccordionTrigger>
         <AccordionContent className="pb-0 group-data-[collapsible=icon]:hidden">
           <div className="pl-8 pr-2 space-y-1">
              {user ? (
@@ -97,17 +96,30 @@ export function SidebarUserMenu() {
                   </SidebarMenuButton>
                </>
              ) : (
-               <SidebarMenuButton
-                  asChild
-                  isActive={pathname.startsWith('/login')}
-                  size="sm"
-                  className="w-full justify-start"
-               >
-                  <Link href="/login">
-                     <LogIn />
-                     <span>Iniciar Sesión</span>
-                  </Link>
-               </SidebarMenuButton>
+                <>
+                    <SidebarMenuButton
+                        asChild
+                        isActive={pathname.startsWith('/login')}
+                        size="sm"
+                        className="w-full justify-start"
+                    >
+                        <Link href="/login">
+                            <LogIn />
+                            <span>Iniciar Sesión</span>
+                        </Link>
+                    </SidebarMenuButton>
+                    <SidebarMenuButton
+                        asChild
+                        isActive={pathname.startsWith('/signup')}
+                        size="sm"
+                        className="w-full justify-start"
+                    >
+                        <Link href="/signup">
+                            <UserCircle />
+                            <span>Registrarse</span>
+                        </Link>
+                    </SidebarMenuButton>
+                </>
              )}
           </div>
         </AccordionContent>

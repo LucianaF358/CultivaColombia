@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
-import { Home, Leaf, Map, Heart, Book } from "lucide-react";
+import { Home, Leaf, Map, Book } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
 import { Button } from "../ui/button";
