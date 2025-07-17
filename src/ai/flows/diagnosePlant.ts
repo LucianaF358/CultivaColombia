@@ -66,11 +66,35 @@ const diagnosePlantFlow = ai.defineFlow(
     inputSchema: DiagnosePlantInputSchema,
     outputSchema: DiagnosePlantOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
-    if (!output) {
-      throw new Error("The AI model did not return a valid output.");
+  async (input, streamingCallback) => {
+    const maxRetries = 3;
+    let attempt = 0;
+    let lastError: any;
+
+    while (attempt < maxRetries) {
+      try {
+        const { output } = await prompt(input);
+        if (!output) {
+          throw new Error("The AI model did not return a valid output.");
+        }
+        return output;
+      } catch (error: any) {
+        lastError = error;
+        // Check if the error is a 503 Service Unavailable
+        if (error.cause?.status === 503 || (error.message && error.message.includes('503'))) {
+          attempt++;
+          if (attempt < maxRetries) {
+            // Wait for 2 seconds before retrying
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
+        } else {
+          // If it's another type of error, break the loop and rethrow
+          throw error;
+        }
+      }
     }
-    return output;
+    
+    // If all retries fail, throw the last captured error
+    throw new Error(`Failed to diagnose plant after ${maxRetries} attempts. Last error: ${lastError.message}`);
   }
 );
