@@ -22,9 +22,8 @@ export function SidebarUserMenu() {
   const [isPending, startTransition] = React.useTransition();
 
   const handleLogout = () => {
-    startTransition(async () => {
-      await logout();
-      router.push('/');
+    startTransition(() => {
+      logout();
     });
   };
 
