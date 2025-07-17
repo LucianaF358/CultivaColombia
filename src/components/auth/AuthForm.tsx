@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, type UserCredential } from 'firebase/auth';
 import { app } from '@/lib/firebase/config';
 import { createSession } from '@/lib/actions';
 import { useRouter } from 'next/navigation';
@@ -51,10 +51,13 @@ export function AuthForm({ mode }: AuthFormProps) {
     setLoading(true);
     const auth = getAuth(app);
     try {
-      const userCredential =
-        mode === 'login'
-          ? await signInWithEmailAndPassword(auth, values.email, values.password)
-          : await createUserWithEmailAndPassword(auth, values.email, values.password);
+      let userCredential: UserCredential;
+
+      if (mode === 'signup') {
+        userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      } else {
+        userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      }
       
       const idToken = await userCredential.user.getIdToken();
       const sessionResult = await createSession(idToken);
