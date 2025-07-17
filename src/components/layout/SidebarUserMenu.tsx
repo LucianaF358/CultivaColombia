@@ -61,7 +61,7 @@ export function SidebarUserMenu() {
                         <SidebarMenuButton
                             asChild
                             isActive={pathname.startsWith(item.href)}
-                            className="w-full justify-start group-data-[collapsible=icon]:justify-center"
+                            className="group-data-[collapsible=icon]:justify-center"
                              tooltip={{
                                 children: item.label,
                                 className: "bg-primary text-primary-foreground",
@@ -78,7 +78,7 @@ export function SidebarUserMenu() {
                       <SidebarMenuButton
                             onClick={handleLogout}
                             disabled={isPending}
-                            className="w-full justify-start group-data-[collapsible=icon]:justify-center"
+                            className="group-data-[collapsible=icon]:justify-center"
                             tooltip={{
                                 children: "Cerrar Sesión",
                                 className: "bg-primary text-primary-foreground",
@@ -95,7 +95,7 @@ export function SidebarUserMenu() {
                         <SidebarMenuButton
                             asChild
                             isActive={pathname.startsWith('/login')}
-                            className="w-full justify-start group-data-[collapsible=icon]:justify-center"
+                            className="group-data-[collapsible=icon]:justify-center"
                              tooltip={{
                                 children: "Iniciar Sesión",
                                 className: "bg-primary text-primary-foreground",
@@ -111,7 +111,7 @@ export function SidebarUserMenu() {
                         <SidebarMenuButton
                             asChild
                             isActive={pathname.startsWith('/signup')}
-                            className="w-full justify-start group-data-[collapsible=icon]:justify-center"
+                            className="group-data-[collapsible=icon]:justify-center"
                             tooltip={{
                                 children: "Registrarse",
                                 className: "bg-primary text-primary-foreground",
