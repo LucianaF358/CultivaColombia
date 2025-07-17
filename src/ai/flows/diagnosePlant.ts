@@ -10,7 +10,7 @@
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
-export const DiagnosePlantInputSchema = z.object({
+const DiagnosePlantInputSchema = z.object({
   photoDataUri: z
     .string()
     .describe(
@@ -20,7 +20,7 @@ export const DiagnosePlantInputSchema = z.object({
 });
 export type DiagnosePlantInput = z.infer<typeof DiagnosePlantInputSchema>;
 
-export const DiagnosePlantOutputSchema = z.object({
+const DiagnosePlantOutputSchema = z.object({
   isPlant: z.boolean().describe('Whether or not the image is actually of a plant.'),
   plantName: z.string().describe('The common name of the identified plant.').optional(),
   isHealthy: z.boolean().describe('Whether or not the plant is healthy.').optional(),
