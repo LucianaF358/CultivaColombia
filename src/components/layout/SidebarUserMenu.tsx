@@ -69,9 +69,9 @@ export function SidebarUserMenu() {
                <>
                  {loggedInLinks.map((item) => (
                     <SidebarMenuItem key={item.href}>
-                        <Link
+                         <Link
                             href={item.href}
-                            data-active={pathname.startsWith(item.href)}
+                            data-active={pathname === item.href}
                             className={cn(
                                 sidebarMenuButtonVariants({ size: "default" }),
                                 "group-data-[collapsible=icon]:justify-center"
@@ -111,7 +111,7 @@ export function SidebarUserMenu() {
                         <SidebarMenuItem key={item.href}>
                              <Link
                                 href={item.href}
-                                data-active={pathname.startsWith(item.href)}
+                                data-active={pathname === item.href}
                                 className={cn(
                                     sidebarMenuButtonVariants({ size: "default" }),
                                     "group-data-[collapsible=icon]:justify-center"
