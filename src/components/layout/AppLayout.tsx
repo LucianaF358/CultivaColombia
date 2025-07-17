@@ -88,7 +88,9 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
-            <SidebarUserMenu />
+            <SidebarMenuItem>
+                <SidebarUserMenu />
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
