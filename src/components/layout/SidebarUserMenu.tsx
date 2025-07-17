@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar';
-import { UserCircle, Heart, LogIn, LogOut, Loader2, Home } from 'lucide-react';
+import { UserCircle, Heart, LogIn, LogOut, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 export function SidebarUserMenu() {
@@ -55,9 +55,8 @@ export function SidebarUserMenu() {
     <Accordion type="single" collapsible className="w-full" defaultValue={user ? (loggedInLinks.some(link => pathname.startsWith(link.href)) ? 'user-menu' : undefined) : (pathname.startsWith('/login') ? 'user-menu' : undefined)}>
       <AccordionItem value="user-menu" className="border-none">
          <SidebarMenuItem>
-            <AccordionTrigger className="w-full hover:no-underline [&[data-state=open]>svg]:hidden">
+            <AccordionTrigger asChild className="w-full hover:no-underline [&[data-state=open]>svg]:hidden">
                <SidebarMenuButton
-                  asChild={false}
                   className="w-full group-data-[collapsible=icon]:justify-center"
                   tooltip={{
                      children: "Cuenta",
