@@ -295,7 +295,7 @@ export default function DiagnosticoPage() {
                         <AccordionItem value="item-3">
                            <AccordionTrigger>
                               <div className="flex items-center gap-2"><HeartPulse className="h-5 w-5"/>Cuidados y Recomendaciones</div>
-                           </Trigger>
+                           </AccordionTrigger>
                           <AccordionContent>
                              <MarkdownContent content={result.diagnosis.careNeeded} />
                           </AccordionContent>
