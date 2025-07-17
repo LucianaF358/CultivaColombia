@@ -15,11 +15,12 @@ import {
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
-import { Home, Leaf, Map, Heart, Book, UserCircle } from "lucide-react";
+import { Home, Leaf, Map, Heart, Book } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
 import { Button } from "../ui/button";
-import { useAuth } from "@/lib/firebase/auth";
+import { SidebarUserMenu } from "./SidebarUserMenu";
+
 
 const menuItems = [
   { href: "/", label: "Inicio", icon: Home },
@@ -31,12 +32,6 @@ const menuItems = [
 function SidebarWrapper({ children }: { children: React.ReactNode }) {
     const { toggleSidebar } = useSidebar();
     const pathname = usePathname();
-    const { user } = useAuth();
-
-    const finalMenuItems = user ? menuItems : [
-      ...menuItems,
-      { href: "/login", label: "Iniciar Sesión", icon: UserCircle },
-    ];
 
     return (
         <Sidebar side="left" collapsible="icon" className="z-40">
@@ -75,7 +70,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            {finalMenuItems.map((item) => (
+            {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild
@@ -93,6 +88,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+            <SidebarUserMenu />
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>

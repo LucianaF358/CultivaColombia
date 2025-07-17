@@ -84,7 +84,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild variant="outline">
+             <Button asChild>
               <Link href="/login">
                 Iniciar Sesión
               </Link>
