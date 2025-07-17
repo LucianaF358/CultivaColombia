@@ -1,15 +1,12 @@
 import { initializeApp, getApps, getApp, type FirebaseApp, type FirebaseOptions } from "firebase/app";
 
-// WARNING: Hardcoding credentials is not recommended for production environments.
-// This is a temporary solution to bypass environment variable loading issues.
-// In a real application, use environment variables.
 const firebaseConfig: FirebaseOptions = {
-  apiKey: "AIzaSyDP41_jT2pX-Am5HdQwz5bVAI",
-  authDomain: "dev-session-santiago.firebaseapp.com",
-  projectId: "dev-session-santiago",
-  storageBucket: "dev-session-santiago.appspot.com",
-  messagingSenderId: "1055536465389",
-  appId: "1:1055536465389:web:c793a388a1b632c0288812"
+  apiKey: "AIzaSyAC4fmFUf4-c-I8IZmcJxhdfHVvXObs_rI",
+  authDomain: "agrocolombia-tfkvb.firebaseapp.com",
+  projectId: "agrocolombia-tfkvb",
+  storageBucket: "agrocolombia-tfkvb.appspot.com",
+  messagingSenderId: "24070420473",
+  appId: "1:24070420473:web:7d4574a90eb0e7e4066f28"
 };
 
 // This function ensures that Firebase is initialized only once.
