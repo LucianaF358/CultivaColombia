@@ -10,6 +10,7 @@ export const firebaseConfig: FirebaseOptions = {
 };
 
 // Initialize Firebase for client-side usage
+// This function ensures that Firebase is initialized only once.
 function createFirebaseApp(config: FirebaseOptions): FirebaseApp {
   if (!getApps().length) {
     return initializeApp(config);

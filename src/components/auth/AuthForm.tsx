@@ -48,7 +48,10 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
+    
+    // The Firebase app is already initialized in config.ts
     const auth = getAuth(app);
+    
     try {
       let userCredential: UserCredential;
 
@@ -93,10 +96,15 @@ export function AuthForm({ mode }: AuthFormProps) {
                     errorMessage = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
                     break;
                 case 'auth/api-key-not-valid':
-                    errorMessage = 'Error de configuración de la aplicación. Contacta al administrador.';
-                    break;
+                case 'auth/invalid-api-key':
+                     errorMessage = 'Error de configuración de la aplicación. La clave de API de Firebase no es válida.';
+                     break;
                 default:
                     errorMessage = `Error: ${error.message}`;
+            }
+        } else if (error.message) {
+            if (error.message.includes('INVALID_LOGIN_CREDENTIALS')) {
+                 errorMessage = 'El correo electrónico o la contraseña son incorrectos.';
             }
         }
         
