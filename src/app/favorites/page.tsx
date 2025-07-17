@@ -4,7 +4,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
-import { getFavoriteCrops } from '@/lib/firebase/firestore';
 import { getCrops } from '@/lib/data';
 import type { Crop } from '@/types';
 import { CropCard } from '@/components/crops/CropCard';
@@ -12,6 +11,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
+import { getFirestore, collection, onSnapshot } from 'firebase/firestore';
+import { app } from '@/lib/firebase/config';
 
 export default function FavoritesPage() {
   const { user, loading: authLoading } = useAuth();
@@ -19,28 +20,50 @@ export default function FavoritesPage() {
   const [favoriteCrops, setFavoriteCrops] = useState<Crop[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Effect to redirect unauthenticated users
   useEffect(() => {
     if (!authLoading && !user) {
       router.push('/login');
     }
   }, [user, authLoading, router]);
 
+  // Effect to listen for real-time favorite changes
   useEffect(() => {
-    async function fetchFavorites() {
-      if (user) {
-        setLoading(true);
-        const favoriteIds = await getFavoriteCrops(user.uid);
+    let unsubscribe = () => {};
+
+    if (user) {
+      setLoading(true);
+      const db = getFirestore(app);
+      const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
+
+      unsubscribe = onSnapshot(favsRef, async (snapshot) => {
+        const favoriteIds = snapshot.docs.map(doc => doc.id);
         const allCrops = await getCrops();
-        const crops = allCrops.filter(crop => favoriteIds.some(fav => fav.id === crop.id));
+        const crops = allCrops.filter(crop => favoriteIds.includes(crop.id));
         setFavoriteCrops(crops);
         setLoading(false);
-      }
-    }
-    fetchFavorites();
-  }, [user]);
+      }, (error) => {
+        console.error("Error fetching favorite crops:", error);
+        setLoading(false);
+      });
 
-  if (authLoading || loading) {
+    } else if (!authLoading) {
+      // If user is not logged in and auth is not loading, clear favorites and stop loading.
+      setFavoriteCrops([]);
+      setLoading(false);
+    }
+
+    // Cleanup subscription on component unmount or when user changes
+    return () => unsubscribe();
+  }, [user, authLoading]);
+
+  if (authLoading || (loading && user)) {
     return <FavoritesSkeleton />;
+  }
+
+  if (!user) {
+    // Render nothing or a redirect message while router pushes
+    return null;
   }
 
   return (
@@ -62,7 +85,7 @@ export default function FavoritesPage() {
           <h2 className="text-2xl font-semibold text-card-foreground">Aún no tienes favoritos</h2>
           <p className="text-muted-foreground mt-2 mb-4 max-w-md">
             Explora los cultivos y haz clic en el icono del corazón (
-            <Heart className="inline-block h-4 w-4 text-accent" />
+            <Heart className="inline-block h-4 w-4 text-accent fill-accent" />
             ) para añadirlos a esta lista.
           </p>
           <Button asChild>
@@ -92,7 +115,7 @@ function FavoritesSkeleton() {
 
 function CardSkeleton() {
     return (
-        <div className="space-y-4 p-4 border rounded-lg">
+        <div className="space-y-4 p-4 border rounded-lg bg-card">
             <Skeleton className="h-48 w-full" />
             <div className="space-y-2">
                 <Skeleton className="h-6 w-3/4" />

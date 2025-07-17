@@ -34,10 +34,14 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
           newFavoriteIds.add(doc.id);
         });
         setFavoriteCropIds(newFavoriteIds);
+      }, (error) => {
+        console.error("Error listening to favorite crops:", error);
       });
 
+      // Cleanup subscription on unmount
       return () => unsubscribe();
     } else {
+      // Clear favorites when user logs out
       setFavoriteCropIds(new Set());
     }
   }, [user]);
