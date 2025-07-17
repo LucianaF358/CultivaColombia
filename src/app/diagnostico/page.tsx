@@ -278,7 +278,10 @@ export default function DiagnosticoPage() {
                      <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
                         <AccordionItem value="item-1">
                           <AccordionTrigger>
-                            <div className="flex items-center gap-2"><Siren className="h-5 w-5"/>Daños Observados</div>
+                            <div className="flex items-center gap-3 text-base">
+                              <div className="p-2 bg-primary/10 rounded-full"><Siren className="h-5 w-5 text-primary"/></div>
+                              <span>Daños Observados</span>
+                            </div>
                           </AccordionTrigger>
                           <AccordionContent>
                             <MarkdownContent content={result.diagnosis.damages} />
@@ -286,7 +289,10 @@ export default function DiagnosticoPage() {
                         </AccordionItem>
                         <AccordionItem value="item-2">
                           <AccordionTrigger>
-                            <div className="flex items-center gap-2"><Sprout className="h-5 w-5"/>Posibles Causas</div>
+                            <div className="flex items-center gap-3 text-base">
+                               <div className="p-2 bg-primary/10 rounded-full"><Sprout className="h-5 w-5 text-primary"/></div>
+                               <span>Posibles Causas</span>
+                            </div>
                           </AccordionTrigger>
                           <AccordionContent>
                              <MarkdownContent content={result.diagnosis.causes} />
@@ -294,7 +300,10 @@ export default function DiagnosticoPage() {
                         </AccordionItem>
                         <AccordionItem value="item-3">
                            <AccordionTrigger>
-                              <div className="flex items-center gap-2"><HeartPulse className="h-5 w-5"/>Cuidados y Recomendaciones</div>
+                              <div className="flex items-center gap-3 text-base">
+                                <div className="p-2 bg-primary/10 rounded-full"><HeartPulse className="h-5 w-5 text-primary"/></div>
+                                <span>Cuidados y Recomendaciones</span>
+                              </div>
                            </AccordionTrigger>
                           <AccordionContent>
                              <MarkdownContent content={result.diagnosis.careNeeded} />
