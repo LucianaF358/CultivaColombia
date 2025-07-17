@@ -1,0 +1,17 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow users to read and write only to their own favorites subcollection.
+    match /usuarios/{userId}/cultivosFavoritos/{cropId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Disallow reading or writing to the main 'usuarios' collection directly.
+    match /usuarios/{userId} {
+      allow read, write: if false;
+    }
+  }
+}
