@@ -6,8 +6,6 @@ import { app } from './config';
 import type { User } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const auth = getAuth(app);
-
 interface AuthContextType {
   user: User | null;
   loading: boolean;
@@ -23,6 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const auth = getAuth(app);
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
       if (firebaseUser) {
         const { uid, email, displayName } = firebaseUser;

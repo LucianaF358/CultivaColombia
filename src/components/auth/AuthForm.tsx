@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -68,16 +67,17 @@ export function AuthForm({ mode }: AuthFormProps) {
             description: "Has iniciado sesión correctamente.",
         });
         router.push('/');
+        router.refresh();
       } else {
         throw new Error(sessionResult.message || 'Error al crear la sesión');
       }
 
     } catch (error: any) {
         let errorMessage = 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.';
-        const errorCode = error.code;
-
-        if (errorCode) {
-            switch (errorCode) {
+        
+        // Check for common Firebase auth errors
+        if (error.code) {
+            switch (error.code) {
                 case 'auth/user-not-found':
                 case 'auth/wrong-password':
                 case 'auth/invalid-credential':
@@ -92,8 +92,11 @@ export function AuthForm({ mode }: AuthFormProps) {
                 case 'auth/weak-password':
                     errorMessage = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
                     break;
+                case 'auth/api-key-not-valid':
+                    errorMessage = 'Error de configuración de la aplicación. Contacta al administrador.';
+                    break;
                 default:
-                    errorMessage = `Error de autenticación: ${error.message}`;
+                    errorMessage = `Error: ${error.message}`;
             }
         }
         
