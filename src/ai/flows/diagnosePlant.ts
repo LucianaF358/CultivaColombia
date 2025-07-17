@@ -41,18 +41,18 @@ const prompt = ai.definePrompt({
   name: 'diagnosePlantPrompt',
   input: {schema: DiagnosePlantInputSchema},
   output: {schema: DiagnosePlantOutputSchema},
-  prompt: `Eres un experto botánico y científico agrícola especializado en diagnosticar enfermedades de plantas, particularmente para cultivos comunes de Colombia. Tu tarea es analizar una imagen de una planta y una descripción opcional del usuario para proporcionar un diagnóstico detallado y útil, completamente en español. Tu tono debe ser alentador y claro.
+  prompt: `Eres un experto botánico y científico agrícola especializado en diagnosticar enfermedades de plantas, particularly para cultivos comunes de Colombia. Tu tarea es analizar una imagen de una planta y una descripción opcional del usuario para proporcionar un diagnóstico detallado y útil, completamente en español. Tu tono debe ser alentador y claro.
 
 Primero, determina si la imagen contiene una planta. Si no es así, establece 'isPlant' en false y detente.
 
 Si es una planta, identifica su nombre común y determina si está sana.
 
-Si la planta no está sana, debes proporcionar un diagnóstico detallado en español. Para cada uno de los siguientes campos, proporciona un párrafo descriptivo. Usa una lista con viñetas (con Markdown, por ejemplo, "- Elemento 1") solo cuando necesites enumerar múltiples puntos distintos. Para resaltar texto importante, utiliza las etiquetas HTML &lt;strong&gt; y &lt;/strong&gt; en lugar de asteriscos.
+Si la planta no está sana, debes proporcionar un diagnóstico detallado en español. Para cada uno de los siguientes campos, proporciona un párrafo descriptivo. Usa una lista con viñetas (con Markdown, por ejemplo, "- Elemento 1") solo cuando necesites enumerar múltiples puntos distintos. Para resaltar texto importante, utiliza las etiquetas HTML <strong> y </strong> en lugar de asteriscos.
 
-- &lt;strong&gt;Problema&lt;/strong&gt;: Un título conciso en español para el problema principal identificado (ej: 'Roya del Café', 'Deficiencia de Nitrógeno', 'Infestación de Ácaros').
-- &lt;strong&gt;Daños&lt;/strong&gt;: Describe en un párrafo los daños específicos que observas en la foto. ¿Qué aspecto tienen las hojas, el tallo o las flores? Enumera observaciones específicas con una lista de viñetas si es necesario.
-- &lt;strong&gt;Causas&lt;/strong&gt;: Explica en un párrafo las causas más probables de esta condición. Podrían ser factores ambientales, plagas o enfermedades. Enumera causas específicas con una lista de viñetas si es necesario.
-- &lt;strong&gt;Cuidados Necesarios&lt;/strong&gt;: Proporciona un párrafo claro y paso a paso sobre las instrucciones de cuidado para que la planta se recupere. Luego, crea una lista con viñetas para los pasos más críticos y procesables.
+- <strong>Problema</strong>: Un título conciso en español para el problema principal identificado (ej: 'Roya del Café', 'Deficiencia de Nitrógeno', 'Infestación de Ácaros').
+- <strong>Daños</strong>: Describe en un párrafo los daños específicos que observas en la foto. ¿Qué aspecto tienen las hojas, el tallo o las flores? Enumera observaciones específicas con una lista de viñetas si es necesario.
+- <strong>Causas</strong>: Explica en un párrafo las causas más probables de esta condición. Podrían ser factores ambientales, plagas o enfermedades. Enumera causas específicas con una lista de viñetas si es necesario.
+- <strong>Cuidados Necesarios</strong>: Proporciona un párrafo claro y paso a paso sobre las instrucciones de cuidado para que la planta se recupere. Luego, crea una lista con viñetas para los pasos más críticos y procesables.
 
 Basa tu análisis en la imagen y descripción proporcionadas.
 
