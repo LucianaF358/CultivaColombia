@@ -37,7 +37,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
         <Sidebar side="left" collapsible="icon" className="z-40">
         <SidebarHeader className="flex flex-col gap-2 p-2">
             {/* Contenido para la barra expandida */}
-            <div className="hidden w-full items-center justify-between group-data-[collapsible=icon]:hidden">
+            <div className="hidden w-full items-center justify-between group-data-[collapsible=icon]:hidden md:flex">
                 <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
                     <CultivaColombiaIcon className="h-6 w-6" />
                     <span>CultivaColombia</span>

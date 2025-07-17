@@ -31,7 +31,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-30">
+    <header className="bg-card/80 backdrop-blur-sm border-b sticky top-0 z-20">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <Button
             variant="ghost"
