@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, type DragEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -13,6 +13,7 @@ import { diagnosePlant, type DiagnosePlantOutput } from '@/ai/flows/diagnosePlan
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 function DiagnosisResultSkeleton() {
   return (
@@ -40,19 +41,54 @@ export default function DiagnosticoPage() {
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<DiagnosePlantOutput | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  const handleFile = (file: File) => {
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+            setResult(null); // Reset result when a new image is uploaded
+        };
+        reader.readAsDataURL(file);
+    } else {
+        toast({
+            title: "Archivo no válido",
+            description: "Por favor, sube un archivo de imagen.",
+            variant: 'destructive'
+        });
+    }
+  }
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-        setResult(null); // Reset result when a new image is uploaded
-      };
-      reader.readAsDataURL(file);
+      handleFile(file);
     }
+  };
+
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(false);
+    const file = event.dataTransfer.files?.[0];
+    if (file) {
+      handleFile(file);
+    }
+  };
+
+  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(true);
+  };
+  
+  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDragging(false);
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -111,8 +147,15 @@ export default function DiagnosticoPage() {
               <div className="space-y-2">
                 <Label htmlFor="plant-image">Fotografía de la planta</Label>
                 <div 
-                  className="relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary transition-colors"
+                  className={cn(
+                    "relative border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:border-primary transition-colors",
+                    isDragging && "border-primary bg-primary/10"
+                  )}
                   onClick={() => fileInputRef.current?.click()}
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDragEnter={handleDragOver}
                 >
                   <Input 
                     id="plant-image" 
@@ -139,9 +182,9 @@ export default function DiagnosticoPage() {
                       </Button>
                     </>
                   ) : (
-                    <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                    <div className="flex flex-col items-center gap-2 text-muted-foreground pointer-events-none">
                       <Upload className="h-8 w-8" />
-                      <span>Haz clic para subir una imagen</span>
+                      <span>Haz clic o arrastra una imagen aquí</span>
                     </div>
                   )}
                 </div>
