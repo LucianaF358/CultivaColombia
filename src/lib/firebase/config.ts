@@ -1,12 +1,15 @@
 import { initializeApp, getApps, getApp, type FirebaseApp, type FirebaseOptions } from "firebase/app";
 
+// WARNING: Hardcoding credentials is not recommended for production environments.
+// This is a temporary solution to bypass environment variable loading issues.
+// In a real application, use environment variables.
 const firebaseConfig: FirebaseOptions = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyDP41_jT2pX...Am5HdQwz5bVAI",
+  authDomain: "dev-session-santiago.firebaseapp.com",
+  projectId: "dev-session-santiago",
+  storageBucket: "dev-session-santiago.appspot.com",
+  messagingSenderId: "1055536465389",
+  appId: "1:1055536465389:web:c793a388a1b632c0288812"
 };
 
 // This function ensures that Firebase is initialized only once.
@@ -17,8 +20,8 @@ function createFirebaseApp(config: FirebaseOptions): FirebaseApp {
 
   // Validate the config
   for (const key in config) {
-      if (config[key as keyof FirebaseOptions] === undefined) {
-          throw new Error(`Firebase configuration error: Missing value for ${key}. Please check your .env file.`);
+      if (!config[key as keyof FirebaseOptions]) {
+          throw new Error(`Firebase configuration error: Missing value for ${key}. Please check your configuration.`);
       }
   }
 
