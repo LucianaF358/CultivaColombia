@@ -55,18 +55,23 @@ export function SidebarUserMenu() {
   return (
     <Accordion type="single" collapsible className="w-full" defaultValue={isUserMenuOpen ? 'user-menu' : undefined}>
       <AccordionItem value="user-menu" className="border-none">
-          <AccordionTrigger asChild>
-              <SidebarMenuButton
-                className="w-full group-data-[collapsible=icon]:justify-center"
-                tooltip={{
-                    children: "Cuenta",
-                    className: "bg-primary text-primary-foreground",
-                }}
-              >
-                    <UserCircle />
-                    <span>Cuenta</span>
-              </SidebarMenuButton>
-          </AccordionTrigger>
+        <AccordionTrigger
+          className="w-full p-0 hover:no-underline [&[data-state=open]>svg:last-child]:-rotate-180"
+          asChild
+        >
+          <div className="w-full">
+            <SidebarMenuButton
+              className="w-full group-data-[collapsible=icon]:justify-center"
+              tooltip={{
+                  children: "Cuenta",
+                  className: "bg-primary text-primary-foreground",
+              }}
+            >
+              <UserCircle />
+              <span>Cuenta</span>
+            </SidebarMenuButton>
+          </div>
+        </AccordionTrigger>
         <AccordionContent className="pb-0 group-data-[collapsible=icon]:hidden">
           <div className="pl-8 pr-2 space-y-1">
              {user ? (
