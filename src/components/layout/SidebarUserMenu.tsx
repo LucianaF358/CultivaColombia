@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { useAuth } from '@/lib/firebase/auth';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { logout } from '@/lib/actions';
 import {
   SidebarFooter,
