@@ -8,6 +8,146 @@ import { Video, FileText, Wrench, BookOpen, ExternalLink, Download } from 'lucid
 
 const videos = [
   {
+    title: "¿Qué es la Fotosíntesis? Explicación Sencilla",
+    description: "Aprende cómo las plantas convierten la luz solar en su alimento. El proceso fundamental para la vida en la Tierra.",
+    videoId: "watch?v=vBGGV6p_mK4",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "photosynthesis diagram"
+  },
+  {
+    title: "Las Partes de una Planta y sus Funciones",
+    description: "Un recorrido completo por la raíz, tallo, hojas, flores y frutos. Entiende para qué sirve cada parte.",
+    videoId: "watch?v=wB32o_ifQ3M",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant parts"
+  },
+  {
+    title: "El Ciclo de Vida de una Planta: de Semilla a Semilla",
+    description: "Observa el increíble viaje de una planta desde la germinación hasta que produce sus propias semillas.",
+    videoId: "watch?v=FJy3eH-tD3s",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant lifecycle"
+  },
+  {
+    title: "Polinización: El Secreto de las Flores y Frutos",
+    description: "Descubre cómo viaja el polen y por qué es crucial para que las plantas produzcan frutos y semillas. Conoce a los polinizadores.",
+    videoId: "watch?v=yl3e2A2TdaA",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "bee pollination"
+  },
+  {
+    title: "La Respiración en las Plantas: ¿Cómo Respiran?",
+    description: "Las plantas también respiran. Aprende sobre el intercambio de gases y cómo obtienen energía durante la noche.",
+    videoId: "watch?v=hB-p7331v4w",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant stomata"
+  },
+  {
+    title: "Cómo Germinar una Semilla: Paso a Paso",
+    description: "Guía práctica para entender el proceso de germinación y cómo darle a tus semillas el mejor comienzo posible.",
+    videoId: "watch?v=J8t2dZc3g9s",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "seed germination"
+  },
+  {
+    title: "¿Cómo beben agua las plantas? El Proceso de Transpiración",
+    description: "Explora el fascinante viaje del agua desde las raíces hasta las hojas y cómo las plantas controlan su hidratación.",
+    videoId: "watch?v=CxJ4gT4L-c0",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant transpiration"
+  },
+  {
+    title: "Nutrientes Esenciales para las Plantas (NPK)",
+    description: "Entiende qué son el Nitrógeno, Fósforo y Potasio (NPK) y por qué son los macronutrientes más importantes para tus cultivos.",
+    videoId: "watch?v=6bC_Xhsg1-o",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "soil nutrients"
+  },
+  {
+    title: "Anatomía de la Hoja: La Fábrica de la Planta",
+    description: "Un vistazo más de cerca a las partes de una hoja y cómo están diseñadas para maximizar la fotosíntesis.",
+    videoId: "watch?v=b2DHHW4v0MI",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "leaf anatomy"
+  },
+  {
+    title: "Tipos de Raíces y su Importancia",
+    description: "No todas las raíces son iguales. Aprende sobre raíces pivotantes, fibrosas y adventicias y su función en la planta.",
+    videoId: "watch?v=zU4hM3T-jG4",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant roots"
+  },
+  {
+    title: "El Tallo: Soporte y Transporte de la Planta",
+    description: "Descubre las funciones del tallo, no solo como estructura, sino como el sistema circulatorio que transporta agua y nutrientes.",
+    videoId: "watch?v=aNjzYyA9s6I",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant stem"
+  },
+  {
+    title: "Del Flor al Fruto: ¿Cómo se Forma un Fruto?",
+    description: "Una vez que una flor es polinizada, comienza una increíble transformación. Aprende cómo se desarrolla un fruto.",
+    videoId: "watch?v=iF2plu4Gq3Y",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "flower fruit"
+  },
+  {
+    title: "Reproducción Asexual en Plantas: Esquejes y Más",
+    description: "Las plantas pueden reproducirse sin semillas. Conoce los métodos como esquejes, estolones y bulbos.",
+    videoId: "watch?v=g6fDTt9aD0g",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant propagation"
+  },
+  {
+    title: "La Vida en el Suelo: Un Universo Bajo Nuestros Pies",
+    description: "El suelo está vivo. Descubre la importancia de los microorganismos, hongos y la materia orgánica para la salud de las plantas.",
+    videoId: "watch?v=f9PAh5Fpqik",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "healthy soil"
+  },
+  {
+    title: "Las Hormonas Vegetales: Fitohormonas",
+    description: "Las plantas tienen hormonas que regulan su crecimiento (auxinas, giberelinas, etc.). Entiende cómo funcionan.",
+    videoId: "watch?v=S-LAvmMENwE",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant hormones"
+  },
+  {
+    title: "¿Qué es el pH del suelo y por qué es importante?",
+    description: "Aprende qué es el pH y cómo afecta la capacidad de las plantas para absorber nutrientes del suelo. Guía para medirlo y corregirlo.",
+    videoId: "watch?v=oW27_aL5y0s",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "soil ph"
+  },
+  {
+    title: "Micorrizas: La Alianza Secreta entre Hongos y Raíces",
+    description: "Descubre la increíble simbiosis entre los hongos micorrízicos y las plantas, una red que mejora la absorción de nutrientes.",
+    videoId: "watch?v=9xPhs3sCgqE",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "mycorrhizal network"
+  },
+  {
+    title: "Tipos de Flores: Anatomía y Diversidad",
+    description: "Explora la diversidad de las flores, sus partes (pétalos, sépalos, pistilo, estambres) y su función en la reproducción.",
+    videoId: "watch?v=2-z2A7LgSAs",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "flower anatomy"
+  },
+  {
+    title: "Cómo las Plantas se Defienden de las Plagas",
+    description: "Las plantas no son indefensas. Conoce sus asombrosos mecanismos de defensa físicos y químicos contra insectos y enfermedades.",
+    videoId: "watch?v=4sYy_6mlB9E",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "plant defense"
+  },
+  {
+    title: "La Dormancia: El Sueño Invernal de las Plantas",
+    description: "Aprende sobre el estado de dormancia, un período de descanso vital para muchas plantas y semillas para sobrevivir a condiciones adversas.",
+    videoId: "watch?v=2Oa_11-yM9s",
+    thumbnailUrl: "https://placehold.co/600x400.png",
+    dataAiHint: "winter seeds"
+  },
+  {
     title: "Agricultura Sostenible en Colombia",
     description: "Un documental que explora prácticas agrícolas respetuosas con el medio ambiente en diferentes regiones del país.",
     videoId: "watch?v=R8eK5tO_18s",
