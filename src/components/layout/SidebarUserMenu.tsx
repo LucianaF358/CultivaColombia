@@ -95,18 +95,26 @@ export function SidebarUserMenu() {
                     </SidebarMenuItem>
                  ))}
                   <SidebarMenuItem>
-                      <SidebarMenuButton
-                            onClick={handleLogout}
-                            disabled={isPending}
-                            className="group-data-[collapsible=icon]:justify-center"
-                            tooltip={{
-                                children: "Cerrar Sesión",
-                                className: "bg-primary text-primary-foreground",
-                            }}
-                        >
-                            {isPending ? <Loader2 className="animate-spin" /> : <LogOut />}
-                            <span>Cerrar Sesión</span>
-                      </SidebarMenuButton>
+                      <Tooltip>
+                          <TooltipTrigger asChild>
+                            <SidebarMenuButton
+                                onClick={handleLogout}
+                                disabled={isPending}
+                                className="group-data-[collapsible=icon]:justify-center w-full"
+                            >
+                                {isPending ? <Loader2 className="animate-spin" /> : <LogOut />}
+                                <span>Cerrar Sesión</span>
+                            </SidebarMenuButton>
+                          </TooltipTrigger>
+                          <TooltipContent
+                                side="right"
+                                align="center"
+                                hidden={state !== "collapsed" || isMobile}
+                                className="bg-primary text-primary-foreground"
+                          >
+                            Cerrar Sesión
+                          </TooltipContent>
+                      </Tooltip>
                   </SidebarMenuItem>
                </>
              ) : (
