@@ -1,4 +1,3 @@
-// src/lib/firebase/clientConfig.ts
 'use client';
 import type { FirebaseOptions } from 'firebase/app';
 
