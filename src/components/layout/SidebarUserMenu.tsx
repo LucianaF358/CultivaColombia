@@ -12,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
-import { UserCircle, Heart, LogIn, LogOut, Loader2 } from 'lucide-react';
+import { UserCircle, Heart, LogIn, LogOut, Loader2, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 
 export function SidebarUserMenu() {
@@ -120,7 +120,7 @@ export function SidebarUserMenu() {
                             }}
                         >
                             <Link href="/signup">
-                                <UserCircle />
+                                <UserPlus />
                                 <span>Registrarse</span>
                             </Link>
                         </SidebarMenuButton>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from 'react-hook-form';
@@ -74,6 +75,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             switch (error.code) {
                 case 'auth/user-not-found':
                 case 'auth/wrong-password':
+                case 'auth/invalid-credential':
                     errorMessage = 'Correo o contraseña incorrectos.';
                     break;
                 case 'auth/email-already-in-use':
