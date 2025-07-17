@@ -35,27 +35,20 @@ function DiagnosisResultSkeleton() {
   );
 }
 
-// Helper to render text with bullet points
+// Helper to render text with bullet points and bold tags
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
 
-  // Simple regex to convert markdown-style lists to HTML lists
-  const listItems = content.match(/^- .+/gm);
-  if (listItems) {
-    const textBefore = content.split(/^- .+/gm)[0];
-    return (
-      <div className="text-muted-foreground space-y-2">
-        {textBefore && <p>{textBefore.trim()}</p>}
-        <ul className="list-disc pl-5 space-y-1">
-          {listItems.map((item, index) => (
-            <li key={index}>{item.substring(2)}</li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
+  // Process bullet points
+  const htmlContent = content.replace(/^- .+/gm, (match) => `<li>${match.substring(2)}</li>`)
+                           .replace(/(<li>.*<\/li>)+/g, (match) => `<ul>${match}</ul>`);
 
-  return <p className="text-muted-foreground">{content}</p>;
+  return (
+    <div 
+      className="text-muted-foreground space-y-2"
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
+  );
 }
 
 
@@ -153,7 +146,9 @@ export default function DiagnosticoPage() {
     setImagePreview(null);
     setDescription('');
     setResult(null);
-    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (

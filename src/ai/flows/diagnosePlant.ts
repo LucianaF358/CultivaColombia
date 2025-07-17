@@ -25,10 +25,10 @@ const DiagnosePlantOutputSchema = z.object({
   plantName: z.string().describe('The common name of the identified plant.').optional(),
   isHealthy: z.boolean().describe('Whether or not the plant is healthy.').optional(),
   diagnosis: z.object({
-      problem: z.string().describe("A concise title for the main problem identified (e.g., 'Mildew Infestation', 'Nutrient Deficiency').").optional(),
-      causes: z.string().describe("A descriptive paragraph explaining the likely causes for the plant's condition. Use a bulleted list (using Markdown with '-') only if there are multiple distinct causes to enumerate.").optional(),
-      damages: z.string().describe("A descriptive paragraph explaining the observed damages on the plant. Use a bulleted list (using Markdown with '-') only if there are multiple distinct damages to enumerate.").optional(),
-      careNeeded: z.string().describe("A descriptive paragraph explaining the actionable steps and care instructions to help the plant recover. Use a bulleted list (using Markdown with '-') to clearly outline the steps.").optional(),
+      problem: z.string().describe("Un título conciso en español para el problema principal identificado (ej: 'Roya del Café', 'Deficiencia de Nitrógeno').").optional(),
+      causes: z.string().describe("Un párrafo descriptivo en español explicando las causas probables. Usa una lista con viñetas (con '-') solo si hay múltiples causas.").optional(),
+      damages: z.string().describe("Un párrafo descriptivo en español explicando los daños observados. Usa una lista con viñetas (con '-') solo si hay múltiples daños.").optional(),
+      careNeeded: z.string().describe("Un párrafo descriptivo en español explicando los cuidados necesarios. Usa una lista con viñetas (con '-') para enumerar los pasos.").optional(),
   }).optional(),
 });
 export type DiagnosePlantOutput = z.infer<typeof DiagnosePlantOutputSchema>;
@@ -41,23 +41,23 @@ const prompt = ai.definePrompt({
   name: 'diagnosePlantPrompt',
   input: {schema: DiagnosePlantInputSchema},
   output: {schema: DiagnosePlantOutputSchema},
-  prompt: `You are an expert botanist and agricultural scientist specializing in diagnosing plant illnesses, particularly for common Colombian crops. Your task is to analyze an image of a plant and an optional user description to provide a detailed and helpful diagnosis. Your tone should be encouraging and clear.
+  prompt: `Eres un experto botánico y científico agrícola especializado en diagnosticar enfermedades de plantas, particularmente para cultivos comunes de Colombia. Tu tarea es analizar una imagen de una planta y una descripción opcional del usuario para proporcionar un diagnóstico detallado y útil, completamente en español. Tu tono debe ser alentador y claro.
 
-First, determine if the image contains a plant. If it does not, set 'isPlant' to false and stop.
+Primero, determina si la imagen contiene una planta. Si no es así, establece 'isPlant' en false y detente.
 
-If it is a plant, identify its common name and determine if it is healthy.
+Si es una planta, identifica su nombre común y determina si está sana.
 
-If the plant is not healthy, you must provide a detailed diagnosis. For each of the following fields, provide a descriptive paragraph. Use a bulleted list (with Markdown hyphens, e.g., "- Item 1") only when you need to enumerate multiple distinct points.
+Si la planta no está sana, debes proporcionar un diagnóstico detallado en español. Para cada uno de los siguientes campos, proporciona un párrafo descriptivo. Usa una lista con viñetas (con Markdown, por ejemplo, "- Elemento 1") solo cuando necesites enumerar múltiples puntos distintos. Para resaltar texto importante, utiliza las etiquetas HTML <strong> y </strong> en lugar de asteriscos.
 
-- **Problem**: A concise title for the main problem identified (e.g., 'Roya del Café', 'Deficiencia de Nitrógeno', 'Infestación de Ácaros').
-- **Damages**: Describe in a paragraph the specific damages you observe in the photo. What do the leaves, stem, or flowers look like? Enumerate specific observations with a bulleted list if necessary.
-- **Causes**: Explain in a paragraph the most likely causes for this condition. This could include environmental factors, pests, or diseases. Enumerate specific causes with a bulleted list if necessary.
-- **Care Needed**: Provide a clear, step-by-step paragraph on care instructions for the plant to recover. Then, create a bulleted list with the most critical, actionable steps.
+- <strong>Problema</strong>: Un título conciso en español para el problema principal identificado (ej: 'Roya del Café', 'Deficiencia de Nitrógeno', 'Infestación de Ácaros').
+- <strong>Daños</strong>: Describe en un párrafo los daños específicos que observas en la foto. ¿Qué aspecto tienen las hojas, el tallo o las flores? Enumera observaciones específicas con una lista de viñetas si es necesario.
+- <strong>Causas</strong>: Explica en un párrafo las causas más probables de esta condición. Podrían ser factores ambientales, plagas o enfermedades. Enumera causas específicas con una lista de viñetas si es necesario.
+- <strong>Cuidados Necesarios</strong>: Proporciona un párrafo claro y paso a paso sobre las instrucciones de cuidado para que la planta se recupere. Luego, crea una lista con viñetas para los pasos más críticos y procesables.
 
-Base your analysis on the provided image and description.
+Basa tu análisis en la imagen y descripción proporcionadas.
 
-User Description: {{{description}}}
-Plant Photo: {{media url=photoDataUri}}`,
+Descripción del usuario: {{{description}}}
+Foto de la planta: {{media url=photoDataUri}}`,
 });
 
 const diagnosePlantFlow = ai.defineFlow(
