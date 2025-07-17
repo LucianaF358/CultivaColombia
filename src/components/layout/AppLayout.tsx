@@ -19,19 +19,24 @@ import { Home, Leaf, Map, Heart, Book, UserCircle } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
 import { Button } from "../ui/button";
+import { useAuth } from "@/lib/firebase/auth";
 
 const menuItems = [
   { href: "/", label: "Inicio", icon: Home },
-  { href: "/favorites", label: "Mis Cultivos", icon: Heart },
   { href: "/diagnostico", label: "Detección con IA", icon: Leaf },
   { href: "/mapa", label: "Mapa Interactivo", icon: Map },
   { href: "/recursos", label: "Recursos", icon: Book },
-  { href: "/profile", label: "Mi Perfil", icon: UserCircle },
 ];
 
 function SidebarWrapper({ children }: { children: React.ReactNode }) {
     const { toggleSidebar } = useSidebar();
     const pathname = usePathname();
+    const { user } = useAuth();
+
+    const finalMenuItems = user ? menuItems : [
+      ...menuItems,
+      { href: "/login", label: "Iniciar Sesión", icon: UserCircle },
+    ];
 
     return (
         <Sidebar side="left" collapsible="icon" className="z-40">
@@ -70,7 +75,7 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            {menuItems.map((item) => (
+            {finalMenuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild

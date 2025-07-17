@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { logout } from '@/lib/actions';
-import { LogOut, UserCircle } from 'lucide-react';
+import { LogOut, UserCircle, Heart } from 'lucide-react';
 import { useTransition } from 'react';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { useSidebar } from '../ui/sidebar';
@@ -68,6 +68,12 @@ export function Header() {
                     <Link href="/profile">
                       <UserCircle className="mr-2 h-4 w-4" />
                       <span>Mi Perfil</span>
+                    </Link>
+                  </DropdownMenuItem>
+                   <DropdownMenuItem asChild>
+                    <Link href="/favorites">
+                      <Heart className="mr-2 h-4 w-4" />
+                      <span>Mis Cultivos</span>
                     </Link>
                   </DropdownMenuItem>
                 <DropdownMenuSeparator />
