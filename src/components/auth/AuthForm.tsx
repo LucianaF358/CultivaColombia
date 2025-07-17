@@ -73,24 +73,30 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
 
     } catch (error: any) {
-        let errorMessage = 'Ocurrió un error. Por favor, inténtalo de nuevo.';
-        if (error.code) {
-            switch (error.code) {
+        let errorMessage = 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.';
+        const errorCode = error.code;
+
+        if (errorCode) {
+            switch (errorCode) {
                 case 'auth/user-not-found':
                 case 'auth/wrong-password':
                 case 'auth/invalid-credential':
-                    errorMessage = 'Correo o contraseña incorrectos.';
+                    errorMessage = 'El correo electrónico o la contraseña son incorrectos.';
                     break;
                 case 'auth/email-already-in-use':
-                    errorMessage = 'Este correo electrónico ya está en uso.';
+                    errorMessage = 'Este correo electrónico ya está registrado. Por favor, inicia sesión.';
                     break;
                 case 'auth/invalid-email':
-                    errorMessage = 'El correo electrónico no es válido.';
+                    errorMessage = 'El formato del correo electrónico no es válido.';
+                    break;
+                case 'auth/weak-password':
+                    errorMessage = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
                     break;
                 default:
-                    errorMessage = 'Error de autenticación. Por favor, verifica tus datos.';
+                    errorMessage = `Error de autenticación: ${error.message}`;
             }
         }
+        
         toast({
             title: 'Error de autenticación',
             description: errorMessage,
