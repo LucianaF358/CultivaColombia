@@ -1,23 +1,24 @@
 
 import { initializeApp, getApps, getApp, type FirebaseApp, type FirebaseOptions } from "firebase/app";
 
+// Hardcoding credentials to ensure they are always available and bypass environment variable loading issues.
 const firebaseConfig: FirebaseOptions = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  apiKey: "AIzaSyAC4fmFUf4-c-I8IZmcJxhdfHVvXObs_rI",
+  authDomain: "agrocolombia-tfkvb.firebaseapp.com",
+  projectId: "agrocolombia-tfkvb",
+  storageBucket: "agrocolombia-tfkvb.appspot.com",
+  messagingSenderId: "24070420473",
+  appId: "1:24070420473:web:7d4574a90eb0e7e4066f28"
 };
 
 // This function ensures that Firebase is initialized only once.
 let app: FirebaseApp;
 
 if (getApps().length === 0) {
-  // Validate that the values are not empty before initializing.
+  // Validate that the hardcoded values are not empty before initializing.
   for (const key in firebaseConfig) {
       if (!(firebaseConfig as any)[key]) {
-          console.error(`Firebase configuration error: Missing value for NEXT_PUBLIC_FIREBASE_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}. Please check your .env file.`);
+          console.error(`Firebase configuration error: Missing value for ${key}.`);
       }
   }
   app = initializeApp(firebaseConfig);
