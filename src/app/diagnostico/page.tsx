@@ -7,13 +7,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, X, Bot, Sprout, Siren, HeartPulse, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { Upload, X, Bot, Sprout, Siren, HeartPulse, ShieldCheck, AlertTriangle, ClipboardList } from 'lucide-react';
 import Image from 'next/image';
 import { diagnosePlant, type DiagnosePlantOutput } from '@/ai/flows/diagnosePlant';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/lib/firebase/auth';
+import { saveDiagnosisForTracking } from '@/lib/firebase/seguimiento';
+import { useRouter } from 'next/navigation';
 
 function DiagnosisResultSkeleton() {
   return (
@@ -63,10 +66,14 @@ export default function DiagnosticoPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [description, setDescription] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [result, setResult] = useState<DiagnosePlantOutput | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const router = useRouter();
+
 
   const handleFile = (file: File) => {
     if (file && file.type.startsWith('image/')) {
@@ -133,10 +140,6 @@ export default function DiagnosticoPage() {
         description,
       });
       setResult(diagnosisResult);
-      toast({
-        title: '¡Diagnóstico listo!',
-        description: 'Revisa los resultados generados por la IA.',
-      });
     } catch (error) {
       console.error("Error diagnosing plant:", error);
       toast({
@@ -146,6 +149,43 @@ export default function DiagnosticoPage() {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleSaveDiagnosis = async () => {
+    if (!user || !result || !imagePreview) {
+      toast({
+        title: "No se puede guardar",
+        description: "Debes iniciar sesión y tener un diagnóstico válido para guardar.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await saveDiagnosisForTracking(user.uid, {
+        ...result,
+        photoDataUri: imagePreview,
+        description,
+      });
+      toast({
+        title: "Diagnóstico Guardado",
+        description: "Puedes ver tus plantas guardadas en la sección de seguimiento.",
+        action: {
+          altText: "Ir a Seguimiento",
+          onClick: () => router.push('/seguimiento'),
+        }
+      });
+    } catch (error) {
+       console.error("Error saving diagnosis:", error);
+       toast({
+        title: 'Error al guardar',
+        description: 'No se pudo guardar el diagnóstico. Por favor, intenta de nuevo.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -275,6 +315,15 @@ export default function DiagnosticoPage() {
                       </p>
                     </div>
                   </div>
+                  
+                  {user && (
+                    <div className="pt-4 border-t">
+                      <Button onClick={handleSaveDiagnosis} disabled={isSaving} className="w-full">
+                        <ClipboardList className="mr-2 h-4 w-4" />
+                        {isSaving ? "Guardando..." : "Guardar para Seguimiento"}
+                      </Button>
+                    </div>
+                  )}
 
                   {!result.isHealthy && result.diagnosis && (
                      <Accordion type="single" collapsible defaultValue="item-1" className="w-full">

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
-import { Home, Leaf, Map, Book } from "lucide-react";
+import { Home, Leaf, Map, Book, ClipboardList } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
 import { Button } from "../ui/button";
@@ -28,6 +28,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip
 const menuItems = [
   { href: "/", label: "Inicio", icon: Home },
   { href: "/diagnostico", label: "Detección con IA", icon: Leaf },
+  { href: "/seguimiento", label: "Seguimiento", icon: ClipboardList },
   { href: "/mapa", label: "Mapa Interactivo", icon: Map },
   { href: "/recursos", label: "Recursos", icon: Book },
 ];
