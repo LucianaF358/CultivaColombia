@@ -40,6 +40,7 @@ export async function diagnosePlant(input: DiagnosePlantInput): Promise<Diagnose
 
 const prompt = ai.definePrompt({
   name: 'diagnosePlantPrompt',
+  model: 'googleai/gemini-1.5-flash',
   input: {schema: DiagnosePlantInputSchema},
   output: {schema: DiagnosePlantOutputSchema},
   prompt: `Eres un experto botánico y científico agrícola especializado en diagnosticar enfermedades de plantas, particularly para cultivos comunes de Colombia. Tu tarea es analizar una imagen de una planta y una descripción opcional del usuario para proporcionar un diagnóstico detallado y útil, completamente en español. Tu tono debe ser alentador y claro.
