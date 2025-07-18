@@ -11,11 +11,6 @@ const firebaseConfig: FirebaseOptions = {
   appId: "1:24070420473:web:7d4574a90eb0e7e4066f28"
 };
 
-// This is a placeholder for your actual Gemini API Key.
-// IMPORTANT: Replace "YOUR_GEMINI_API_KEY" with your real key from Google AI Studio.
-export const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
-
-
 // This function ensures that Firebase is initialized only once.
 let app: FirebaseApp;
 
