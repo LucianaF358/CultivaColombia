@@ -300,18 +300,103 @@ const documents = [
   {
     title: "Calendario de Siembra para Colombia",
     description: "Una guía completa en PDF con las mejores épocas para sembrar diferentes cultivos según la región.",
-    url: "/docs/calendario-siembra.pdf", // Placeholder URL
+    url: "/docs/calendario-siembra.pdf",
   },
   {
     title: "Guía de Agricultura Urbana y en Patios",
     description: "Aprende a montar tu propia huerta en espacios pequeños. Ideal para principiantes.",
-    url: "/docs/guia-agricultura-urbana.pdf", // Placeholder URL
+    url: "/docs/guia-agricultura-urbana.pdf",
   },
-    {
+  {
     title: "Manual de Buenas Prácticas Agrícolas (BPA)",
     description: "Documento del ICA sobre los estándares para garantizar la calidad e inocuidad de los productos.",
     url: "https://www.ica.gov.co/getattachment/1b580a31-6b83-45a7-9306-7945e43e30e7/Publicacion-3.aspx", 
     isExternal: true,
+  },
+  {
+    title: "El Arte de Germinar Semillas",
+    description: "Técnicas y secretos para despertar tus semillas y asegurar un comienzo exitoso para tus plantas.",
+    url: "/docs/guia-germinacion-semillas.pdf",
+  },
+  {
+    title: "Primeros Pasos para tu Huerta",
+    description: "Una guía esencial para planificar, diseñar y preparar el terreno para tu primera huerta casera.",
+    url: "/docs/guia-iniciar-huerta.pdf",
+  },
+  {
+    title: "El ABC del Riego: Cuándo y Cómo Regar",
+    description: "Aprende a identificar las necesidades de agua de tus plantas y las mejores técnicas de riego.",
+    url: "/docs/guia-riego-eficiente.pdf",
+  },
+  {
+    title: "Nutrición Vegetal para Principiantes",
+    description: "Entiende los nutrientes que tus plantas necesitan y cómo proporcionárselos de forma natural.",
+    url: "/docs/guia-nutricion-vegetal.pdf",
+  },
+  {
+    title: "Guía para la Preparación de Compost Casero",
+    description: "Transforma tus desechos orgánicos en oro negro para tus plantas con esta guía paso a paso.",
+    url: "/docs/guia-compostaje-casero.pdf",
+  },
+  {
+    title: "Identificación y Manejo de Plagas Comunes",
+    description: "Aprende a reconocer y combatir las plagas más frecuentes de la huerta con métodos orgánicos.",
+    url: "/docs/guia-manejo-plagas.pdf",
+  },
+  {
+    title: "Plantas que Curan el Suelo: Abonos Verdes",
+    description: "Descubre cómo ciertas plantas pueden mejorar la fertilidad y estructura de tu suelo de forma natural.",
+    url: "/docs/guia-abonos-verdes.pdf",
+  },
+  {
+    title: "Cosecha y Almacenamiento de Hortalizas",
+    description: "Maximiza la frescura y durabilidad de tus cosechas con las técnicas adecuadas de recolección y guardado.",
+    url: "/docs/guia-cosecha-almacenamiento.pdf",
+  },
+  {
+    title: "La Poda: Un Mal Necesario y Beneficioso",
+    description: "Guía ilustrada sobre por qué, cuándo y cómo podar diferentes tipos de plantas para mejorar su salud.",
+    url: "/docs/guia-poda-basica.pdf",
+  },
+  {
+    title: "Mitos y Verdades de la Agricultura",
+    description: "Separamos la ficción de la realidad en el mundo de la jardinería y la agricultura. ¡Te sorprenderás!",
+    url: "/docs/guia-mitos-agricultura.pdf",
+  },
+  {
+    title: "Guía para la Recolección de Semillas",
+    description: "Aprende a guardar las semillas de tus mejores plantas para la próxima temporada y crear tu propio banco.",
+    url: "/docs/guia-recoleccion-semillas.pdf",
+  },
+  {
+    title: "15 Datos Curiosos sobre las Plantas",
+    description: "Una colección de hechos fascinantes sobre el reino vegetal que cambiará tu forma de ver las plantas.",
+    url: "/docs/guia-datos-curiosos-plantas.pdf",
+  },
+  {
+    title: "Salud del Suelo: Más Allá del NPK",
+    description: "Profundiza en la importancia de la materia orgánica, los microorganismos y la estructura del suelo.",
+    url: "/docs/guia-salud-del-suelo.pdf",
+  },
+  {
+    title: "Cómo Atraer Polinizadores a tu Huerta",
+    description: "Descubre qué flores y prácticas puedes implementar para invitar a abejas y mariposas a tu jardín.",
+    url: "/docs/guia-atraer-polinizadores.pdf",
+  },
+  {
+    title: "Agricultura en Macetas: Cultiva en Cualquier Espacio",
+    description: "Guía completa para tener una huerta productiva en balcones, terrazas y patios pequeños.",
+    url: "/docs/guia-agricultura-macetas.pdf",
+  },
+  {
+    title: "Entendiendo el Lenguaje de las Plantas",
+    description: "Aprende a interpretar las señales que te dan tus plantas: hojas amarillas, marchitas o con manchas.",
+    url: "/docs/guia-lenguaje-plantas.pdf",
+  },
+  {
+    title: "Biopreparados: Fertilizantes y Repelentes Caseros",
+    description: "Recetas sencillas para crear tus propios insumos agrícolas a partir de materiales que tienes en casa.",
+    url: "/docs/guia-biopreparados-caseros.pdf",
   },
 ];
 
@@ -425,7 +510,7 @@ export default function RecursosPage() {
                     </div>
                     <div className="flex-shrink-0 mt-4 sm:mt-0">
                          <Button asChild>
-                            <Link href={doc.url} target="_blank" rel="noopener noreferrer">
+                            <Link href={doc.url} target={doc.isExternal ? '_blank' : '_self'} rel={doc.isExternal ? 'noopener noreferrer' : ''}>
                                 {doc.isExternal ? <ExternalLink className="mr-2 h-4 w-4"/> : <Download className="mr-2 h-4 w-4" />}
                                 {doc.isExternal ? 'Visitar' : 'Descargar'}
                             </Link>
