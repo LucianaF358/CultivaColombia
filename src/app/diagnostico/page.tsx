@@ -42,8 +42,7 @@ function DiagnosisResultSkeleton() {
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
 
-  // AI prompt is already generating basic HTML (<strong>, <ul>, <li>)
-  // so we can just render it.
+  // AI prompt is generating basic HTML (<strong>) and markdown lists
   const createMarkup = (text: string) => {
     // Replace Markdown-style lists with HTML lists
     const listRegex = /((?:- .+\n?)+)/gm;
