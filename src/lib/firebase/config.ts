@@ -26,9 +26,6 @@ if (getApps().length === 0) {
           console.error(`Firebase configuration error: Missing value for ${key}.`);
       }
   }
-  if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
-    console.error(`Firebase configuration error: Missing value for GEMINI_API_KEY. Please add it to /src/lib/firebase/config.ts`);
-  }
   app = initializeApp(firebaseConfig);
 } else {
   app = getApp();
