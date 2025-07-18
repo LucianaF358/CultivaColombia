@@ -45,17 +45,24 @@ function MarkdownContent({ content }: { content: string | undefined }) {
   const createMarkup = (text: string) => {
     // Reemplaza los guiones de Markdown por elementos <li> y envuelve los bloques en <ul>
     const listRegex = /((?:^- .+\n?)+)/gm;
-    const processedText = text.replace(listRegex, (match) => {
+    let processedText = text.replace(listRegex, (match) => {
       const items = match.split('\n').filter(item => item.trim() !== '');
       const listItems = items.map(item => `<li>${item.substring(2)}</li>`).join('');
       return `<ul class="list-disc pl-5 space-y-1">${listItems}</ul>`;
     });
+     // Reemplaza los párrafos que no son listas con etiquetas <p> para un espaciado consistente.
+    const paragraphRegex = /^(?!<ul)(.*)$/gm;
+    processedText = processedText.replace(paragraphRegex, (match) => {
+        if (match.trim() === '' || match.startsWith('<ul')) return match;
+        return `<p>${match}</p>`;
+    });
+
     return { __html: processedText };
   };
 
   return (
     <div
-      className="text-muted-foreground space-y-2"
+      className="text-muted-foreground space-y-2 prose-p:my-0"
       dangerouslySetInnerHTML={createMarkup(content)}
     />
   );
