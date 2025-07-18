@@ -42,29 +42,15 @@ function DiagnosisResultSkeleton() {
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
 
-  // AI prompt is generating basic HTML (<strong>) and markdown lists
+  // The AI prompt is instructed to return HTML tags (<strong>, <ul>, <li>),
+  // so we can render it directly. This is safer than complex regex.
   const createMarkup = (text: string) => {
-    // Replace Markdown-style lists with HTML lists
-    const listRegex = /((?:- .+\n?)+)/gm;
-    let processedText = text.replace(listRegex, (match) => {
-        const items = match.split('\n').filter(item => item.trim() !== '');
-        const listItems = items.map(item => `<li>${item.substring(2)}</li>`).join('');
-        return `<ul class="list-disc pl-5 space-y-1">${listItems}</ul>`;
-    });
-    
-    // Wrap non-list paragraphs in <p> tags
-    processedText = processedText.split('\n').map(line => {
-        if (line.trim().startsWith('<ul')) return line;
-        if (line.trim() === '') return '';
-        return `<p>${line}</p>`;
-    }).join('');
-
-    return { __html: processedText };
+    return { __html: text };
   };
 
   return (
     <div
-      className="text-muted-foreground space-y-2 prose-p:my-0"
+      className="text-muted-foreground space-y-2 prose-p:my-0 prose-ul:list-disc prose-ul:pl-5 prose-ul:space-y-1"
       dangerouslySetInnerHTML={createMarkup(content)}
     />
   );
@@ -151,9 +137,13 @@ export default function DiagnosticoPage() {
       setResult(diagnosisResult);
     } catch (error) {
       console.error("Error diagnosing plant:", error);
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'No se pudo analizar la planta. Por favor, intenta de nuevo.';
+      
       toast({
         title: 'Error en el diagnóstico',
-        description: 'No se pudo analizar la planta. Por favor, intenta de nuevo.',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
@@ -344,7 +334,7 @@ export default function DiagnosticoPage() {
                             </div>
                           </AccordionTrigger>
                           <AccordionContent>
-                            <MarkdownContent content={result.diagnosis.damages} />
+                             <MarkdownContent content={result.diagnosis.damages} />
                           </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-2">
