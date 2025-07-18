@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
-import { getFirestore, collection, onSnapshot, Unsubscribe } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
 import { app } from '@/lib/firebase/config';
 
 export default function FavoritesPage() {
@@ -19,6 +19,8 @@ export default function FavoritesPage() {
   const [loadingCrops, setLoadingCrops] = useState(true);
 
   useEffect(() => {
+    if (authLoading) return; // Wait until authentication state is resolved
+
     let unsubscribe: Unsubscribe = () => {};
 
     if (user) {
@@ -28,7 +30,7 @@ export default function FavoritesPage() {
 
       unsubscribe = onSnapshot(favsRef, async (snapshot) => {
         const favoriteIds = snapshot.docs.map(doc => doc.id);
-        const allCrops = await getCrops();
+        const allCrops = await getCrops(); // Fetch all crops to filter from
         const crops = allCrops.filter(crop => favoriteIds.includes(crop.id));
         setFavoriteCrops(crops);
         setLoadingCrops(false);
@@ -37,15 +39,17 @@ export default function FavoritesPage() {
         setLoadingCrops(false);
       });
 
-    } else if (!authLoading) {
+    } else {
+      // If there's no user, clear favorites and stop loading.
       setFavoriteCrops([]);
       setLoadingCrops(false);
     }
 
+    // Cleanup subscription on component unmount
     return () => unsubscribe();
   }, [user, authLoading]);
 
-  if (authLoading || (user && loadingCrops)) {
+  if (authLoading || loadingCrops) {
     return <FavoritesSkeleton />;
   }
 

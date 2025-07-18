@@ -58,7 +58,7 @@ const SidebarProvider = React.forwardRef<
 >(
   (
     {
-      defaultOpen = true,
+      defaultOpen,
       open: openProp,
       onOpenChange: setOpenProp,
       className,
@@ -71,31 +71,40 @@ const SidebarProvider = React.forwardRef<
     const isMobile = useIsMobile()
     const [openMobile, setOpenMobile] = React.useState(false)
 
-    // This is the internal state of the sidebar.
-    // We use openProp and setOpenProp for control from outside the component.
-    const [_open, _setOpen] = React.useState(defaultOpen)
-    const open = openProp ?? _open
-    const setOpen = React.useCallback(
-      (value: boolean | ((value: boolean) => boolean)) => {
-        const openState = typeof value === "function" ? value(open) : value
-        if (setOpenProp) {
-          setOpenProp(openState)
-        } else {
-          _setOpen(openState)
+    // Set initial state from cookie or default
+    const [open, setOpen] = React.useState(() => {
+        if (typeof window !== 'undefined') {
+            const cookie = document.cookie.split('; ').find(row => row.startsWith(`${SIDEBAR_COOKIE_NAME}=`));
+            if (cookie) {
+                return cookie.split('=')[1] === 'true';
+            }
         }
+        return defaultOpen ?? true;
+    });
 
-        // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+    React.useEffect(() => {
+        if (openProp !== undefined) {
+            setOpen(openProp);
+        }
+    }, [openProp]);
+
+    const handleSetOpen = React.useCallback(
+      (value: boolean) => {
+        setOpen(value);
+        if (onOpenChange) {
+          onOpenChange(value);
+        }
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
       },
-      [setOpenProp, open]
-    )
+      [onOpenChange]
+    );
 
     // Helper to toggle the sidebar.
     const toggleSidebar = React.useCallback(() => {
       return isMobile
         ? setOpenMobile((open) => !open)
-        : setOpen((open) => !open)
-    }, [isMobile, setOpen, setOpenMobile])
+        : handleSetOpen(!open)
+    }, [isMobile, open, handleSetOpen, setOpenMobile])
 
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {
@@ -121,13 +130,13 @@ const SidebarProvider = React.forwardRef<
       () => ({
         state,
         open,
-        setOpen,
+        setOpen: handleSetOpen,
         isMobile,
         openMobile,
         setOpenMobile,
         toggleSidebar,
       }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+      [state, open, handleSetOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
     )
 
     return (

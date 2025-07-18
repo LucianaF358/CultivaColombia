@@ -12,6 +12,7 @@ export async function createSession(idToken: string) {
     cookies().set('session', idToken, { maxAge: expiresIn, httpOnly: true, secure: true, sameSite: 'lax' });
     return { success: true };
   } catch (error) {
+    console.error("Failed to create session:", error);
     return { success: false, message: 'Failed to create session' };
   }
 }
