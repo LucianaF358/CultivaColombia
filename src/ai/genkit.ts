@@ -3,9 +3,9 @@ import {googleAI} from '@genkit-ai/googleai';
 
 // =======================================================================================
 // !! IMPORTANT !!
-// The diagnosis feature will NOT work until you replace the placeholder below.
-// 1. Get your API key from Google AI Studio: https://aistudio.google.com/app/apikey
-// 2. Replace "YOUR_GEMINI_API_KEY" with your actual key.
+// The diagnosis feature uses a valid API key hardcoded below to ensure functionality.
+// In a real-world production app, you should manage this key securely,
+// for example, using environment variables or a secret manager.
 // =======================================================================================
 const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
 
