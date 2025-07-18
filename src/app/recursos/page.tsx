@@ -277,6 +277,35 @@ const articles = [
         "<strong>4. ¿Qué no compostar?:</strong> Evita carnes, lácteos, grasas, aceites y excrementos de mascotas, ya que pueden atraer plagas y generar olores desagradables.",
         "<strong>5. Paciencia:</strong> El compost estará listo en unos 3 a 6 meses, cuando tenga un color oscuro, textura terrosa y un olor a tierra de bosque."
     ],
+  },
+  {
+    title: "Asociación de Cultivos Tradicional en Colombia",
+    content: [
+        "La 'milpa' o la siembra de las 'Tres Hermanas' es una técnica ancestral que combina maíz, frijol y ahuyama (o calabaza) en un mismo espacio, creando un sistema que se beneficia mutuamente.",
+        "<strong>1. Maíz, el soporte:</strong> El tallo del maíz sirve como un tutor natural para que el frijol pueda enredarse y trepar en busca de luz.",
+        "<strong>2. Frijol, el fertilizante:</strong> El frijol, como todas las leguminosas, tiene la capacidad de fijar nitrógeno atmosférico en el suelo, un nutriente esencial que el maíz consume en grandes cantidades.",
+        "<strong>3. Ahuyama, la protectora:</strong> Las grandes hojas de la ahuyama cubren el suelo, manteniendo la humedad, evitando el crecimiento de malezas y creando un microclima favorable para las otras dos plantas.",
+        "<strong>Beneficios:</strong> Esta asociación no solo optimiza el espacio y los recursos, sino que también mejora la salud del suelo y proporciona una dieta balanceada: carbohidratos (maíz), proteínas (frijol) y vitaminas (ahuyama)."
+    ],
+  },
+  {
+    title: "El Impacto de La Niña y El Niño en la Agricultura Colombiana",
+    content: [
+        "Colombia, por su ubicación tropical, es altamente vulnerable al Fenómeno El Niño-Oscilación del Sur (ENOS). Entender su impacto es clave para la planificación agrícola.",
+        "<strong>Fenómeno de El Niño:</strong> Se caracteriza por un calentamiento de las aguas del Océano Pacífico, lo que generalmente se traduce en <strong>déficit de lluvias y sequías</strong> en gran parte del país, especialmente en las regiones Andina y Caribe. Afecta negativamente a cultivos como el café, el arroz y la papa, y disminuye los caudales de los ríos para riego.",
+        "<strong>Fenómeno de La Niña:</strong> Es el evento opuesto, con un enfriamiento de las aguas del Pacífico que provoca un <strong>aumento de las lluvias</strong>, inundaciones y deslizamientos de tierra. Esto puede causar pérdidas de cosechas por exceso de humedad, proliferación de enfermedades fúngicas y daños en la infraestructura vial.",
+        "<strong>Adaptación:</strong> Los agricultores deben prepararse implementando sistemas de riego eficientes para El Niño, y mejorando el drenaje de los terrenos y usando variedades resistentes a hongos para La Niña. Estar atento a los pronósticos del IDEAM es fundamental."
+    ],
+  },
+  {
+    title: "Manejo Integrado de la Broca del Café",
+    content: [
+        "La broca del café (Hypothenemus hampei) es la plaga más devastadora para el café en Colombia y el mundo. Un manejo efectivo no depende de una sola técnica, sino de la combinación de varias estrategias (Manejo Integrado de Plagas - MIP).",
+        "<strong>1. Control Cultural (Re-Re):</strong> La práctica más importante es la recolección rigurosa y frecuente de todos los frutos maduros, sobremaduros y secos que quedan en el árbol y en el suelo después de la cosecha. Esto elimina el principal sitio de reproducción de la broca.",
+        "<strong>2. Control Biológico:</strong> Consiste en la liberación de avispas parasitoides (como Cephalonomia stephanoderis) que atacan a la broca dentro del grano. También se pueden usar hongos entomopatógenos como Beauveria bassiana para infectar y matar al insecto.",
+        "<strong>3. Trampeo:</strong> Se utilizan trampas con atrayentes (una mezcla de alcoholes) para capturar las hembras de la broca que vuelan en busca de nuevos frutos para infestar. Esto ayuda a monitorear y reducir la población.",
+        "<strong>4. Control Químico (Último Recurso):</strong> Solo se debe recurrir a insecticidas de baja toxicidad y de forma muy localizada cuando los niveles de infestación son muy altos (superiores al 2%) y las otras medidas no han sido suficientes."
+    ],
   }
 ];
 
