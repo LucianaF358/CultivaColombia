@@ -49,104 +49,6 @@ const videos = [
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "seed germination"
   },
-  {
-    title: "¿Cómo beben agua las plantas? El Proceso de Transpiración",
-    description: "Explora el fascinante viaje del agua desde las raíces hasta las hojas y cómo las plantas controlan su hidratación.",
-    videoId: "watch?v=CxJ4gT4L-c0",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "plant transpiration"
-  },
-  {
-    title: "Nutrientes Esenciales para las Plantas (NPK)",
-    description: "Entiende qué son el Nitrógeno, Fósforo y Potasio (NPK) y por qué son los macronutrientes más importantes para tus cultivos.",
-    videoId: "watch?v=6bC_Xhsg1-o",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "soil nutrients"
-  },
-  {
-    title: "Anatomía de la Hoja: La Fábrica de la Planta",
-    description: "Un vistazo más de cerca a las partes de una hoja y cómo están diseñadas para maximizar la fotosíntesis.",
-    videoId: "watch?v=b2DHHW4v0MI",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "leaf anatomy"
-  },
-  {
-    title: "Tipos de Raíces y su Importancia",
-    description: "No todas las raíces son iguales. Aprende sobre raíces pivotantes, fibrosas y adventicias y su función en la planta.",
-    videoId: "watch?v=zU4hM3T-jG4",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "plant roots"
-  },
-  {
-    title: "El Tallo: Soporte y Transporte de la Planta",
-    description: "Descubre las funciones del tallo, no solo como estructura, sino como el sistema circulatorio que transporta agua y nutrientes.",
-    videoId: "watch?v=aNjzYyA9s6I",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "plant stem"
-  },
-  {
-    title: "Del Flor al Fruto: ¿Cómo se Forma un Fruto?",
-    description: "Una vez que una flor es polinizada, comienza una increíble transformación. Aprende cómo se desarrolla un fruto.",
-    videoId: "watch?v=iF2plu4Gq3Y",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "flower fruit"
-  },
-  {
-    title: "Reproducción Asexual en Plantas: Esquejes y Más",
-    description: "Las plantas pueden reproducirse sin semillas. Conoce los métodos como esquejes, estolones y bulbos.",
-    videoId: "watch?v=g6fDTt9aD0g",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "plant propagation"
-  },
-  {
-    title: "La Vida en el Suelo: Un Universo Bajo Nuestros Pies",
-    description: "El suelo está vivo. Descubre la importancia de los microorganismos, hongos y la materia orgánica para la salud de las plantas.",
-    videoId: "watch?v=f9PAh5Fpqik",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "healthy soil"
-  },
-  {
-    title: "Las Hormonas Vegetales: Fitohormonas",
-    description: "Las plantas tienen hormonas que regulan su crecimiento (auxinas, giberelinas, etc.). Entiende cómo funcionan.",
-    videoId: "watch?v=S-LAvmMENwE",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "plant hormones"
-  },
-  {
-    title: "¿Qué es el pH del suelo y por qué es importante?",
-    description: "Aprende qué es el pH y cómo afecta la capacidad de las plantas para absorber nutrientes del suelo. Guía para medirlo y corregirlo.",
-    videoId: "watch?v=oW27_aL5y0s",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "soil ph"
-  },
-  {
-    title: "Micorrizas: La Alianza Secreta entre Hongos y Raíces",
-    description: "Descubre la increíble simbiosis entre los hongos micorrízicos y las plantas, una red que mejora la absorción de nutrientes.",
-    videoId: "watch?v=9xPhs3sCgqE",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "mycorrhizal network"
-  },
-  {
-    title: "Tipos de Flores: Anatomía y Diversidad",
-    description: "Explora la diversidad de las flores, sus partes (pétalos, sépalos, pistilo, estambres) y su función en la reproducción.",
-    videoId: "watch?v=2-z2A7LgSAs",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "flower anatomy"
-  },
-  {
-    title: "Cómo las Plantas se Defienden de las Plagas",
-    description: "Las plantas no son indefensas. Conoce sus asombrosos mecanismos de defensa físicos y químicos contra insectos y enfermedades.",
-    videoId: "watch?v=4sYy_6mlB9E",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "plant defense"
-  },
-  {
-    title: "La Dormancia: El Sueño Invernal de las Plantas",
-    description: "Aprende sobre el estado de dormancia, un período de descanso vital para muchas plantas y semillas para sobrevivir a condiciones adversas.",
-    videoId: "watch?v=2Oa_11-yM9s",
-    thumbnailUrl: "https://placehold.co/600x400.png",
-    dataAiHint: "winter seeds"
-  },
 ];
 
 const documents = [
@@ -268,6 +170,86 @@ const tools = [
     title: "Mapa de Suelos de Colombia - AGROSAVIA",
     description: "Consulta los mapas detallados de suelos de Colombia para entender mejor tu tierra.",
     url: "https://www.agrosavia.co/investigacion-y-desarrollo/mapas-de-suelos",
+  },
+  {
+    title: "Canal de YouTube: La Huerta de Toni",
+    description: "Uno de los canales más populares en español sobre huertos urbanos, permacultura y técnicas de cultivo ecológico.",
+    url: "https://www.youtube.com/@LaHuertadeToni",
+  },
+  {
+    title: "Canal de YouTube: Agro-Cultura.co",
+    description: "Canal colombiano enfocado en la agricultura sostenible, con reportajes y guías sobre cultivos locales.",
+    url: "https://www.youtube.com/@agro-cultura",
+  },
+  {
+    title: "PictureThis (App)",
+    description: "Identifica miles de plantas, flores y árboles al instante con solo tomar una foto. Incluye diagnósticos.",
+    url: "https://www.picturethisai.com/es",
+  },
+  {
+    title: "Planificador de Huertos Online",
+    description: "Herramienta web para diseñar y planificar la distribución de tu huerto, optimizando espacio y asociaciones.",
+    url: "https://www.growveg.com/garden-planner-intro.aspx",
+  },
+  {
+    title: "Portal de la FAO en español",
+    description: "Accede a noticias, publicaciones y datos de la Organización de las Naciones Unidas para la Alimentación y la Agricultura.",
+    url: "https://www.fao.org/home/es",
+  },
+  {
+    title: "Infoagro - Portal Agrícola",
+    description: "Un completo portal con artículos técnicos, noticias de mercado y foros sobre todo tipo de cultivos.",
+    url: "https://www.infoagro.com/",
+  },
+  {
+    title: "Calendario Lunar para Siembra",
+    description: "Consulta las fases de la luna para planificar tus siembras y cosechas según los principios de la agricultura biodinámica.",
+    url: "https://www.calendariolunar.es/huerto/",
+  },
+  {
+    title: "Red de Información y Comunicación del Sector Agropecuario (Agronet)",
+    description: "Plataforma del Ministerio de Agricultura de Colombia con estadísticas, precios y noticias del sector.",
+    url: "https://www.agronet.gov.co/",
+  },
+  {
+    title: "Calculadora de Asociaciones de Cultivos",
+    description: "Descubre qué plantas se benefician mutuamente al crecer juntas (alelopatía) y cuáles deben evitarse.",
+    url: "https://www.lahuertinadetoni.es/tabla-de-asociaciones-de-cultivos-y-compatibilidades/",
+  },
+  {
+    title: "Agroecología en Corto (Podcast)",
+    description: "Podcast que explora temas de agroecología, soberanía alimentaria y experiencias de agricultores.",
+    url: "https://open.spotify.com/show/5rX3X4Y5Z6Z0j6f6e0c0j4",
+  },
+  {
+    title: "Foro de InfoJardín",
+    description: "Una de las comunidades de jardinería y agricultura más grandes en español para resolver dudas.",
+    url: "https://foro.infojardin.com/",
+  },
+  {
+    title: "IDEAM - Pronóstico del Tiempo",
+    description: "Consulta los pronósticos meteorológicos oficiales para Colombia, crucial para la planificación agrícola.",
+    url: "http://www.ideam.gov.co/web/tiempo-y-clima",
+  },
+  {
+    title: "Calculadora de Espaciado de Plantas",
+    description: "Calcula cuántas plantas puedes sembrar en un área determinada según el marco de plantación recomendado.",
+    url: "https://www.omnicalculator.com/other/plant-spacing",
+  },
+  {
+    title: "Blog: Cosechando Ideas",
+    description: "Un blog con guías detalladas, tutoriales de bricolaje para el huerto y recetas con productos de temporada.",
+    url: "https://www.pinterest.com/ideas/huerto-en-casa/914381831841/",
+  },
+  {
+    title: "Cursos Online de Permacultura",
+    description: "Plataforma con cursos para aprender a diseñar sistemas agrícolas sostenibles y resilientes.",
+    url: "https://www.permacultura.org/cursos.html",
+  },
+  {
+    title: "Twitch: Agricultor en Directo",
+    description: "Canales de agricultores que transmiten en vivo sus labores diarias, mostrando técnicas y resolviendo dudas en tiempo real.",
+    url: "https://www.twitch.tv/directory/game/Farming%20Simulator%2022",
   },
 ];
 
@@ -426,4 +408,5 @@ export default function RecursosPage() {
   );
 }
 
+    
     
