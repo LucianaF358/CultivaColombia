@@ -1,10 +1,14 @@
 
+"use client";
+
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Video, FileText, Wrench, BookOpen, ExternalLink, Download } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const videos = [
   {
@@ -253,8 +257,15 @@ const tools = [
   },
 ];
 
-const articles = [
+type Article = {
+  id: number;
+  title: string;
+  content: string[];
+};
+
+const articles: Article[] = [
   {
+    id: 1,
     title: "5 Claves para un Riego Eficiente",
     content: [
         "El riego es fundamental, pero hacerlo de forma eficiente ahorra agua y previene enfermedades. Aquí tienes 5 claves:",
@@ -266,6 +277,7 @@ const articles = [
     ],
   },
   {
+    id: 2,
     title: "Principios Básicos del Compostaje Casero",
     content: [
         "Compostar es reciclar materia orgánica para crear un abono rico en nutrientes. Sigue estos principios:",
@@ -279,6 +291,7 @@ const articles = [
     ],
   },
   {
+    id: 3,
     title: "Asociación de Cultivos Tradicional en Colombia",
     content: [
         "La 'milpa' o la siembra de las 'Tres Hermanas' es una técnica ancestral que combina maíz, frijol y ahuyama (o calabaza) en un mismo espacio, creando un sistema que se beneficia mutuamente.",
@@ -289,6 +302,7 @@ const articles = [
     ],
   },
   {
+    id: 4,
     title: "El Impacto de La Niña y El Niño en la Agricultura Colombiana",
     content: [
         "Colombia, por su ubicación tropical, es altamente vulnerable al Fenómeno El Niño-Oscilación del Sur (ENOS). Entender su impacto es clave para la planificación agrícola.",
@@ -298,6 +312,7 @@ const articles = [
     ],
   },
   {
+    id: 5,
     title: "Manejo Integrado de la Broca del Café",
     content: [
         "La broca del café (Hypothenemus hampei) es la plaga más devastadora para el café en Colombia y el mundo. Un manejo efectivo no depende de una sola técnica, sino de la combinación de varias estrategias (Manejo Integrado de Plagas - MIP).",
@@ -311,6 +326,8 @@ const articles = [
 
 
 export default function RecursosPage() {
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="text-center mb-12">
@@ -320,122 +337,133 @@ export default function RecursosPage() {
         </p>
       </header>
 
-      <Tabs defaultValue="videos" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto mb-8">
-          <TabsTrigger value="videos" className="py-2 flex items-center gap-2"><Video className="h-4 w-4"/> Videos</TabsTrigger>
-          <TabsTrigger value="guides" className="py-2 flex items-center gap-2"><FileText className="h-4 w-4"/> Guías</TabsTrigger>
-          <TabsTrigger value="tools" className="py-2 flex items-center gap-2"><Wrench className="h-4 w-4"/> Herramientas</TabsTrigger>
-          <TabsTrigger value="articles" className="py-2 flex items-center gap-2"><BookOpen className="h-4 w-4"/> Artículos</TabsTrigger>
-        </TabsList>
+      <Dialog>
+        <Tabs defaultValue="videos" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto mb-8">
+            <TabsTrigger value="videos" className="py-2 flex items-center gap-2"><Video className="h-4 w-4"/> Videos</TabsTrigger>
+            <TabsTrigger value="guides" className="py-2 flex items-center gap-2"><FileText className="h-4 w-4"/> Guías</TabsTrigger>
+            <TabsTrigger value="tools" className="py-2 flex items-center gap-2"><Wrench className="h-4 w-4"/> Herramientas</TabsTrigger>
+            <TabsTrigger value="articles" className="py-2 flex items-center gap-2"><BookOpen className="h-4 w-4"/> Artículos</TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="videos">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videos.map((video, index) => (
-              <Card key={index} className="overflow-hidden flex flex-col">
-                <CardHeader>
-                  <div className="relative aspect-video">
-                    <Image 
-                      src={video.thumbnailUrl}
-                      alt={`Miniatura del video ${video.title}`}
-                      fill
-                      className="object-cover rounded-md"
-                      data-ai-hint={video.dataAiHint}
-                    />
+          <TabsContent value="videos">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {videos.map((video, index) => (
+                <Card key={index} className="overflow-hidden flex flex-col">
+                  <CardHeader>
+                    <div className="relative aspect-video">
+                      <Image 
+                        src={video.thumbnailUrl}
+                        alt={`Miniatura del video ${video.title}`}
+                        fill
+                        className="object-cover rounded-md"
+                        data-ai-hint={video.dataAiHint}
+                      />
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <h3 className="font-semibold text-lg">{video.title}</h3>
+                    <p className="text-muted-foreground text-sm mt-1">{video.description}</p>
+                  </CardContent>
+                  <div className="p-6 pt-0">
+                    <Button asChild className="w-full">
+                      <Link href={`https://www.youtube.com/${video.videoId}`} target="_blank" rel="noopener noreferrer">
+                        <Video className="mr-2 h-4 w-4" /> Ver en YouTube
+                      </Link>
+                    </Button>
                   </div>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <h3 className="font-semibold text-lg">{video.title}</h3>
-                  <p className="text-muted-foreground text-sm mt-1">{video.description}</p>
-                </CardContent>
-                <div className="p-6 pt-0">
-                  <Button asChild className="w-full">
-                    <Link href={`https://www.youtube.com/${video.videoId}`} target="_blank" rel="noopener noreferrer">
-                      <Video className="mr-2 h-4 w-4" /> Ver en YouTube
-                    </Link>
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="guides">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {documents.map((doc, index) => (
-                <Card key={index} className="flex flex-col sm:flex-row items-center p-4 gap-4">
-                    <div className="flex-shrink-0">
-                        <div className="p-3 bg-primary/10 rounded-lg">
-                            <FileText className="h-8 w-8 text-primary"/>
-                        </div>
-                    </div>
-                    <div className="flex-grow text-center sm:text-left">
-                        <h3 className="font-semibold text-lg">{doc.title}</h3>
-                        <p className="text-muted-foreground text-sm mt-1">{doc.description}</p>
-                    </div>
-                    <div className="flex-shrink-0 mt-4 sm:mt-0">
-                         <Button asChild>
-                            <Link href={doc.url} target={doc.isExternal ? '_blank' : '_self'} rel={doc.isExternal ? 'noopener noreferrer' : ''}>
-                                {doc.isExternal ? <ExternalLink className="mr-2 h-4 w-4"/> : <Download className="mr-2 h-4 w-4" />}
-                                {doc.isExternal ? 'Visitar' : 'Descargar'}
-                            </Link>
-                        </Button>
-                    </div>
                 </Card>
-                ))}
+              ))}
             </div>
-        </TabsContent>
+          </TabsContent>
 
-        <TabsContent value="tools">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {tools.map((tool, index) => (
-                <Card key={index} className="flex flex-col sm:flex-row items-center p-4 gap-4">
-                     <div className="flex-shrink-0">
-                        <div className="p-3 bg-primary/10 rounded-lg">
-                            <Wrench className="h-8 w-8 text-primary"/>
-                        </div>
-                    </div>
-                    <div className="flex-grow text-center sm:text-left">
-                        <h3 className="font-semibold text-lg">{tool.title}</h3>
-                        <p className="text-muted-foreground text-sm mt-1">{tool.description}</p>
-                    </div>
-                    <div className="flex-shrink-0 mt-4 sm:mt-0">
-                         <Button asChild>
-                            <Link href={tool.url} target="_blank" rel="noopener noreferrer">
-                                <ExternalLink className="mr-2 h-4 w-4" />
-                                Visitar Herramienta
-                            </Link>
-                        </Button>
-                    </div>
+          <TabsContent value="guides">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {documents.map((doc, index) => (
+                  <Card key={index} className="flex flex-col sm:flex-row items-center p-4 gap-4">
+                      <div className="flex-shrink-0">
+                          <div className="p-3 bg-primary/10 rounded-lg">
+                              <FileText className="h-8 w-8 text-primary"/>
+                          </div>
+                      </div>
+                      <div className="flex-grow text-center sm:text-left">
+                          <h3 className="font-semibold text-lg">{doc.title}</h3>
+                          <p className="text-muted-foreground text-sm mt-1">{doc.description}</p>
+                      </div>
+                      <div className="flex-shrink-0 mt-4 sm:mt-0">
+                          <Button asChild>
+                              <Link href={doc.url} target={doc.isExternal ? '_blank' : '_self'} rel={doc.isExternal ? 'noopener noreferrer' : ''}>
+                                  {doc.isExternal ? <ExternalLink className="mr-2 h-4 w-4"/> : <Download className="mr-2 h-4 w-4" />}
+                                  {doc.isExternal ? 'Visitar' : 'Descargar'}
+                              </Link>
+                          </Button>
+                      </div>
+                  </Card>
+                  ))}
+              </div>
+          </TabsContent>
+
+          <TabsContent value="tools">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {tools.map((tool, index) => (
+                  <Card key={index} className="flex flex-col sm:flex-row items-center p-4 gap-4">
+                      <div className="flex-shrink-0">
+                          <div className="p-3 bg-primary/10 rounded-lg">
+                              <Wrench className="h-8 w-8 text-primary"/>
+                          </div>
+                      </div>
+                      <div className="flex-grow text-center sm:text-left">
+                          <h3 className="font-semibold text-lg">{tool.title}</h3>
+                          <p className="text-muted-foreground text-sm mt-1">{tool.description}</p>
+                      </div>
+                      <div className="flex-shrink-0 mt-4 sm:mt-0">
+                          <Button asChild>
+                              <Link href={tool.url} target="_blank" rel="noopener noreferrer">
+                                  <ExternalLink className="mr-2 h-4 w-4" />
+                                  Visitar Herramienta
+                              </Link>
+                          </Button>
+                      </div>
+                  </Card>
+                  ))}
+              </div>
+          </TabsContent>
+
+          <TabsContent value="articles">
+            <div className="space-y-6 max-w-4xl mx-auto">
+              {articles.map((article) => (
+                <Card key={article.id} className="flex flex-col sm:flex-row items-center justify-between p-6">
+                  <CardHeader className="p-0 flex-grow">
+                    <CardTitle className="text-xl font-headline text-primary">{article.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-0 mt-4 sm:mt-0 sm:ml-6 flex-shrink-0">
+                    <DialogTrigger asChild>
+                      <Button onClick={() => setSelectedArticle(article)}>Leer Artículo</Button>
+                    </DialogTrigger>
+                  </CardContent>
                 </Card>
-                ))}
+              ))}
             </div>
-        </TabsContent>
+          </TabsContent>
+        </Tabs>
 
-        <TabsContent value="articles">
-            <div className="space-y-8 max-w-4xl mx-auto">
-                {articles.map((article, index) => (
-                    <Card key={index}>
-                        <CardHeader>
-                            <CardTitle className="text-2xl font-headline text-primary">{article.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            {article.content.map((paragraph, pIndex) => (
-                                <p 
-                                key={pIndex}
-                                className="text-foreground/90"
-                                dangerouslySetInnerHTML={{ __html: paragraph }}
-                                />
-                            ))}
-                        </CardContent>
-                    </Card>
-                ))}
+        {selectedArticle && (
+          <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-3xl font-headline text-primary mb-4">{selectedArticle.title}</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 prose dark:prose-invert max-w-none">
+              {selectedArticle.content.map((paragraph, pIndex) => (
+                <p 
+                  key={pIndex}
+                  className="text-foreground/90"
+                  dangerouslySetInnerHTML={{ __html: paragraph }}
+                />
+              ))}
             </div>
-        </TabsContent>
-
-      </Tabs>
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 }
-
-    
-    
