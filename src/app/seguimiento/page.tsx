@@ -22,7 +22,7 @@ interface TrackedPlant {
         problem?: string;
     };
     isHealthy?: boolean;
-    trackedAt: Timestamp;
+    trackedAt: Timestamp | null;
 }
 
 export default function SeguimientoPage() {
@@ -115,9 +115,11 @@ export default function SeguimientoPage() {
                     </CardDescription>
                 </CardContent>
                 <CardFooter>
-                    <p className="text-sm text-muted-foreground">
-                        Guardado {formatDistanceToNow(plant.trackedAt.toDate(), { addSuffix: true, locale: es })}
-                    </p>
+                    {plant.trackedAt && (
+                        <p className="text-sm text-muted-foreground">
+                            Guardado {formatDistanceToNow(plant.trackedAt.toDate(), { addSuffix: true, locale: es })}
+                        </p>
+                    )}
                 </CardFooter>
             </Card>
           ))}
