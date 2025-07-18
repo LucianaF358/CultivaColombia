@@ -38,24 +38,27 @@ function DiagnosisResultSkeleton() {
   );
 }
 
-// Helper to render text with bullet points and bold tags
+// Helper to render text with bullet points and bold tags from AI response
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
 
+  // AI prompt is already generating basic HTML (<strong>, <ul>, <li>)
+  // so we can just render it.
   const createMarkup = (text: string) => {
-    // Reemplaza los guiones de Markdown por elementos <li> y envuelve los bloques en <ul>
-    const listRegex = /((?:^- .+\n?)+)/gm;
+    // Replace Markdown-style lists with HTML lists
+    const listRegex = /((?:- .+\n?)+)/gm;
     let processedText = text.replace(listRegex, (match) => {
-      const items = match.split('\n').filter(item => item.trim() !== '');
-      const listItems = items.map(item => `<li>${item.substring(2)}</li>`).join('');
-      return `<ul class="list-disc pl-5 space-y-1">${listItems}</ul>`;
+        const items = match.split('\n').filter(item => item.trim() !== '');
+        const listItems = items.map(item => `<li>${item.substring(2)}</li>`).join('');
+        return `<ul class="list-disc pl-5 space-y-1">${listItems}</ul>`;
     });
-     // Reemplaza los párrafos que no son listas con etiquetas <p> para un espaciado consistente.
-    const paragraphRegex = /^(?!<ul)(.*)$/gm;
-    processedText = processedText.replace(paragraphRegex, (match) => {
-        if (match.trim() === '' || match.startsWith('<ul')) return match;
-        return `<p>${match}</p>`;
-    });
+    
+    // Wrap non-list paragraphs in <p> tags
+    processedText = processedText.split('\n').map(line => {
+        if (line.trim().startsWith('<ul')) return line;
+        if (line.trim() === '') return '';
+        return `<p>${line}</p>`;
+    }).join('');
 
     return { __html: processedText };
   };
