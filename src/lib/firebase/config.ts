@@ -11,6 +11,11 @@ const firebaseConfig: FirebaseOptions = {
   appId: "1:24070420473:web:7d4574a90eb0e7e4066f28"
 };
 
+// This is a placeholder for your actual Gemini API Key.
+// IMPORTANT: Replace "YOUR_GEMINI_API_KEY" with your real key from Google AI Studio.
+export const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
+
+
 // This function ensures that Firebase is initialized only once.
 let app: FirebaseApp;
 
@@ -20,6 +25,9 @@ if (getApps().length === 0) {
       if (!(firebaseConfig as any)[key]) {
           console.error(`Firebase configuration error: Missing value for ${key}.`);
       }
+  }
+  if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
+    console.error(`Firebase configuration error: Missing value for GEMINI_API_KEY. Please add it to /src/lib/firebase/config.ts`);
   }
   app = initializeApp(firebaseConfig);
 } else {
