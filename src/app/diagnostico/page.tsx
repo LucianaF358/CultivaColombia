@@ -132,7 +132,7 @@ export default function DiagnosticoPage() {
     try {
       const diagnosisResult = await diagnosePlant({
         photoDataUri: imagePreview,
-        description,
+        description: description || undefined, // Send undefined if description is empty
       });
       setResult(diagnosisResult);
     } catch (error) {
