@@ -45,12 +45,10 @@ export default function FavoritesPage() {
     return () => unsubscribe();
   }, [user, authLoading]);
 
-  // While auth is loading, or if the user is logged in but we are still fetching their crops
   if (authLoading || (user && loadingCrops)) {
     return <FavoritesSkeleton />;
   }
 
-  // After loading, if there's no user, show a prompt to log in
   if (!user) {
       return (
           <div className="container mx-auto px-4 py-8">

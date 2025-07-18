@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo, useEffect } from 'react';
@@ -6,7 +7,7 @@ import { CropCard } from './CropCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/firebase/auth';
-import { collection, onSnapshot, getFirestore } from 'firebase/firestore';
+import { collection, onSnapshot, getFirestore, type Unsubscribe } from 'firebase/firestore';
 import { app } from '@/lib/firebase/config';
 
 interface CropsViewProps {
@@ -24,11 +25,13 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
   const { user } = useAuth();
 
   useEffect(() => {
+    let unsubscribe: Unsubscribe = () => {};
+    
     if (user) {
       const db = getFirestore(app);
       const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
       
-      const unsubscribe = onSnapshot(favsRef, (snapshot) => {
+      unsubscribe = onSnapshot(favsRef, (snapshot) => {
         const newFavoriteIds = new Set<string>();
         snapshot.forEach((doc) => {
           newFavoriteIds.add(doc.id);
@@ -38,12 +41,11 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
         console.error("Error listening to favorite crops:", error);
       });
 
-      // Cleanup subscription on unmount
-      return () => unsubscribe();
     } else {
-      // Clear favorites when user logs out
       setFavoriteCropIds(new Set());
     }
+
+    return () => unsubscribe();
   }, [user]);
 
   const filteredCrops = useMemo(() => {
