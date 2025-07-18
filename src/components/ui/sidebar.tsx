@@ -91,12 +91,12 @@ const SidebarProvider = React.forwardRef<
     const handleSetOpen = React.useCallback(
       (value: boolean) => {
         setOpen(value);
-        if (onOpenChange) {
-          onOpenChange(value);
+        if (setOpenProp) {
+          setOpenProp(value);
         }
         document.cookie = `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
       },
-      [onOpenChange]
+      [setOpenProp]
     );
 
     // Helper to toggle the sidebar.
