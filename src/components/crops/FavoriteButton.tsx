@@ -9,7 +9,6 @@ import { useAuth } from '@/lib/firebase/auth';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { toggleFavorite } from '@/lib/firebase/firestore';
-import { ToastAction } from '../ui/toast';
 
 interface FavoriteButtonProps {
   cropId: string;
@@ -31,11 +30,10 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
         title: 'Inicia sesión para guardar',
         description: 'Debes iniciar sesión para añadir cultivos a tus favoritos.',
         variant: 'destructive',
-        action: (
-          <ToastAction altText="Iniciar sesión" onClick={() => router.push('/login')}>
-            Iniciar sesión
-          </ToastAction>
-        ),
+        action: {
+          altText: "Iniciar sesión",
+          onClick: () => router.push('/login'),
+        },
       });
       return;
     }
@@ -47,11 +45,10 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
           toast({
             title: 'Añadido a Mis Favoritos',
             description: 'El cultivo ha sido añadido a tu lista.',
-            action: (
-              <ToastAction altText="Ir a favoritos" onClick={() => router.push('/favorites')}>
-                Ir a favoritos
-              </ToastAction>
-            ),
+            action: {
+              altText: "Ir a favoritos",
+              onClick: () => router.push('/favorites'),
+            },
           });
         } else {
           toast({

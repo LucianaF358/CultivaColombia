@@ -1,22 +1,26 @@
+
 "use client"
 
 // Inspired by react-hot-toast library
 import * as React from "react"
 
 import type {
-  ToastActionElement,
   ToastProps,
 } from "@/components/ui/toast"
-import { Button } from "@/components/ui/button"
 
 const TOAST_LIMIT = 3
 const TOAST_REMOVE_DELAY = 10000
+
+type ToastAction = {
+  altText: string;
+  onClick: () => void;
+}
 
 type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
   description?: React.ReactNode
-  action?: ToastActionElement | React.ReactElement<React.ComponentProps<typeof Button>>
+  action?: ToastAction
 }
 
 const actionTypes = {
