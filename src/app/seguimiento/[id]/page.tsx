@@ -136,7 +136,7 @@ export default function TrackedPlantDetailPage({ params }: { params: { id: strin
                 <CardContent>
                     <CardTitle className="text-3xl font-bold font-headline text-primary">{plant.plantName || 'Planta no identificada'}</CardTitle>
                     <CardDescription className="text-lg text-muted-foreground mt-2">
-                        {plant.description}
+                        {plant.description || "Sin descripción adicional."}
                     </CardDescription>
                 </CardContent>
             </Card>
@@ -255,5 +255,3 @@ function DetailPageSkeleton() {
       </div>
     );
   }
-
-    
