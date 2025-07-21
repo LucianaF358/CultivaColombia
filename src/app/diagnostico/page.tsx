@@ -328,7 +328,7 @@ export default function DiagnosticoPage() {
                     </div>
                   </div>
                   
-                  {result.isPlant && (
+                  {user && result.isPlant && (
                     <div className="pt-4 border-t">
                       <Button onClick={handleSaveDiagnosis} disabled={isSaving} className="w-full">
                         <ClipboardList className="mr-2 h-4 w-4" />
