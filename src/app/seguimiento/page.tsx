@@ -13,17 +13,8 @@ import { app } from '@/lib/firebase/config';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
+import type { TrackedPlant } from '@/types';
 
-interface TrackedPlant {
-    id: string;
-    photoDataUri: string;
-    plantName?: string;
-    diagnosis?: {
-        problem?: string;
-    };
-    isHealthy?: boolean;
-    trackedAt: Timestamp | null;
-}
 
 export default function SeguimientoPage() {
   const { user, loading: authLoading } = useAuth();
@@ -93,35 +84,37 @@ export default function SeguimientoPage() {
       {trackedPlants.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {trackedPlants.map(plant => (
-            <Card key={plant.id}>
-                <CardHeader className="p-0">
-                    <div className="relative w-full h-48">
-                        <Image
-                            src={plant.photoDataUri}
-                            alt={`Imagen de ${plant.plantName || 'planta diagnosticada'}`}
-                            fill
-                            className="object-cover rounded-t-lg"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                    </div>
-                </CardHeader>
-                <CardContent className="p-6">
-                    <CardTitle>{plant.plantName || "Planta no identificada"}</CardTitle>
-                    <CardDescription className="mt-2">
-                        {plant.isHealthy 
-                            ? "La planta parece estar sana." 
-                            : `Problema: ${plant.diagnosis?.problem || "No especificado"}`
-                        }
-                    </CardDescription>
-                </CardContent>
-                <CardFooter>
-                    {plant.trackedAt && (
-                        <p className="text-sm text-muted-foreground">
-                            Guardado {formatDistanceToNow(plant.trackedAt.toDate(), { addSuffix: true, locale: es })}
-                        </p>
-                    )}
-                </CardFooter>
-            </Card>
+            <Link key={plant.id} href={`/seguimiento/${plant.id}`} className="group block h-full">
+              <Card className="flex flex-col h-full overflow-hidden group-hover:shadow-xl transition-shadow duration-300 bg-card">
+                  <CardHeader className="p-0">
+                      <div className="relative w-full h-48">
+                          <Image
+                              src={plant.photoDataUri}
+                              alt={`Imagen de ${plant.plantName || 'planta diagnosticada'}`}
+                              fill
+                              className="object-cover rounded-t-lg"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                      </div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                      <CardTitle>{plant.plantName || "Planta no identificada"}</CardTitle>
+                      <CardDescription className="mt-2 line-clamp-2">
+                          {plant.isHealthy 
+                              ? "La planta parece estar sana." 
+                              : `Problema: ${plant.diagnosis?.problem || "No especificado"}`
+                          }
+                      </CardDescription>
+                  </CardContent>
+                  <CardFooter>
+                      {plant.trackedAt && (
+                          <p className="text-sm text-muted-foreground">
+                              Guardado {formatDistanceToNow(plant.trackedAt.toDate(), { addSuffix: true, locale: es })}
+                          </p>
+                      )}
+                  </CardFooter>
+              </Card>
+            </Link>
           ))}
         </div>
       ) : (
@@ -170,3 +163,5 @@ function CardSkeleton() {
         </div>
     )
 }
+
+    

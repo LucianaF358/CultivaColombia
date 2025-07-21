@@ -1,3 +1,7 @@
+
+import type { Timestamp } from 'firebase/firestore';
+import type { DiagnosePlantOutput } from '@/ai/flows/diagnosePlant';
+
 export type Crop = {
   id: string;
   nombre: string;
@@ -22,3 +26,18 @@ export type User = {
   email: string | null;
   displayName: string | null;
 };
+
+export type CareTask = {
+    text: string;
+    completed: boolean;
+};
+
+export interface TrackedPlant extends DiagnosePlantOutput {
+    id: string;
+    photoDataUri: string;
+    description: string;
+    trackedAt: Timestamp | null;
+    tasks: CareTask[];
+}
+
+    
