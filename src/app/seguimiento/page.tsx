@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ClipboardList, PlusCircle } from 'lucide-react';
-import { getFirestore, collection, onSnapshot, type Unsubscribe, query, orderBy, type Timestamp } from 'firebase/firestore';
-import { app } from '@/lib/firebase/config';
+import { collection, onSnapshot, type Unsubscribe, query, orderBy } from 'firebase/firestore';
+import { db } from '@/lib/firebase/db';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatDistanceToNow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -28,7 +28,6 @@ export default function SeguimientoPage() {
 
     if (user) {
       setLoadingPlants(true);
-      const db = getFirestore(app);
       const plantsRef = collection(db, 'usuarios', user.uid, 'plantasSeguimiento');
       const q = query(plantsRef, orderBy('trackedAt', 'desc'));
 

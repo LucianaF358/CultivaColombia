@@ -10,8 +10,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
-import { getFirestore, collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
-import { app } from '@/lib/firebase/config';
+import { collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
+import { db } from '@/lib/firebase/db';
 
 export default function FavoritesPage() {
   const { user, loading: authLoading } = useAuth();
@@ -25,7 +25,6 @@ export default function FavoritesPage() {
 
     if (user) {
       setLoadingCrops(true);
-      const db = getFirestore(app);
       const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
 
       unsubscribe = onSnapshot(favsRef, async (snapshot) => {

@@ -1,12 +1,10 @@
 
 "use client";
 
-import { getFirestore, doc, collection, addDoc, serverTimestamp, getDoc, updateDoc } from 'firebase/firestore';
-import { app } from './config';
+import { collection, addDoc, serverTimestamp, getDoc, updateDoc, doc } from 'firebase/firestore';
+import { db } from './db';
 import type { DiagnosePlantOutput } from '@/ai/flows/diagnosePlant';
 import type { TrackedPlant, CareTask } from '@/types';
-
-const db = getFirestore(app);
 
 interface DiagnosisDataToSave extends DiagnosePlantOutput {
     photoDataUri: string;
@@ -58,5 +56,3 @@ export async function updateTrackedPlantTasks(userId: string, plantId: string, t
         throw new Error("No se pudo actualizar la lista de tareas.");
     }
 }
-
-    

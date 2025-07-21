@@ -1,11 +1,8 @@
 
 "use client";
 
-import { getFirestore, doc, setDoc, deleteDoc, getDocs, collection, writeBatch } from 'firebase/firestore';
-import { app } from './config';
-import type { Crop } from '@/types';
-
-const db = getFirestore(app);
+import { doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { db } from './db';
 
 export async function toggleFavorite(userId: string, cropId: string, toFavorite: boolean): Promise<void> {
   if (!userId) {

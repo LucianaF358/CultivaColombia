@@ -7,8 +7,8 @@ import { CropCard } from './CropCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/firebase/auth';
-import { collection, onSnapshot, getFirestore, type Unsubscribe } from 'firebase/firestore';
-import { app } from '@/lib/firebase/config';
+import { collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
+import { db } from '@/lib/firebase/db';
 
 interface CropsViewProps {
   initialCrops: Crop[];
@@ -28,7 +28,6 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     let unsubscribe: Unsubscribe = () => {};
     
     if (user) {
-      const db = getFirestore(app);
       const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
       
       unsubscribe = onSnapshot(favsRef, (snapshot) => {
