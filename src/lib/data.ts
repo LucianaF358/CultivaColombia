@@ -1697,13 +1697,25 @@ const crops: Crop[] = [
 
 // In a real app, this function would fetch data from a Firestore collection.
 export async function getCrops(): Promise<Crop[]> {
-  // Simulate network delay to mimic a real API call
-  await new Promise(resolve => setTimeout(resolve, 200));
-  return crops;
+  try {
+    // Simulate network delay to mimic a real API call
+    await new Promise(resolve => setTimeout(resolve, 200));
+    return crops;
+  } catch (error) {
+    console.error("Error fetching crops:", error);
+    // Return an empty array on error to prevent the app from crashing.
+    return [];
+  }
 }
 
 // In a real app, this would fetch a specific crop by its ID from Firestore.
 export async function getCropById(id: string): Promise<Crop | undefined> {
-  await new Promise(resolve => setTimeout(resolve, 100));
-  return crops.find(crop => crop.id === id);
+  try {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return crops.find(crop => crop.id === id);
+  } catch (error) {
+    console.error(`Error fetching crop by id ${id}:`, error);
+    // Return undefined on error to let the caller handle it (e.g., show a 404 page).
+    return undefined;
+  }
 }
