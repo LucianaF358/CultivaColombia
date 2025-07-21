@@ -32,12 +32,15 @@ export type CareTask = {
     completed: boolean;
 };
 
+export type DailyCarePlan = {
+    day: number;
+    tasks: CareTask[];
+};
+
 export interface TrackedPlant extends DiagnosePlantOutput {
     id: string;
     photoDataUri: string;
     description: string;
     trackedAt: Timestamp | null;
-    tasks: CareTask[];
+    dailyPlan?: DailyCarePlan[];
 }
-
-    

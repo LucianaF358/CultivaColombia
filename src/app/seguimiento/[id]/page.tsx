@@ -4,18 +4,17 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
 import { useRouter, notFound, useParams } from 'next/navigation';
-import { getTrackedPlantById, updateTrackedPlantTasks } from '@/lib/firebase/seguimiento';
+import { getTrackedPlantById, updateTrackedPlantPlan } from '@/lib/firebase/seguimiento';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ClipboardList, Loader2, HeartPulse, Sprout, Siren, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { TrackedPlant } from '@/types';
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import type { TrackedPlant, DailyCarePlan } from '@/types';
 
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
@@ -28,20 +27,6 @@ function MarkdownContent({ content }: { content: string | undefined }) {
   );
 }
 
-// This function is now centralized in `seguimiento.ts` but we keep a local copy
-// for display logic just in case, though the data from DB should be primary.
-function parseCareTasks(careNeeded: string | undefined): { text: string; completed: boolean }[] {
-    if (!careNeeded) return [];
-    const taskLines = careNeeded.match(/^- .*/gm);
-    if (!taskLines) return [];
-    
-    return taskLines.map(line => ({
-        text: line.substring(2).trim(),
-        completed: false
-    }));
-}
-
-
 export default function TrackedPlantDetailPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -49,7 +34,7 @@ export default function TrackedPlantDetailPage() {
   const { toast } = useToast();
   const [plant, setPlant] = useState<TrackedPlant | null>(null);
   const [loading, setLoading] = useState(true);
-  const [tasks, setTasks] = useState<{ text: string; completed: boolean }[]>([]);
+  const [dailyPlan, setDailyPlan] = useState<DailyCarePlan[]>([]);
   const plantId = params.id as string;
 
   useEffect(() => {
@@ -64,12 +49,7 @@ export default function TrackedPlantDetailPage() {
         const fetchedPlant = await getTrackedPlantById(user.uid, plantId);
         if (fetchedPlant) {
           setPlant(fetchedPlant);
-          // Prioritize tasks from DB. If empty, try to parse from diagnosis.
-          if (fetchedPlant.tasks && fetchedPlant.tasks.length > 0) {
-            setTasks(fetchedPlant.tasks);
-          } else if (fetchedPlant.diagnosis?.careNeeded) {
-            setTasks(parseCareTasks(fetchedPlant.diagnosis.careNeeded));
-          }
+          setDailyPlan(fetchedPlant.dailyPlan || []);
         } else {
           setPlant(null); // Plant not found
         }
@@ -86,26 +66,26 @@ export default function TrackedPlantDetailPage() {
     }
   }, [user, authLoading, plantId, router, toast]);
 
-  const handleTaskChange = async (index: number) => {
+  const handleTaskChange = async (dayIndex: number, taskIndex: number) => {
     if (!user || !plant) return;
 
-    const newTasks = [...tasks];
-    newTasks[index].completed = !newTasks[index].completed;
-    setTasks(newTasks);
+    const newPlan = [...dailyPlan];
+    newPlan[dayIndex].tasks[taskIndex].completed = !newPlan[dayIndex].tasks[taskIndex].completed;
+    setDailyPlan(newPlan);
 
     try {
-        await updateTrackedPlantTasks(user.uid, plant.id, newTasks);
+        await updateTrackedPlantPlan(user.uid, plant.id, newPlan);
         toast({
             title: "Progreso guardado",
-            description: "Tu lista de tareas ha sido actualizada.",
+            description: "Tu plan de cuidados ha sido actualizado.",
         });
     } catch (error) {
-        console.error("Error updating tasks:", error);
+        console.error("Error updating plan:", error);
         toast({ title: "Error", description: "No se pudo guardar el cambio en la tarea.", variant: "destructive" });
         // Revert UI change on error
-        const revertedTasks = [...tasks];
-        revertedTasks[index].completed = !revertedTasks[index].completed;
-        setTasks(revertedTasks);
+        const revertedPlan = [...dailyPlan];
+        revertedPlan[dayIndex].tasks[taskIndex].completed = !revertedPlan[dayIndex].tasks[taskIndex].completed;
+        setDailyPlan(revertedPlan);
     }
   };
 
@@ -169,47 +149,59 @@ export default function TrackedPlantDetailPage() {
             </CardContent>
           </Card>
           
-          {!plant.isHealthy && tasks.length > 0 && (
-             <Card>
+          {!plant.isHealthy && dailyPlan.length > 0 && (
+            <Card>
                 <CardHeader>
-                <CardTitle>Plan de Cuidados</CardTitle>
-                <CardDescription>Marca las tareas a medida que las completes para recuperar tu planta.</CardDescription>
+                    <CardTitle>Plan de Cuidados de 7 Días</CardTitle>
+                    <CardDescription>Sigue este plan diario y marca las tareas completadas.</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                    {tasks.map((task, index) => (
-                        <div key={index} className="flex items-center space-x-3 p-3 bg-card rounded-md border hover:bg-muted/50 transition-colors">
-                            <Checkbox 
-                                id={`task-${index}`} 
-                                checked={task.completed}
-                                onCheckedChange={() => handleTaskChange(index)}
-                                aria-label={`Marcar como completada: ${task.text}`}
-                            />
-                            <Label 
-                                htmlFor={`task-${index}`}
-                                className={`flex-1 cursor-pointer text-sm ${task.completed ? 'line-through text-muted-foreground' : 'text-card-foreground'}`}
-                            >
-                                {task.text}
-                            </Label>
-                        </div>
-                    ))}
+                <CardContent>
+                    <Tabs defaultValue="day-1" className="w-full">
+                        <TabsList className="grid w-full grid-cols-4 md:grid-cols-7">
+                            {dailyPlan.map((day, dayIndex) => (
+                                <TabsTrigger key={dayIndex} value={`day-${day.day}`}>Día {day.day}</TabsTrigger>
+                            ))}
+                        </TabsList>
+                        {dailyPlan.map((day, dayIndex) => (
+                            <TabsContent key={dayIndex} value={`day-${day.day}`} className="mt-4 space-y-3">
+                                {day.tasks.length > 0 ? day.tasks.map((task, taskIndex) => (
+                                    <div key={taskIndex} className="flex items-center space-x-3 p-3 bg-card rounded-md border hover:bg-muted/50 transition-colors">
+                                        <Checkbox 
+                                            id={`task-${dayIndex}-${taskIndex}`} 
+                                            checked={task.completed}
+                                            onCheckedChange={() => handleTaskChange(dayIndex, taskIndex)}
+                                            aria-label={`Marcar como completada: ${task.text}`}
+                                        />
+                                        <Label 
+                                            htmlFor={`task-${dayIndex}-${taskIndex}`}
+                                            className={`flex-1 cursor-pointer text-sm ${task.completed ? 'line-through text-muted-foreground' : 'text-card-foreground'}`}
+                                        >
+                                            {task.text}
+                                        </Label>
+                                    </div>
+                                )) : (
+                                    <p className="text-muted-foreground text-sm text-center py-4">No hay tareas específicas para hoy. ¡Buen trabajo!</p>
+                                )}
+                            </TabsContent>
+                        ))}
+                    </Tabs>
                 </CardContent>
             </Card>
           )}
 
-           {!plant.isHealthy && tasks.length === 0 && (
+           {!plant.isHealthy && dailyPlan.length === 0 && (
             <Card>
-              <CardHeader>
-                <CardTitle>Plan de Cuidados</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-muted-foreground">
-                    <p>La IA no proporcionó una lista de tareas para este diagnóstico. Aquí están las recomendaciones generales:</p>
-                    <MarkdownContent content={plant.diagnosis?.careNeeded} />
-                </div>
-              </CardContent>
+                <CardHeader>
+                    <CardTitle>Plan de Cuidados</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="text-center text-muted-foreground flex flex-col items-center gap-4 py-8">
+                        <CalendarDays className="h-10 w-10" />
+                        <p>La IA no generó un plan de cuidados diario para este diagnóstico.</p>
+                    </div>
+                </CardContent>
             </Card>
            )}
-
         </div>
       </div>
     </div>

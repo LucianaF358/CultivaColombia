@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import type { CareTask, DailyCarePlan } from '@/types';
 
 const DiagnosePlantInputSchema = z.object({
   photoDataUri: z
@@ -21,6 +22,16 @@ const DiagnosePlantInputSchema = z.object({
 });
 export type DiagnosePlantInput = z.infer<typeof DiagnosePlantInputSchema>;
 
+const CareTaskSchema = z.object({
+  text: z.string().describe("Descripción clara y concisa de la tarea a realizar."),
+  completed: z.boolean().default(false).describe("Indica si la tarea ha sido completada."),
+});
+
+const DailyCarePlanSchema = z.object({
+  day: z.number().describe("El número del día del plan (ej: 1, 2, 3)."),
+  tasks: z.array(CareTaskSchema).describe("Una lista de tareas específicas para este día."),
+});
+
 const DiagnosePlantOutputSchema = z.object({
   isPlant: z.boolean().describe('Whether or not the image is actually of a plant.'),
   plantName: z.string().describe('The common name of the identified plant.').optional(),
@@ -29,7 +40,7 @@ const DiagnosePlantOutputSchema = z.object({
       problem: z.string().describe("Una frase corta en español que resuma el problema principal identificado (ej: 'Presencia de Roya del Café', 'Síntomas de deficiencia de Nitrógeno').").optional(),
       causes: z.string().describe("Un párrafo descriptivo en español explicando las causas probables. Usa una lista con viñetas (con '-') solo si hay múltiples causas.").optional(),
       damages: z.string().describe("Un párrafo descriptivo en español explicando los daños observados. Usa una lista con viñetas (con '-') solo si hay múltiples daños.").optional(),
-      careNeeded: z.string().describe("Un párrafo descriptivo en español explicando los cuidados necesarios. Usa una lista con viñetas (con '-') para enumerar los pasos.").optional(),
+      dailyCarePlan: z.array(DailyCarePlanSchema).describe("Un plan de cuidados detallado para 7 días. Cada día debe tener de 1 a 3 tareas claras y accionables. Si la planta está sana, este campo puede estar vacío.").optional(),
   }).optional(),
 });
 export type DiagnosePlantOutput = z.infer<typeof DiagnosePlantOutputSchema>;
@@ -43,22 +54,31 @@ const prompt = ai.definePrompt({
   model: 'googleai/gemini-1.5-flash',
   input: {schema: DiagnosePlantInputSchema},
   output: {schema: DiagnosePlantOutputSchema},
-  prompt: `Eres un experto botánico y científico agrícola especializado en diagnosticar enfermedades de plantas, particularly para cultivos comunes de Colombia. Tu tarea es analizar una imagen de una planta y una descripción opcional del usuario para proporcionar un diagnóstico detallado y útil, completamente en español. Tu tono debe ser alentador y claro.
+  prompt: `Eres un experto botánico y agrónomo colombiano. Tu tarea es analizar una foto y una descripción opcional para diagnosticar el estado de una planta y proporcionar un plan de acción claro y conciso, totalmente en español.
 
-Primero, determina si la imagen contiene una planta. Si no es así, establece 'isPlant' en false y detente.
+1.  **Análisis Inicial:**
+    *   Determina si la imagen contiene una planta. Si no, el campo 'isPlant' es 'false' y detente.
+    *   Si es una planta, identifica su nombre común ('plantName') y si está sana ('isHealthy').
 
-Si es una planta, identifica su nombre común y determina si está sana.
+2.  **Diagnóstico (si no está sana):**
+    *   **Problema:** Una frase corta resumiendo el problema.
+    *   **Daños:** Un párrafo describiendo los daños visibles.
+    *   **Causas:** Un párrafo explicando las causas probables.
+    *   **Plan de Cuidados Diario (dailyCarePlan):** Crea un plan de recuperación de **7 días**. Para cada día, define entre 1 y 3 tareas sencillas y accionables. Las tareas deben ser claras y fáciles de seguir para un principiante.
+        *   **Ejemplo de Tarea (Día 1):** "Retirar las hojas más afectadas con tijeras limpias."
+        *   **Ejemplo de Tarea (Día 2):** "Aplicar aceite de neem diluido en agua sobre las hojas (mañana o tarde)."
+        *   **Ejemplo de Tarea (Día 3):** "Revisar el envés de las hojas en busca de nuevas plagas."
 
-Si la planta no está sana, debes proporcionar un diagnóstico detallado en español. Para cada uno de los siguientes campos, proporciona un párrafo descriptivo. Usa una lista con viñetas (con Markdown, por ejemplo, "- Elemento 1") solo cuando necesites enumerar múltiples puntos distintos. Para resaltar texto importante, utiliza las etiquetas HTML <strong> y </strong> en lugar de asteriscos.
+3.  **Si la planta está sana:**
+    *   'isHealthy' es 'true'. El campo 'diagnosis' puede omitirse o contener un 'dailyCarePlan' vacío.
 
-- <strong>Problema</strong>: Una frase corta en español que resuma el problema principal identificado (ej: 'Presencia de Roya del Café', 'Síntomas de deficiencia de Nitrógeno', 'Infestación de Ácaros').
-- <strong>Daños</strong>: Describe en un párrafo los daños específicos que observas en la foto. ¿Qué aspecto tienen las hojas, el tallo o las flores? Enumera observaciones específicas con una lista de viñetas si es necesario.
-- <strong>Causas</strong>: Explica en un párrafo las causas más probables de esta condición. Podrían ser factores ambientales, plagas o enfermedades. Enumera causas específicas con una lista de viñetas si es necesario.
-- <strong>Cuidados Necesarios</strong>: Proporciona un párrafo claro y paso a paso sobre las instrucciones de cuidado para que la planta se recupere. Luego, crea una lista con viñetas para los pasos más críticos y procesables.
+**Formato del Texto:**
+*   Usa párrafos simples.
+*   Para resaltar texto importante, utiliza las etiquetas HTML \`<strong>\` y \`</strong>\`.
+*   NO uses Markdown para listas con viñetas. La estructura del plan diario ya maneja las listas de tareas.
 
-Basa tu análisis en la imagen y descripción proporcionadas.
-
-Descripción del usuario: {{{description}}}
+**Contexto del Usuario:**
+Descripción: {{{description}}}
 Foto de la planta: {{media url=photoDataUri}}`,
 });
 
