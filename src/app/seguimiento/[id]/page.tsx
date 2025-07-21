@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
-import { useRouter, notFound } from 'next/navigation';
+import { useRouter, notFound, useParams } from 'next/navigation';
 import { getTrackedPlantById, updateTrackedPlantTasks } from '@/lib/firebase/seguimiento';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -42,13 +42,15 @@ function parseCareTasks(careNeeded: string | undefined): { text: string; complet
 }
 
 
-export default function TrackedPlantDetailPage({ params }: { params: { id: string } }) {
+export default function TrackedPlantDetailPage() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const params = useParams();
   const { toast } = useToast();
   const [plant, setPlant] = useState<TrackedPlant | null>(null);
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState<{ text: string; completed: boolean }[]>([]);
+  const plantId = params.id as string;
 
   useEffect(() => {
     if (authLoading) return;
@@ -59,7 +61,7 @@ export default function TrackedPlantDetailPage({ params }: { params: { id: strin
 
     const fetchPlant = async () => {
       try {
-        const fetchedPlant = await getTrackedPlantById(user.uid, params.id);
+        const fetchedPlant = await getTrackedPlantById(user.uid, plantId);
         if (fetchedPlant) {
           setPlant(fetchedPlant);
           if (fetchedPlant.tasks && fetchedPlant.tasks.length > 0) {
@@ -79,7 +81,7 @@ export default function TrackedPlantDetailPage({ params }: { params: { id: strin
     };
 
     fetchPlant();
-  }, [user, authLoading, params.id, router, toast]);
+  }, [user, authLoading, plantId, router, toast]);
 
   const handleTaskChange = async (index: number) => {
     if (!user || !plant) return;
@@ -255,3 +257,6 @@ function DetailPageSkeleton() {
       </div>
     );
   }
+
+
+    
