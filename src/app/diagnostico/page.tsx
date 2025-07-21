@@ -152,10 +152,23 @@ export default function DiagnosticoPage() {
   };
 
   const handleSaveDiagnosis = async () => {
-    if (!user || !result || !imagePreview) {
+    if (!user) {
+      toast({
+        title: "Inicia sesión para guardar",
+        description: "Debes iniciar sesión para guardar un diagnóstico.",
+        variant: "destructive",
+        action: {
+          altText: "Iniciar Sesión",
+          onClick: () => router.push('/login'),
+        }
+      });
+      return;
+    }
+
+    if (!result || !imagePreview) {
       toast({
         title: "No se puede guardar",
-        description: "Debes iniciar sesión y tener un diagnóstico válido para guardar.",
+        description: "Debes tener un diagnóstico válido para guardar.",
         variant: "destructive"
       });
       return;
@@ -315,7 +328,7 @@ export default function DiagnosticoPage() {
                     </div>
                   </div>
                   
-                  {user && (
+                  {result.isPlant && (
                     <div className="pt-4 border-t">
                       <Button onClick={handleSaveDiagnosis} disabled={isSaving} className="w-full">
                         <ClipboardList className="mr-2 h-4 w-4" />
