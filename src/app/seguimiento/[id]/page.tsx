@@ -28,14 +28,14 @@ function MarkdownContent({ content }: { content: string | undefined }) {
   );
 }
 
+// This function is now centralized in `seguimiento.ts` but we keep a local copy
+// for display logic just in case, though the data from DB should be primary.
 function parseCareTasks(careNeeded: string | undefined): { text: string; completed: boolean }[] {
     if (!careNeeded) return [];
-    // The AI is instructed to use "- " for bullet points. We find those lines.
     const taskLines = careNeeded.match(/^- .*/gm);
     if (!taskLines) return [];
     
     return taskLines.map(line => ({
-        // Remove the leading "- "
         text: line.substring(2).trim(),
         completed: false
     }));
@@ -64,6 +64,7 @@ export default function TrackedPlantDetailPage() {
         const fetchedPlant = await getTrackedPlantById(user.uid, plantId);
         if (fetchedPlant) {
           setPlant(fetchedPlant);
+          // Prioritize tasks from DB. If empty, try to parse from diagnosis.
           if (fetchedPlant.tasks && fetchedPlant.tasks.length > 0) {
             setTasks(fetchedPlant.tasks);
           } else if (fetchedPlant.diagnosis?.careNeeded) {
@@ -80,7 +81,9 @@ export default function TrackedPlantDetailPage() {
       }
     };
 
-    fetchPlant();
+    if (user && plantId) {
+      fetchPlant();
+    }
   }, [user, authLoading, plantId, router, toast]);
 
   const handleTaskChange = async (index: number) => {
@@ -193,6 +196,20 @@ export default function TrackedPlantDetailPage() {
             </Card>
           )}
 
+           {!plant.isHealthy && tasks.length === 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Plan de Cuidados</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-muted-foreground">
+                    <p>La IA no proporcionó una lista de tareas para este diagnóstico. Aquí están las recomendaciones generales:</p>
+                    <MarkdownContent content={plant.diagnosis?.careNeeded} />
+                </div>
+              </CardContent>
+            </Card>
+           )}
+
         </div>
       </div>
     </div>
@@ -257,6 +274,3 @@ function DetailPageSkeleton() {
       </div>
     );
   }
-
-
-    
