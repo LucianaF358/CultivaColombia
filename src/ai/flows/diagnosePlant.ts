@@ -84,7 +84,7 @@ const diagnosePlantFlow = ai.defineFlow(
         lastError = error;
         attempt++;
         
-        const isServiceUnavailable = error.cause?.status === 503 || (error.message && error.message.includes('503'));
+        const isServiceUnavailable = error.cause?.status === 503 || (error.message && (error.message.includes('503') || error.message.toLowerCase().includes('service unavailable')));
 
         if (isServiceUnavailable && attempt < maxRetries) {
           // Wait for 2 seconds before retrying
@@ -97,6 +97,6 @@ const diagnosePlantFlow = ai.defineFlow(
     }
     
     // This part is reached only if the loop completes due to max retries for a 503 error.
-    throw new Error(`Failed to diagnose plant after ${maxRetries} attempts due to service unavailability. Last error: ${lastError?.message}`);
+    throw new Error(`El modelo de IA está sobrecargado. Por favor, intenta de nuevo en unos momentos.`);
   }
 );
