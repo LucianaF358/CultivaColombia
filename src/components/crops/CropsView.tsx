@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useTransition } from 'react';
 import type { Crop } from '@/types';
 import { CropCard } from './CropCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -18,43 +18,51 @@ interface CropsViewProps {
 }
 
 export function CropsView({ initialCrops, regions, climates, types }: CropsViewProps) {
-  const [regionFilter, setRegionFilter] = useState('all');
-  const [climateFilter, setClimateFilter] = useState('all');
-  const [typeFilter, setTypeFilter] = useState('all');
+  const [filters, setFilters] = useState({
+    region: 'all',
+    climate: 'all',
+    type: 'all',
+  });
   const [favoriteCropIds, setFavoriteCropIds] = useState<Set<string>>(new Set());
   const { user } = useAuth();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    let unsubscribe: Unsubscribe = () => {};
-    
-    if (user) {
-      const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
-      
-      unsubscribe = onSnapshot(favsRef, (snapshot) => {
-        const newFavoriteIds = new Set<string>();
-        snapshot.forEach((doc) => {
-          newFavoriteIds.add(doc.id);
-        });
-        setFavoriteCropIds(newFavoriteIds);
-      }, (error) => {
-        console.error("Error listening to favorite crops:", error);
-      });
-
-    } else {
+    if (!user) {
       setFavoriteCropIds(new Set());
+      return;
     }
+
+    const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
+    const unsubscribe = onSnapshot(favsRef, (snapshot) => {
+      const newFavoriteIds = new Set<string>();
+      snapshot.forEach((doc) => {
+        newFavoriteIds.add(doc.id);
+      });
+      startTransition(() => {
+        setFavoriteCropIds(newFavoriteIds);
+      });
+    }, (error) => {
+      console.error("Error listening to favorite crops:", error);
+    });
 
     return () => unsubscribe();
   }, [user]);
 
+  const handleFilterChange = (filterName: keyof typeof filters) => (value: string) => {
+    startTransition(() => {
+        setFilters(prev => ({ ...prev, [filterName]: value }));
+    });
+  };
+
   const filteredCrops = useMemo(() => {
     return initialCrops.filter(crop => {
-      const regionMatch = regionFilter === 'all' || crop.region === regionFilter;
-      const climateMatch = climateFilter === 'all' || crop.clima === climateFilter;
-      const typeMatch = typeFilter === 'all' || crop.tipo === typeFilter;
+      const regionMatch = filters.region === 'all' || crop.region === filters.region;
+      const climateMatch = filters.climate === 'all' || crop.clima === filters.climate;
+      const typeMatch = filters.type === 'all' || crop.tipo === filters.type;
       return regionMatch && climateMatch && typeMatch;
     });
-  }, [initialCrops, regionFilter, climateFilter, typeFilter]);
+  }, [initialCrops, filters]);
 
   return (
     <section>
@@ -63,7 +71,7 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto flex-grow">
           <div>
             <Label htmlFor="region-filter" className="text-sm font-medium text-muted-foreground">Región</Label>
-            <Select value={regionFilter} onValueChange={setRegionFilter}>
+            <Select value={filters.region} onValueChange={handleFilterChange('region')}>
               <SelectTrigger id="region-filter" className="w-full mt-1">
                 <SelectValue placeholder="Selecciona una región" />
               </SelectTrigger>
@@ -75,7 +83,7 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
           </div>
           <div>
             <Label htmlFor="climate-filter" className="text-sm font-medium text-muted-foreground">Clima</Label>
-            <Select value={climateFilter} onValueChange={setClimateFilter}>
+            <Select value={filters.climate} onValueChange={handleFilterChange('climate')}>
               <SelectTrigger id="climate-filter" className="w-full mt-1">
                 <SelectValue placeholder="Selecciona un clima" />
               </SelectTrigger>
@@ -87,7 +95,7 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
           </div>
           <div>
             <Label htmlFor="type-filter" className="text-sm font-medium text-muted-foreground">Tipo de Cultivo</Label>
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
+            <Select value={filters.type} onValueChange={handleFilterChange('type')}>
               <SelectTrigger id="type-filter" className="w-full mt-1">
                 <SelectValue placeholder="Selecciona un tipo" />
               </SelectTrigger>
@@ -100,7 +108,20 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
         </div>
       </div>
 
-      {filteredCrops.length > 0 ? (
+      {isPending ? (
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+                <div key={i} className="space-y-4 p-4 border rounded-lg bg-card animate-pulse">
+                    <div className="h-48 w-full bg-muted rounded-md" />
+                    <div className="space-y-2">
+                        <div className="h-6 w-3/4 bg-muted rounded-md" />
+                        <div className="h-4 w-full bg-muted rounded-md" />
+                        <div className="h-4 w-5/6 bg-muted rounded-md" />
+                    </div>
+                </div>
+            ))}
+        </div>
+      ) : filteredCrops.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCrops.map(crop => (
             <CropCard 
