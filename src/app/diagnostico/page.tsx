@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, X, Bot, Sprout, Siren, HeartPulse, ShieldCheck, AlertTriangle, ClipboardList } from 'lucide-react';
+import { Upload, X, Bot, Sprout, Siren, HeartPulse, ShieldCheck, AlertTriangle, ClipboardList, CheckSquare } from 'lucide-react';
 import Image from 'next/image';
 import { diagnosePlant, type DiagnosePlantOutput } from '@/ai/flows/diagnosePlant';
 import { useToast } from '@/hooks/use-toast';
@@ -361,17 +361,30 @@ export default function DiagnosticoPage() {
                              <MarkdownContent content={result.diagnosis.causes} />
                           </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="item-3">
-                           <AccordionTrigger>
-                              <div className="flex items-center gap-3 text-base">
-                                <div className="p-2 bg-primary/10 rounded-full"><HeartPulse className="h-5 w-5 text-primary"/></div>
-                                <span>Cuidados y Recomendaciones</span>
-                              </div>
-                           </AccordionTrigger>
-                          <AccordionContent>
-                             <MarkdownContent content={result.diagnosis.careNeeded} />
-                          </AccordionContent>
-                        </AccordionItem>
+                        {result.diagnosis.dailyCarePlan && result.diagnosis.dailyCarePlan.length > 0 && (
+                          <AccordionItem value="item-3">
+                            <AccordionTrigger>
+                                <div className="flex items-center gap-3 text-base">
+                                  <div className="p-2 bg-primary/10 rounded-full"><HeartPulse className="h-5 w-5 text-primary"/></div>
+                                  <span>Plan de Cuidados Sugerido</span>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <p className="text-muted-foreground mb-4">Se ha generado un plan de 7 días. Guárdalo para hacerle seguimiento.</p>
+                                <div className="space-y-2">
+                                    {result.diagnosis.dailyCarePlan[0]?.tasks.map((task, index) => (
+                                        <div key={index} className="flex items-center gap-2">
+                                            <CheckSquare className="h-4 w-4 text-primary" />
+                                            <span className="text-sm text-muted-foreground">{task.text}</span>
+                                        </div>
+                                    ))}
+                                    {result.diagnosis.dailyCarePlan.length > 1 && (
+                                      <p className="text-sm text-muted-foreground pt-2">... y más tareas para los próximos días.</p>
+                                    )}
+                                </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        )}
                       </Accordion>
                   )}
                 </div>
