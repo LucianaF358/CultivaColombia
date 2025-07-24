@@ -37,10 +37,16 @@ export type DailyCarePlan = {
     tasks: CareTask[];
 };
 
+export type Note = {
+    text: string;
+    date: string; // ISO date string
+}
+
 export interface TrackedPlant extends DiagnosePlantOutput {
     id: string;
     photoDataUri: string;
     description: string;
     trackedAt: Timestamp | null;
     dailyPlan?: DailyCarePlan[];
+    notes?: Note[];
 }

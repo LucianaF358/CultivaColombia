@@ -1,19 +1,24 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
 import { useRouter, notFound, useParams } from 'next/navigation';
-import { getTrackedPlantById, updateTrackedPlantPlan } from '@/lib/firebase/seguimiento';
+import { getTrackedPlantById, updateTrackedPlantPlan, addNoteAndUpdatePlan } from '@/lib/firebase/seguimiento';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays } from 'lucide-react';
+import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays, BookText, Lightbulb, Loader2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Progress } from '@/components/ui/progress';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import type { TrackedPlant, DailyCarePlan } from '@/types';
 
 function MarkdownContent({ content }: { content: string | undefined }) {
@@ -35,6 +40,8 @@ export default function TrackedPlantDetailPage() {
   const [plant, setPlant] = useState<TrackedPlant | null>(null);
   const [loading, setLoading] = useState(true);
   const [dailyPlan, setDailyPlan] = useState<DailyCarePlan[]>([]);
+  const [newNote, setNewNote] = useState('');
+  const [isUpdatingPlan, setIsUpdatingPlan] = useState(false);
   const plantId = params.id as string;
 
   useEffect(() => {
@@ -66,6 +73,14 @@ export default function TrackedPlantDetailPage() {
     }
   }, [user, authLoading, plantId, router, toast]);
 
+  const progress = useMemo(() => {
+    const allTasks = dailyPlan.flatMap(day => day.tasks);
+    if (allTasks.length === 0) return 0;
+    const completedTasks = allTasks.filter(task => task.completed);
+    return (completedTasks.length / allTasks.length) * 100;
+  }, [dailyPlan]);
+
+
   const handleTaskChange = async (dayIndex: number, taskIndex: number) => {
     if (!user || !plant) return;
 
@@ -75,10 +90,6 @@ export default function TrackedPlantDetailPage() {
 
     try {
         await updateTrackedPlantPlan(user.uid, plant.id, newPlan);
-        toast({
-            title: "Progreso guardado",
-            description: "Tu plan de cuidados ha sido actualizado.",
-        });
     } catch (error) {
         console.error("Error updating plan:", error);
         toast({ title: "Error", description: "No se pudo guardar el cambio en la tarea.", variant: "destructive" });
@@ -88,6 +99,27 @@ export default function TrackedPlantDetailPage() {
         setDailyPlan(revertedPlan);
     }
   };
+
+  const handleAddNote = async () => {
+    if (!user || !plant || !newNote.trim()) {
+        toast({ title: "Nota vacía", description: "Por favor escribe una nota.", variant: "destructive" });
+        return;
+    }
+    setIsUpdatingPlan(true);
+    try {
+        const updatedPlan = await addNoteAndUpdatePlan(user.uid, plantId, newNote);
+        setDailyPlan(updatedPlan);
+        setPlant(prev => prev ? { ...prev, notes: [...(prev.notes || []), { text: newNote, date: new Date().toISOString() }] } : null);
+        setNewNote('');
+        toast({ title: "Plan Actualizado", description: "La IA ha generado un nuevo plan de cuidados basado en tu nota." });
+    } catch (error) {
+        console.error("Error updating plan with note:", error);
+        toast({ title: "Error", description: "No se pudo actualizar el plan con la nota.", variant: "destructive" });
+    } finally {
+        setIsUpdatingPlan(false);
+    }
+  };
+
 
   if (loading || authLoading) {
     return <DetailPageSkeleton />;
@@ -125,6 +157,41 @@ export default function TrackedPlantDetailPage() {
                     </CardDescription>
                 </CardContent>
             </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Notas y Observaciones</CardTitle>
+                    <CardDescription>Añade notas para que la IA ajuste el plan de cuidados.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                        <Textarea 
+                            placeholder="Ej: 'Las manchas han empezado a reducirse, pero noté unas pequeñas moscas blancas...'"
+                            value={newNote}
+                            onChange={(e) => setNewNote(e.target.value)}
+                            rows={4}
+                        />
+                        <Button onClick={handleAddNote} disabled={isUpdatingPlan || !newNote.trim()} className="w-full">
+                            {isUpdatingPlan ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analizando y actualizando...</> : <><Lightbulb className="mr-2 h-4 w-4" />Añadir Nota y Actualizar Plan</>}
+                        </Button>
+                    </div>
+
+                    {plant.notes && plant.notes.length > 0 && (
+                        <div className="space-y-3 pt-4 border-t">
+                             <h4 className="font-semibold text-sm">Historial de Notas</h4>
+                             <div className="max-h-40 overflow-y-auto space-y-3 pr-2">
+                                {plant.notes.slice().reverse().map((note, index) => (
+                                    <div key={index} className="text-sm p-3 bg-muted/50 rounded-md border">
+                                        <p className="text-muted-foreground">{note.text}</p>
+                                        <p className="text-xs text-muted-foreground/80 mt-1">{format(new Date(note.date), "d 'de' LLLL, yyyy 'a las' HH:mm", { locale: es })}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+
         </div>
 
         <div className="lg:col-span-3 space-y-6">
@@ -153,7 +220,10 @@ export default function TrackedPlantDetailPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>Plan de Cuidados de 7 Días</CardTitle>
-                    <CardDescription>Sigue este plan diario y marca las tareas completadas.</CardDescription>
+                    <div className="flex items-center gap-4">
+                        <Progress value={progress} className="w-full" />
+                        <span className="text-sm font-semibold text-muted-foreground">{Math.round(progress)}%</span>
+                    </div>
                 </CardHeader>
                 <CardContent>
                     <Tabs defaultValue="day-1" className="w-full">
