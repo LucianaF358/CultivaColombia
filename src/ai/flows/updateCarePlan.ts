@@ -41,7 +41,7 @@ const UpdateCarePlanInputSchema = z.object({
 export type UpdateCarePlanInput = z.infer<typeof UpdateCarePlanInputSchema>;
 
 // The output is a new daily care plan
-export const UpdateCarePlanOutputSchema = z.array(DailyCarePlanSchema);
+const UpdateCarePlanOutputSchema = z.array(DailyCarePlanSchema);
 export type UpdateCarePlanOutput = z.infer<typeof UpdateCarePlanOutputSchema>;
 
 
