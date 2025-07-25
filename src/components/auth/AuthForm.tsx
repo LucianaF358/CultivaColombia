@@ -68,7 +68,6 @@ export function AuthForm({ mode }: AuthFormProps) {
           description: "Has iniciado sesión correctamente.",
       });
       router.push('/');
-      router.refresh();
 
     } catch (error: any) {
         let errorMessage = 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.';
