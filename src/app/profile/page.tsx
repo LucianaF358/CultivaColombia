@@ -6,11 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { logout } from "@/lib/actions";
 import { sendPasswordReset, deleteUserAccount } from "@/lib/firebase/authActions";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, KeyRound, Trash2, ShieldAlert } from 'lucide-react';
+import { Loader2, KeyRound, Trash2, ShieldAlert, LogOut } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoggingOut, startLogoutTransition] = useTransition();
   const [isPasswordResetting, setIsPasswordResetting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
@@ -28,6 +29,12 @@ export default function ProfilePage() {
       router.push('/login');
     }
   }, [user, loading, router]);
+  
+  const handleLogout = () => {
+    startLogoutTransition(() => {
+        logout();
+    });
+  };
 
   const handlePasswordReset = async () => {
     if (!user || !user.email) return;
@@ -132,7 +139,8 @@ export default function ProfilePage() {
             <CardDescription>{user.email}</CardDescription>
           </CardHeader>
            <CardContent className="text-center">
-            <Button variant="ghost" onClick={() => logout()}>
+            <Button variant="ghost" onClick={handleLogout} disabled={isLoggingOut}>
+              {isLoggingOut ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <LogOut className="mr-2 h-4 w-4" />}
               Cerrar Sesión
             </Button>
           </CardContent>
