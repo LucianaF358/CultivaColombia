@@ -51,7 +51,7 @@ export default function ProfilePage() {
   };
 
   const handleDeleteAccount = async () => {
-    if(deleteConfirmation !== 'DELETE') return;
+    if(deleteConfirmation !== 'ELIMINAR') return;
 
     setIsDeleting(true);
     const result = await deleteUserAccount();
@@ -174,12 +174,12 @@ export default function ProfilePage() {
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <div className="space-y-2 py-2">
-                    <Label htmlFor="delete-confirm">Para confirmar, escribe <strong className="text-destructive">DELETE</strong> a continuación:</Label>
+                    <Label htmlFor="delete-confirm">Para confirmar, escribe <strong className="text-destructive">ELIMINAR</strong> a continuación:</Label>
                     <Input 
                         id="delete-confirm"
                         value={deleteConfirmation}
                         onChange={(e) => setDeleteConfirmation(e.target.value)}
-                        placeholder="DELETE"
+                        placeholder="ELIMINAR"
                         className="border-destructive focus-visible:ring-destructive"
                     />
                 </div>
@@ -188,7 +188,7 @@ export default function ProfilePage() {
                   <AlertDialogAction
                     variant="destructive"
                     onClick={handleDeleteAccount}
-                    disabled={deleteConfirmation !== 'DELETE' || isDeleting}
+                    disabled={deleteConfirmation !== 'ELIMINAR' || isDeleting}
                   >
                     {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Eliminar permanentemente
