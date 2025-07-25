@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
 import { getCrops } from '@/lib/data';
 import type { Crop } from '@/types';
@@ -15,40 +15,48 @@ import { db } from '@/lib/firebase/db';
 
 export default function FavoritesPage() {
   const { user, loading: authLoading } = useAuth();
-  const [favoriteCrops, setFavoriteCrops] = useState<Crop[]>([]);
-  const [loadingCrops, setLoadingCrops] = useState(true);
+  const [allCrops, setAllCrops] = useState<Crop[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(true);
 
+  // 1. Fetch all crops once when the component mounts
   useEffect(() => {
-    if (authLoading) return; // Wait until authentication state is resolved
-
-    let unsubscribe: Unsubscribe = () => {};
-
-    if (user) {
-      setLoadingCrops(true);
-      const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
-
-      unsubscribe = onSnapshot(favsRef, async (snapshot) => {
-        const favoriteIds = snapshot.docs.map(doc => doc.id);
-        const allCrops = await getCrops(); // Fetch all crops to filter from
-        const crops = allCrops.filter(crop => favoriteIds.includes(crop.id));
-        setFavoriteCrops(crops);
-        setLoadingCrops(false);
-      }, (error) => {
-        console.error("Error fetching favorite crops:", error);
-        setLoadingCrops(false);
-      });
-
-    } else {
-      // If there's no user, clear favorites and stop loading.
-      setFavoriteCrops([]);
-      setLoadingCrops(false);
+    async function loadAllCrops() {
+      setLoading(true);
+      const crops = await getCrops();
+      setAllCrops(crops);
+      setLoading(false);
     }
+    loadAllCrops();
+  }, []);
+
+  // 2. Set up a real-time listener for favorite IDs when the user changes
+  useEffect(() => {
+    if (authLoading) return; // Wait for auth to be ready
+    if (!user) {
+      setFavoriteIds(new Set()); // Clear favorites if user logs out
+      return;
+    }
+
+    const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
+    const unsubscribe = onSnapshot(favsRef, (snapshot) => {
+      const newFavoriteIds = new Set(snapshot.docs.map(doc => doc.id));
+      setFavoriteIds(newFavoriteIds);
+    }, (error) => {
+      console.error("Error fetching favorite crops:", error);
+    });
 
     // Cleanup subscription on component unmount
     return () => unsubscribe();
   }, [user, authLoading]);
 
-  if (authLoading || loadingCrops) {
+  // 3. Compute the favorite crops list based on the two states
+  const favoriteCrops = useMemo(() => {
+    if (allCrops.length === 0 || favoriteIds.size === 0) return [];
+    return allCrops.filter(crop => favoriteIds.has(crop.id));
+  }, [allCrops, favoriteIds]);
+
+  if (authLoading || loading) {
     return <FavoritesSkeleton />;
   }
 
