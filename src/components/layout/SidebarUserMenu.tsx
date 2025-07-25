@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { useAuth } from '@/lib/firebase/auth';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { logout } from '@/lib/actions';
 import {
   SidebarFooter,
@@ -18,17 +18,22 @@ import { UserCircle, Heart, LogIn, LogOut, Loader2, UserPlus } from 'lucide-reac
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '@/lib/firebase/config';
 
 export function SidebarUserMenu() {
   const { user, loading } = useAuth();
   const { isMobile, state } = useSidebar();
   const pathname = usePathname();
+  const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
 
   const handleLogout = () => {
-    startTransition(() => {
-      logout();
+    startTransition(async () => {
+      const auth = getAuth(app);
+      await signOut(auth);
+      await logout();
+      router.push('/');
     });
   };
 
@@ -50,7 +55,6 @@ export function SidebarUserMenu() {
                     <SidebarMenuButton
                         disabled
                         className="group-data-[collapsible=icon]:justify-center"
-                        tooltip={{ children: "Cargando..." }}
                     >
                         <Loader2 className="animate-spin" />
                         <span className="group-data-[collapsible=icon]:hidden">Cargando...</span>

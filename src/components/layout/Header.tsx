@@ -18,15 +18,22 @@ import { LogOut, UserCircle, Heart } from 'lucide-react';
 import { useTransition } from 'react';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { useSidebar } from '../ui/sidebar';
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '@/lib/firebase/config';
+import { useRouter } from 'next/navigation';
 
 export function Header() {
   const { user } = useAuth();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { toggleSidebar } = useSidebar();
 
   const handleLogout = () => {
-    startTransition(() => {
-      logout();
+    startTransition(async () => {
+      const auth = getAuth(app);
+      await signOut(auth);
+      await logout();
+      router.push('/');
     });
   };
 

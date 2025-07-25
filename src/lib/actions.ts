@@ -2,7 +2,6 @@
 "use server";
 
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 export async function createSession(idToken: string) {
   if (!idToken) {
@@ -20,5 +19,5 @@ export async function createSession(idToken: string) {
 
 export async function logout() {
   cookies().delete('session');
-  redirect('/');
+  // No need to redirect from here, client will handle it.
 }

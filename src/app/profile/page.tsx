@@ -14,6 +14,8 @@ import { Loader2, KeyRound, Trash2, ShieldAlert, LogOut } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { getAuth, signOut } from "firebase/auth";
+import { app } from "@/lib/firebase/config";
 
 export default function ProfilePage() {
   const { user, loading } = useAuth();
@@ -31,8 +33,11 @@ export default function ProfilePage() {
   }, [user, loading, router]);
   
   const handleLogout = () => {
-    startLogoutTransition(() => {
-        logout();
+    startLogoutTransition(async () => {
+        const auth = getAuth(app);
+        await signOut(auth);
+        await logout();
+        router.push('/');
     });
   };
 
