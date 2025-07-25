@@ -62,11 +62,16 @@ export default function ProfilePage() {
         title: "Cuenta Eliminada",
         description: "Tu cuenta ha sido eliminada permanentemente.",
       });
-      // The logout action will handle the redirect
+      // The user is now logged out on the server, a client-side redirect completes the flow.
+      router.push('/');
     } else {
+       let errorMessage = result.error || "No se pudo completar la operación.";
+       if (result.error === 'auth/requires-recent-login' || result.error === 'auth/no-current-user') {
+           errorMessage = "Esta es una operación sensible y requiere que inicies sesión recientemente. Por favor, cierra sesión y vuelve a entrar antes de intentarlo de nuevo.";
+       }
        toast({
         title: "Error al eliminar la cuenta",
-        description: result.error || "No se pudo completar la operación. Puede que necesites iniciar sesión de nuevo.",
+        description: errorMessage,
         variant: "destructive",
       });
     }

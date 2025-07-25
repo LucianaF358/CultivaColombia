@@ -19,28 +19,26 @@ export async function sendPasswordReset(email: string): Promise<{ success: boole
 }
 
 export async function deleteUserAccount(): Promise<{ success: boolean; error?: string }> {
-    const sessionCookie = cookies().get('session');
-    
-    // This action requires the user to be recently signed in.
-    // We can't easily re-authenticate on the server, so we'll rely on the client-side user object.
-    // If the token is expired, Firebase Admin SDK would be a better choice, but for simplicity
-    // with client-side auth, we'll proceed this way. The operation will fail if the user's
-    // token is expired, and we will catch that error.
-    
+    // Note: The most robust way to handle this is with the Firebase Admin SDK to manage the user
+    // based on the session cookie. However, to stick with the client-side SDK pattern,
+    // we must rely on auth.currentUser, which can be unreliable on the server.
+    // This implementation will work if the auth state is correctly propagated, but it's fragile.
+    // A key improvement is providing a clear error message to the user if it fails.
     if (!auth.currentUser) {
-        return { success: false, error: "Usuario no autenticado. Por favor, inicia sesión de nuevo." };
+        // This is a likely failure point on the server.
+        // We'll return a specific error that the client can interpret.
+        return { success: false, error: "auth/no-current-user" };
     }
     
     try {
         await deleteUser(auth.currentUser);
-        await logout(); // Log out after successful deletion
+        // Do not call logout() here directly, as it causes a redirect within a server action
+        // which is not recommended. The client will handle the redirect after the action completes.
+        cookies().delete('session');
         return { success: true };
     } catch (error: any) {
         console.error("Error deleting user account:", error);
-        let message = "Ocurrió un error al eliminar la cuenta.";
-        if (error.code === 'auth/requires-recent-login') {
-            message = "Esta operación es sensible y requiere autenticación reciente. Por favor, cierra sesión y vuelve a iniciar sesión antes de intentarlo de nuevo.";
-        }
-        return { success: false, error: message };
+        // Forward the error code to the client
+        return { success: false, error: error.code || "Ocurrió un error desconocido." };
     }
 }
