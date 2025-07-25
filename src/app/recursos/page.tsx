@@ -14,42 +14,42 @@ const videos = [
   {
     title: "¿Qué es la Fotosíntesis? Explicación Sencilla",
     description: "Aprende cómo las plantas convierten la luz solar en su alimento. El proceso fundamental para la vida en la Tierra.",
-    videoId: "watch?v=m-h0p_D2_YI",
+    videoId: "D1YhA2P2T_0",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "photosynthesis diagram"
   },
   {
     title: "Las Partes de una Planta y sus Funciones",
     description: "Un recorrido completo por la raíz, tallo, hojas, flores y frutos. Entiende para qué sirve cada parte.",
-    videoId: "watch?v=b213g-p3QzI",
+    videoId: "b213g-p3QzI",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant parts"
   },
   {
     title: "El Ciclo de Vida de una Planta: de Semilla a Semilla",
     description: "Observa el increíble viaje de una planta desde la germinación hasta que produce sus propias semillas.",
-    videoId: "watch?v=k0-z1a29pM4",
+    videoId: "k0-z1a29pM4",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant lifecycle"
   },
   {
     title: "Polinización: El Secreto de las Flores y Frutos",
     description: "Descubre cómo viaja el polen y por qué es crucial para que las plantas produzcan frutos y semillas. Conoce a los polinizadores.",
-    videoId: "watch?v=E_X5I0f-U5g",
+    videoId: "E_X5I0f-U5g",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "bee pollination"
   },
   {
     title: "La Respiración en las Plantas: ¿Cómo Respiran?",
     description: "Las plantas también respiran. Aprende sobre el intercambio de gases y cómo obtienen energía durante la noche.",
-    videoId: "watch?v=gJ51c0dG-6U",
+    videoId: "gJ51c0dG-6U",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant stomata"
   },
   {
     title: "Cómo Germinar una Semilla: Paso a Paso",
     description: "Guía práctica para entender el proceso de germinación y cómo darle a tus semillas el mejor comienzo posible.",
-    videoId: "watch?v=J8t2dZc3g9s",
+    videoId: "J8t2dZc3g9s",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "seed germination"
   },
@@ -367,7 +367,7 @@ export default function RecursosPage() {
                   </CardContent>
                   <div className="p-6 pt-0">
                     <Button asChild className="w-full">
-                      <Link href={`https://www.youtube.com/${video.videoId}`} target="_blank" rel="noopener noreferrer">
+                      <Link href={`https://www.youtube.com/watch?v=${video.videoId}`} target="_blank" rel="noopener noreferrer">
                         <Video className="mr-2 h-4 w-4" /> Ver en YouTube
                       </Link>
                     </Button>
