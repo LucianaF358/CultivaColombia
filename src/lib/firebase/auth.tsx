@@ -36,26 +36,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
-  // Show a full-page loader while authenticating
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-          <div className="w-full h-full flex justify-center items-center">
-            <div className="space-y-4 p-8">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-[250px]" />
-                  <Skeleton className="h-4 w-[200px]" />
-                </div>
-              </div>
-          </div>
-      </div>
-    );
-  }
-
   return (
     <AuthContext.Provider value={{ user, loading }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
