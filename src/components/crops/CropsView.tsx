@@ -33,12 +33,14 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
       return;
     }
 
+    // Set up the real-time listener for favorites
     const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
     const unsubscribe = onSnapshot(favsRef, (snapshot) => {
       const newFavoriteIds = new Set<string>();
       snapshot.forEach((doc) => {
         newFavoriteIds.add(doc.id);
       });
+      // Use a transition to prevent jarring UI updates
       startTransition(() => {
         setFavoriteCropIds(newFavoriteIds);
       });
@@ -46,8 +48,9 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
       console.error("Error listening to favorite crops:", error);
     });
 
+    // Cleanup function to unsubscribe when the component unmounts or the user changes
     return () => unsubscribe();
-  }, [user]);
+  }, [user]); // This dependency array ensures the listener is reset when the user logs in or out
 
   const handleFilterChange = (filterName: keyof typeof filters) => (value: string) => {
     startTransition(() => {
