@@ -12,44 +12,44 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 
 const videos = [
   {
-    title: "¿Qué es la Fotosíntesis? Explicación Sencilla",
-    description: "Aprende cómo las plantas convierten la luz solar en su alimento. El proceso fundamental para la vida en la Tierra.",
-    videoId: "y-5-sBC3Q64",
+    title: "¿Qué es la Fotosíntesis? Para Niños",
+    description: "Aprende cómo las plantas convierten la luz solar en su alimento. Un video educativo de Smile and Learn.",
+    videoId: "ps2p_t9a-cY",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "photosynthesis diagram"
   },
   {
-    title: "Las Partes de una Planta y sus Funciones",
+    title: "Las Partes de la Planta y sus Funciones",
     description: "Un recorrido completo por la raíz, tallo, hojas, flores y frutos. Entiende para qué sirve cada parte.",
-    videoId: "b2d3pI2uD8A",
+    videoId: "oeiK_dU5-qI",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant parts"
   },
   {
-    title: "El Ciclo de Vida de una Planta: de Semilla a Semilla",
+    title: "El Ciclo de Vida de una Planta",
     description: "Observa el increíble viaje de una planta desde la germinación hasta que produce sus propias semillas.",
-    videoId: "gJ51c0dG-6U",
+    videoId: "8E6z5I-g4gY",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant lifecycle"
   },
   {
-    title: "Polinización: El Secreto de las Flores y Frutos",
+    title: "Polinización: ¿Qué es y qué tipos existen?",
     description: "Descubre cómo viaja el polen y por qué es crucial para que las plantas produzcan frutos y semillas. Conoce a los polinizadores.",
-    videoId: "E-t2p_A-c4k",
+    videoId: "FlO5bO3VeHY",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "bee pollination"
   },
   {
-    title: "La Respiración en las Plantas: ¿Cómo Respiran?",
+    title: "Nutrición y Respiración de las Plantas",
     description: "Las plantas también respiran. Aprende sobre el intercambio de gases y cómo obtienen energía durante la noche.",
-    videoId: "CRTr3DjwGtk",
+    videoId: "zID_i_gBXLs",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant stomata"
   },
   {
-    title: "Cómo Germinar una Semilla: Paso a Paso",
+    title: "Cómo Germinar una Semilla: Experimento",
     description: "Guía práctica para entender el proceso de germinación y cómo darle a tus semillas el mejor comienzo posible.",
-    videoId: "J8t2dZc3g9s",
+    videoId: "F5i_sJgUIqI",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "seed germination"
   },
@@ -471,3 +471,4 @@ export default function RecursosPage() {
     
 
     
+
