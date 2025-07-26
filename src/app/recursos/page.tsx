@@ -14,28 +14,28 @@ const videos = [
   {
     title: "¿Qué es la Fotosíntesis? Explicación Sencilla",
     description: "Aprende cómo las plantas convierten la luz solar en su alimento. El proceso fundamental para la vida en la Tierra.",
-    videoId: "D1YhA2P2T_0",
+    videoId: "mjmQpM2gCgA",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "photosynthesis diagram"
   },
   {
     title: "Las Partes de una Planta y sus Funciones",
     description: "Un recorrido completo por la raíz, tallo, hojas, flores y frutos. Entiende para qué sirve cada parte.",
-    videoId: "b213g-p3QzI",
+    videoId: "f-DImyY2yHQ",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant parts"
   },
   {
     title: "El Ciclo de Vida de una Planta: de Semilla a Semilla",
     description: "Observa el increíble viaje de una planta desde la germinación hasta que produce sus propias semillas.",
-    videoId: "k0-z1a29pM4",
+    videoId: "9sV7Y9PZE4Y",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant lifecycle"
   },
   {
     title: "Polinización: El Secreto de las Flores y Frutos",
     description: "Descubre cómo viaja el polen y por qué es crucial para que las plantas produzcan frutos y semillas. Conoce a los polinizadores.",
-    videoId: "E_X5I0f-U5g",
+    videoId: "sMvrLaT2M-s",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "bee pollination"
   },
@@ -467,5 +467,7 @@ export default function RecursosPage() {
     </div>
   );
 }
+
+    
 
     
