@@ -14,35 +14,35 @@ const videos = [
   {
     title: "¿Qué es la Fotosíntesis? Explicación Sencilla",
     description: "Aprende cómo las plantas convierten la luz solar en su alimento. El proceso fundamental para la vida en la Tierra.",
-    videoId: "mjmQpM2gCgA",
+    videoId: "y-5-sBC3Q64",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "photosynthesis diagram"
   },
   {
     title: "Las Partes de una Planta y sus Funciones",
     description: "Un recorrido completo por la raíz, tallo, hojas, flores y frutos. Entiende para qué sirve cada parte.",
-    videoId: "f-DImyY2yHQ",
+    videoId: "b2d3pI2uD8A",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant parts"
   },
   {
     title: "El Ciclo de Vida de una Planta: de Semilla a Semilla",
     description: "Observa el increíble viaje de una planta desde la germinación hasta que produce sus propias semillas.",
-    videoId: "9sV7Y9PZE4Y",
+    videoId: "gJ51c0dG-6U",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant lifecycle"
   },
   {
     title: "Polinización: El Secreto de las Flores y Frutos",
     description: "Descubre cómo viaja el polen y por qué es crucial para que las plantas produzcan frutos y semillas. Conoce a los polinizadores.",
-    videoId: "sMvrLaT2M-s",
+    videoId: "E-t2p_A-c4k",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "bee pollination"
   },
   {
     title: "La Respiración en las Plantas: ¿Cómo Respiran?",
     description: "Las plantas también respiran. Aprende sobre el intercambio de gases y cómo obtienen energía durante la noche.",
-    videoId: "gJ51c0dG-6U",
+    videoId: "CRTr3DjwGtk",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant stomata"
   },
