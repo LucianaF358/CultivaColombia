@@ -14,7 +14,7 @@ const videos = [
   {
     title: "¿Qué es la Fotosíntesis? Para Niños",
     description: "Aprende cómo las plantas convierten la luz solar en su alimento. Un video educativo de Smile and Learn.",
-    videoId: "ps2p_t9a-cY",
+    videoId: "t-g2J3q2_gA",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "photosynthesis diagram"
   },
@@ -41,7 +41,7 @@ const videos = [
   },
   {
     title: "Nutrición y Respiración de las Plantas",
-    description: "Las plantas también respiran. Aprende sobre el intercambio de gases y cómo obtienen energía durante la noche.",
+    description: "Las plantas también respiran. Aprende sobre el intercambio de gases y cómo obtienen energía.",
     videoId: "zID_i_gBXLs",
     thumbnailUrl: "https://placehold.co/600x400.png",
     dataAiHint: "plant stomata"
@@ -472,3 +472,6 @@ export default function RecursosPage() {
 
     
 
+
+
+    
