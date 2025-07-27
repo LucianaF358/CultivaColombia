@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useEffect, useTransition, useMemo } from 'react';
 import type { Crop } from '@/types';
 import { CropCard } from './CropCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -25,7 +25,6 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     type: 'all',
   });
   const [favoriteCropIds, setFavoriteCropIds] = useState<Set<string>>(new Set());
-  const [displayedCrops, setDisplayedCrops] = useState<Crop[]>(initialCrops);
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
 
@@ -47,22 +46,20 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     return () => unsubscribe();
   }, [user]);
 
-  // Effect to update displayed crops based on filters
-  useEffect(() => {
-    startTransition(() => {
-      const filtered = initialCrops.filter(crop => {
-        const regionMatch = filters.region === 'all' || crop.region === filters.region;
-        const climateMatch = filters.climate === 'all' || crop.clima === filters.climate;
-        const typeMatch = filters.type === 'all' || crop.tipo === filters.type;
-        return regionMatch && climateMatch && typeMatch;
-      });
-      setDisplayedCrops(filtered);
+  // Derived state for displayed crops based on filters
+  const displayedCrops = useMemo(() => {
+    return initialCrops.filter(crop => {
+      const regionMatch = filters.region === 'all' || crop.region === filters.region;
+      const climateMatch = filters.climate === 'all' || crop.clima === filters.climate;
+      const typeMatch = filters.type === 'all' || crop.tipo === filters.type;
+      return regionMatch && climateMatch && typeMatch;
     });
   }, [filters, initialCrops]);
 
-
   const handleFilterChange = (filterName: keyof typeof filters) => (value: string) => {
-    setFilters(prev => ({ ...prev, [filterName]: value }));
+    startTransition(() => {
+      setFilters(prev => ({ ...prev, [filterName]: value }));
+    });
   };
 
   return (
