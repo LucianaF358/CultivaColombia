@@ -43,7 +43,7 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
     try {
       await toggleFavorite(user.uid, cropId, !isFavorite);
       
-      // The onSnapshot listener in CropsView will handle the UI update automatically.
+      // The onSnapshot listener in CropsView/FavoritesPage will handle the UI update automatically.
       // We can still show a toast for better user feedback.
       if (!isFavorite) {
         toast({
