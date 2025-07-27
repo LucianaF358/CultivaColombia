@@ -5,7 +5,7 @@ import { collection, addDoc, serverTimestamp, getDoc, updateDoc, doc, arrayUnion
 import { db } from './db';
 import type { DiagnosePlantOutput } from '@/ai/flows/diagnosePlant';
 import { updateCarePlan, type UpdateCarePlanOutput } from '@/ai/flows/updateCarePlan';
-import type { TrackedPlant, DailyCarePlan, Note } from '@/types';
+import type { TrackedPlant, DailyCarePlan, Note, Crop } from '@/types';
 
 interface DiagnosisDataToSave extends DiagnosePlantOutput {
     photoDataUri: string;
@@ -21,9 +21,14 @@ export async function saveDiagnosisForTracking(userId: string, data: DiagnosisDa
 
   try {
     const docData: Omit<TrackedPlant, 'id'> = {
-      ...data,
-      trackedAt: serverTimestamp() as any, // Use server timestamp for consistency
-      dailyPlan: data.diagnosis?.dailyCarePlan || [], // Save the generated tasks list
+      isPlant: data.isPlant,
+      plantName: data.plantName,
+      isHealthy: data.isHealthy,
+      diagnosis: data.diagnosis,
+      photoDataUri: data.photoDataUri,
+      description: data.description,
+      trackedAt: serverTimestamp() as any,
+      dailyPlan: data.diagnosis?.dailyCarePlan || [],
       notes: [],
     };
 
@@ -33,6 +38,38 @@ export async function saveDiagnosisForTracking(userId: string, data: DiagnosisDa
     throw new Error("No se pudo guardar el diagnóstico para seguimiento.");
   }
 }
+
+export async function startSowingCrop(userId: string, crop: Crop): Promise<void> {
+    if (!userId) {
+        throw new Error("El usuario no está autenticado.");
+    }
+    const trackingCollectionRef = collection(db, 'usuarios', userId, 'plantasSeguimiento');
+
+    try {
+        const docData: Omit<TrackedPlant, 'id'> = {
+            isPlant: true,
+            plantName: crop.nombre,
+            isHealthy: true, // Started from a healthy state
+            imageUrl: crop.imageUrl, // Store the reference image URL
+            trackedAt: serverTimestamp() as any,
+            description: `Seguimiento de siembra para ${crop.nombre}.`,
+            dailyPlan: [ // Generic germination plan
+                { day: 1, tasks: [{ text: `Preparar el sustrato y sembrar la semilla de ${crop.nombre} según la profundidad recomendada.`, completed: false }] },
+                { day: 2, tasks: [{ text: "Realizar el primer riego con cuidado para no desenterrar la semilla.", completed: false }] },
+                { day: 3, tasks: [{ text: "Verificar la humedad del sustrato. Mantener húmedo pero no encharcado.", completed: false }] },
+                { day: 4, tasks: [{ text: "Asegurar que la siembra reciba la cantidad de luz solar adecuada.", completed: false }] },
+                { day: 5, tasks: [{ text: "Revisar en busca de los primeros signos de germinación.", completed: false }] },
+                { day: 6, tasks: [{ text: "Mantener la humedad constante.", completed: false }] },
+                { day: 7, tasks: [{ text: `Vigilar la aparición de plántulas de ${crop.nombre}.`, completed: false }] },
+            ]
+        };
+        await addDoc(trackingCollectionRef, docData);
+    } catch (error) {
+        console.error("Error starting sowing tracking:", error);
+        throw new Error("No se pudo iniciar el seguimiento de la siembra.");
+    }
+}
+
 
 export async function getTrackedPlantById(userId: string, plantId: string): Promise<TrackedPlant | null> {
     if (!userId) {
@@ -52,6 +89,12 @@ export async function getTrackedPlantById(userId: string, plantId: string): Prom
         if (!plantData.notes) {
             plantData.notes = [];
         }
+        
+        // Use imageUrl for photoDataUri if it exists, for consistent display
+        if (plantData.imageUrl && !plantData.photoDataUri) {
+            plantData.photoDataUri = plantData.imageUrl;
+        }
+
 
         return plantData;
     } else {
