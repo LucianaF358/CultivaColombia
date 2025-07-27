@@ -18,7 +18,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Directa o por trasplante desde semilleros.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Sogata, Piricularia.',
-    imageUrl: 'https://images.unsplash.com/photo-1723475158232-819e29803f4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcnJvenxlbnwwfHx8fDE3NTM2Mjc0Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    imageUrl: 'https://images.unsplash.com/photo-1659333555620-0d58d9fd1a5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjdWx0aXZvJTIwYXJyb3p8ZW58MHx8fHwxNzUzNjI4MzE0fDA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'rice paddy'
   },
   { 
@@ -54,7 +54,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, germina en 1-2 semanas.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Roya del tallo, pulgones.',
-    imageUrl: 'https://images.unsplash.com/photo-1507633698034-3f473855a82c?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1664673678053-3b388fc8f00c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjdWx0aXZvJTIwdHJpZ298ZW58MHx8fHwxNzUzNjI4MzM4fDA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'wheat field'
   },
   {
@@ -72,7 +72,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa, 3-7 días para germinar.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Mosca del sorgo, pulgón amarillo.',
-    imageUrl: 'https://images.unsplash.com/photo-1628042735787-35c8c6ce5f82?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1552119243-9291d3359aac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjdWx0aXZvJTIwc29yZ298ZW58MHx8fHwxNzUzNjI4MzYwfDA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'sorghum field'
   },
   {
@@ -90,7 +90,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Roya, oídio.',
-    imageUrl: 'https://images.unsplash.com/photo-1593336423588-e54f762744a5?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1597300342840-c80ffcbb5356?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjdWx0aXZvJTIwY2ViYWRhfGVufDB8fHx8MTc1MzYyODM5N3ww&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'barley field'
   },
   {
