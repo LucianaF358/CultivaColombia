@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/firebase/auth';
 import { collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
 import { db } from '@/lib/firebase/db';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface CropsViewProps {
   initialCrops: Crop[];
@@ -40,10 +41,8 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
       snapshot.forEach((doc) => {
         newFavoriteIds.add(doc.id);
       });
-      // Use a transition to prevent jarring UI updates
-      startTransition(() => {
-        setFavoriteCropIds(newFavoriteIds);
-      });
+      // No transition needed here, as this should be a fast state update
+      setFavoriteCropIds(newFavoriteIds);
     }, (error) => {
       console.error("Error listening to favorite crops:", error);
     });
@@ -114,14 +113,7 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
       {isPending ? (
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
-                <div key={i} className="space-y-4 p-4 border rounded-lg bg-card animate-pulse">
-                    <div className="h-48 w-full bg-muted rounded-md" />
-                    <div className="space-y-2">
-                        <div className="h-6 w-3/4 bg-muted rounded-md" />
-                        <div className="h-4 w-full bg-muted rounded-md" />
-                        <div className="h-4 w-5/6 bg-muted rounded-md" />
-                    </div>
-                </div>
+               <CardSkeleton key={i} />
             ))}
         </div>
       ) : filteredCrops.length > 0 ? (
@@ -141,4 +133,21 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
       )}
     </section>
   );
+}
+
+function CardSkeleton() {
+    return (
+        <div className="space-y-4 p-4 border rounded-lg bg-card">
+            <Skeleton className="h-48 w-full" />
+            <div className="space-y-2">
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+            </div>
+            <div className="flex gap-2 pt-4">
+                 <Skeleton className="h-6 w-24" />
+                 <Skeleton className="h-6 w-24" />
+            </div>
+        </div>
+    )
 }

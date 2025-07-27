@@ -1,8 +1,8 @@
 
 "use client";
 
-import { useTransition } from 'react';
-import { Heart } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/firebase/auth';
@@ -19,9 +19,9 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleFavorite = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleFavorite = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -38,32 +38,37 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
       return;
     }
 
-    startTransition(async () => {
-      try {
-        await toggleFavorite(user.uid, cropId, !isFavorite);
-        if (!isFavorite) {
-          toast({
-            title: 'Añadido a Mis Favoritos',
-            description: 'El cultivo ha sido añadido a tu lista.',
-            action: {
-              altText: "Ir a favoritos",
-              onClick: () => router.push('/favorites'),
-            },
-          });
-        } else {
-          toast({
-            title: 'Eliminado de Mis Favoritos',
-            description: 'El cultivo ha sido eliminado de tu lista.',
-          });
-        }
-      } catch (error) {
+    setIsLoading(true);
+
+    try {
+      await toggleFavorite(user.uid, cropId, !isFavorite);
+      
+      // The onSnapshot listener in CropsView will handle the UI update automatically.
+      // We can still show a toast for better user feedback.
+      if (!isFavorite) {
         toast({
-          title: 'Error',
-          description: error instanceof Error ? error.message : "No se pudo realizar la acción.",
-          variant: 'destructive',
+          title: 'Añadido a Mis Favoritos',
+          description: 'El cultivo ha sido añadido a tu lista.',
+          action: {
+            altText: "Ir a favoritos",
+            onClick: () => router.push('/favorites'),
+          },
+        });
+      } else {
+        toast({
+          title: 'Eliminado de Mis Favoritos',
+          description: 'El cultivo ha sido eliminado de tu lista.',
         });
       }
-    });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : "No se pudo realizar la acción.",
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,13 +77,17 @@ export function FavoriteButton({ cropId, isFavorite }: FavoriteButtonProps) {
       size="icon"
       className="rounded-full bg-background/80 hover:bg-background backdrop-blur-sm"
       onClick={handleFavorite}
-      disabled={isPending}
+      disabled={isLoading}
       aria-label="Marcar como favorito"
     >
-      <Heart className={cn(
-        "h-6 w-6 transition-all",
-        isFavorite ? 'text-accent fill-accent' : 'text-muted-foreground'
-      )} />
+      {isLoading ? (
+        <Loader2 className="h-6 w-6 animate-spin" />
+      ) : (
+        <Heart className={cn(
+          "h-6 w-6 transition-all",
+          isFavorite ? 'text-accent fill-accent' : 'text-muted-foreground'
+        )} />
+      )}
     </Button>
   );
 }
