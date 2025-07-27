@@ -18,7 +18,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Directa o por trasplante desde semilleros.',
     tiempoCosecha: '4-6 meses.',
     plagasComunes: 'Sogata, Piricularia.',
-    imageUrl: 'https://images.unsplash.com/photo-1536383606073-2037469e5211?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1723475158232-819e29803f4d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcnJvenxlbnwwfHx8fDE3NTM2Mjc0Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'rice paddy'
   },
   { 
@@ -36,7 +36,7 @@ const crops: Crop[] = [
     tiempoSiembra: '1-2 semanas para germinar.',
     tiempoCosecha: '3-4 meses desde la siembra.',
     plagasComunes: 'Gusano cogollero, araña roja.',
-    imageUrl: 'https://images.unsplash.com/photo-1598153348888-c0a876a333c1?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1738640920336-26aae3e5db67?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjdWx0aXZvJTIwbWFpenxlbnwwfHx8fDE3NTM2Mjc0NTl8MA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'corn field'
   },
   {
