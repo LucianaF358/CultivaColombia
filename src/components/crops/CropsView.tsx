@@ -1,13 +1,13 @@
 
 "use client";
 
-import { useState, useMemo, useEffect, useTransition } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import type { Crop } from '@/types';
 import { CropCard } from './CropCard';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/firebase/auth';
-import { collection, onSnapshot, type Unsubscribe } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase/db';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -25,9 +25,11 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     type: 'all',
   });
   const [favoriteCropIds, setFavoriteCropIds] = useState<Set<string>>(new Set());
+  const [displayedCrops, setDisplayedCrops] = useState<Crop[]>(initialCrops);
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
 
+  // Listener for favorite changes
   useEffect(() => {
     if (!user) {
       setFavoriteCropIds(new Set());
@@ -37,9 +39,7 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     const favsRef = collection(db, 'usuarios', user.uid, 'cultivosFavoritos');
     const unsubscribe = onSnapshot(favsRef, (snapshot) => {
       const newFavoriteIds = new Set(snapshot.docs.map(doc => doc.id));
-      startTransition(() => {
-        setFavoriteCropIds(newFavoriteIds);
-      });
+      setFavoriteCropIds(newFavoriteIds);
     }, (error) => {
       console.error("Error listening to favorite crops:", error);
     });
@@ -47,20 +47,23 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     return () => unsubscribe();
   }, [user]);
 
-  const handleFilterChange = (filterName: keyof typeof filters) => (value: string) => {
+  // Effect to update displayed crops based on filters
+  useEffect(() => {
     startTransition(() => {
-        setFilters(prev => ({ ...prev, [filterName]: value }));
+      const filtered = initialCrops.filter(crop => {
+        const regionMatch = filters.region === 'all' || crop.region === filters.region;
+        const climateMatch = filters.climate === 'all' || crop.clima === filters.climate;
+        const typeMatch = filters.type === 'all' || crop.tipo === filters.type;
+        return regionMatch && climateMatch && typeMatch;
+      });
+      setDisplayedCrops(filtered);
     });
-  };
+  }, [filters, initialCrops]);
 
-  const filteredCrops = useMemo(() => {
-    return initialCrops.filter(crop => {
-      const regionMatch = filters.region === 'all' || crop.region === filters.region;
-      const climateMatch = filters.climate === 'all' || crop.clima === filters.climate;
-      const typeMatch = filters.type === 'all' || crop.tipo === filters.type;
-      return regionMatch && climateMatch && typeMatch;
-    });
-  }, [initialCrops, filters]);
+
+  const handleFilterChange = (filterName: keyof typeof filters) => (value: string) => {
+    setFilters(prev => ({ ...prev, [filterName]: value }));
+  };
 
   return (
     <section>
@@ -112,9 +115,9 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
                <CardSkeleton key={i} />
             ))}
         </div>
-      ) : filteredCrops.length > 0 ? (
+      ) : displayedCrops.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCrops.map(crop => (
+          {displayedCrops.map(crop => (
             <CropCard 
               key={crop.id} 
               crop={crop} 
