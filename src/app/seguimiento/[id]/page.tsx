@@ -8,7 +8,7 @@ import { getTrackedPlantById, updateTrackedPlantPlan, addNoteAndUpdatePlan } fro
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays, BookText, Lightbulb, Loader2, Check, Droplets, Sun, Seed, Wind } from 'lucide-react';
+import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays, BookText, Lightbulb, Loader2, Check, Droplets, Sun, Wind, ActivitySquare } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -86,7 +86,7 @@ function GerminationGuide({ plant, dailyPlan, onTaskChange }: { plant: TrackedPl
             </Card>
 
             <StageCard 
-                icon={Seed}
+                icon={ActivitySquare}
                 title="Etapa 1: Preparación y Siembra"
                 description="Prepara el terreno para tu futura planta."
                 completed={isStage1Complete}
@@ -490,5 +490,9 @@ function DetailPageSkeleton() {
       </div>
     );
   }
+
+    
+
+    
 
     
