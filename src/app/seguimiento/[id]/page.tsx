@@ -464,3 +464,5 @@ function DetailPageSkeleton() {
       </div>
     );
   }
+
+    
