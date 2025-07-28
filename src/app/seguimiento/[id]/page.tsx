@@ -467,3 +467,4 @@ function DetailPageSkeleton() {
   }
 
     
+
