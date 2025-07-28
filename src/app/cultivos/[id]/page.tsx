@@ -2,7 +2,7 @@
 "use client";
 
 import { getCropById } from '@/lib/data';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -64,22 +64,26 @@ export default function CropDetailPage({ params }: { params: { id: string } }) {
   const [crop, setCrop] = useState<Crop | null>(null);
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const pageParams = useParams();
   
   const { user } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
+    const cropId = pageParams.id as string;
+    if (!cropId) return;
+
     async function fetchCrop() {
       setLoading(true);
-      const fetchedCrop = await getCropById(params.id);
+      const fetchedCrop = await getCropById(cropId);
       if (fetchedCrop) {
         setCrop(fetchedCrop);
       }
       setLoading(false);
     }
     fetchCrop();
-  }, [params.id]);
+  }, [pageParams.id]);
 
   const handleStartSowing = async () => {
     if (!user) {

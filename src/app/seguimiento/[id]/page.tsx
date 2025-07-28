@@ -52,6 +52,7 @@ export default function TrackedPlantDetailPage() {
     }
 
     const fetchPlant = async () => {
+      if (!plantId) return;
       try {
         const fetchedPlant = await getTrackedPlantById(user.uid, plantId);
         if (fetchedPlant) {
