@@ -8,7 +8,7 @@ import { getTrackedPlantById, updateTrackedPlantPlan, addNoteAndUpdatePlan } fro
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays, BookText, Lightbulb, Loader2, Check, Droplets, Sun, Wind, ActivitySquare } from 'lucide-react';
+import { ArrowLeft, Siren, HeartPulse, Sprout, ShieldCheck, CalendarDays, BookText, Lightbulb, Loader2, Check } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -18,7 +18,7 @@ import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import type { TrackedPlant, DailyCarePlan, CareTask } from '@/types';
+import type { TrackedPlant, DailyCarePlan } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -49,7 +49,7 @@ function GerminationCalendar({ plant, dailyPlan, onTaskChange }: { plant: Tracke
         }
     }, [plant.trackedAt]);
     
-    const taskTypeStyles = {
+    const taskTypeStyles: { [key: string]: string } = {
         sowing: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border-green-200 dark:border-green-800',
         watering: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 border-blue-200 dark:border-blue-800',
         care: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 border-yellow-200 dark:border-yellow-800',
@@ -59,7 +59,8 @@ function GerminationCalendar({ plant, dailyPlan, onTaskChange }: { plant: Tracke
 
     const getDayTaskType = (day: DailyCarePlan) => {
         if (!day.tasks || day.tasks.length === 0) return 'default';
-        return day.tasks[0].type || 'default';
+        const taskType = day.tasks[0].type || 'default';
+        return taskTypeStyles[taskType] ? taskType : 'default';
     };
 
     const todaysTasks = todayIndex >= 0 && todayIndex < dailyPlan.length ? dailyPlan[todayIndex].tasks : [];
@@ -247,7 +248,7 @@ export default function TrackedPlantDetailPage() {
     notFound();
   }
   
-  const isGerminationTracking = plant.isHealthy && plant.imageUrl;
+  const isGerminationTracking = plant.isHealthy && !plant.diagnosis;
 
   return (
     <div className="container mx-auto px-4 py-8">
