@@ -45,11 +45,11 @@ function GerminationGuide({ plant, dailyPlan, onTaskChange }: { plant: TrackedPl
 
     const progress = totalTasks > 0 ? (completedTasksCount / totalTasks) * 100 : 0;
 
-    const StageCard = ({ icon, title, description, completed, children }: { icon: React.ElementType, title: string, description: string, completed: boolean, children?: React.ReactNode }) => (
+    const StageCard = ({ icon: Icon, title, description, completed, children }: { icon: React.ElementType, title: string, description: string, completed: boolean, children?: React.ReactNode }) => (
         <Card className={`transition-all duration-500 ${completed ? 'bg-card/60' : 'bg-card'}`}>
             <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                 <div className={`p-3 rounded-full ${completed ? 'bg-green-100 dark:bg-green-900/30' : 'bg-primary/10'}`}>
-                    {completed ? <Check className="h-6 w-6 text-green-600"/> : <props.icon className="h-6 w-6 text-primary"/>}
+                    {completed ? <Check className="h-6 w-6 text-green-600"/> : <Icon className="h-6 w-6 text-primary"/>}
                 </div>
                 <div>
                     <CardTitle>{title}</CardTitle>
@@ -490,6 +490,8 @@ function DetailPageSkeleton() {
       </div>
     );
   }
+
+    
 
     
 
