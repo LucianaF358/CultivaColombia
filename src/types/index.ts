@@ -27,9 +27,12 @@ export type User = {
   displayName: string | null;
 };
 
+export type TaskType = 'sowing' | 'watering' | 'care' | 'observation' | 'default';
+
 export type CareTask = {
     text: string;
     completed: boolean;
+    type?: TaskType;
 };
 
 export type DailyCarePlan = {

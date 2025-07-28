@@ -53,14 +53,14 @@ export async function startSowingCrop(userId: string, crop: Crop): Promise<void>
             imageUrl: crop.imageUrl, // Store the reference image URL
             trackedAt: serverTimestamp() as any,
             description: `Seguimiento de siembra para ${crop.nombre}.`,
-            dailyPlan: [ // Generic germination plan
-                { day: 1, tasks: [{ text: `Preparar el sustrato y sembrar la semilla de ${crop.nombre} según la profundidad recomendada.`, completed: false }] },
-                { day: 2, tasks: [{ text: "Realizar el primer riego con cuidado para no desenterrar la semilla.", completed: false }] },
-                { day: 3, tasks: [{ text: "Verificar la humedad del sustrato. Mantener húmedo pero no encharcado.", completed: false }] },
-                { day: 4, tasks: [{ text: "Asegurar que la siembra reciba la cantidad de luz solar adecuada.", completed: false }] },
-                { day: 5, tasks: [{ text: "Revisar en busca de los primeros signos de germinación.", completed: false }] },
-                { day: 6, tasks: [{ text: "Mantener la humedad constante.", completed: false }] },
-                { day: 7, tasks: [{ text: `Vigilar la aparición de plántulas de ${crop.nombre}.`, completed: false }] },
+            dailyPlan: [ // Interactive germination plan
+                { day: 1, tasks: [{ text: `Preparar el sustrato y sembrar la semilla de ${crop.nombre}.`, completed: false, type: 'sowing' }] },
+                { day: 2, tasks: [{ text: "Realizar el primer riego con cuidado para no desenterrar la semilla.", completed: false, type: 'watering' }] },
+                { day: 3, tasks: [{ text: "Verificar la humedad del sustrato. Mantener húmedo pero no encharcado.", completed: false, type: 'care' }] },
+                { day: 4, tasks: [{ text: "Asegurar que la siembra reciba la cantidad de luz solar adecuada.", completed: false, type: 'care' }] },
+                { day: 5, tasks: [{ text: "Revisar en busca de los primeros signos de germinación.", completed: false, type: 'observation' }] },
+                { day: 6, tasks: [{ text: "Mantener la humedad constante con un riego suave si es necesario.", completed: false, type: 'watering' }] },
+                { day: 7, tasks: [{ text: `Vigilar la aparición de plántulas de ${crop.nombre}.`, completed: false, type: 'observation' }] },
             ]
         };
         await addDoc(trackingCollectionRef, docData);

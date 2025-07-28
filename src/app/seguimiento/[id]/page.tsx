@@ -16,11 +16,11 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import type { TrackedPlant, DailyCarePlan } from '@/types';
+import type { TrackedPlant, DailyCarePlan, CareTask } from '@/types';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 function MarkdownContent({ content }: { content: string | undefined }) {
   if (!content) return null;
@@ -33,147 +33,121 @@ function MarkdownContent({ content }: { content: string | undefined }) {
   );
 }
 
-function GerminationGuide({ plant, dailyPlan, onTaskChange }: { plant: TrackedPlant, dailyPlan: DailyCarePlan[], onTaskChange: (dayIndex: number, taskIndex: number) => void }) {
+function GerminationCalendar({ plant, dailyPlan, onTaskChange }: { plant: TrackedPlant, dailyPlan: DailyCarePlan[], onTaskChange: (dayIndex: number, taskIndex: number) => void }) {
     
-    const completedTasksCount = useMemo(() => {
-        return dailyPlan.flatMap(day => day.tasks).filter(task => task.completed).length;
-    }, [dailyPlan]);
+    const [todayIndex, setTodayIndex] = useState(-1);
 
-    const totalTasks = useMemo(() => {
-        return dailyPlan.flatMap(day => day.tasks).length;
-    }, [dailyPlan]);
-
-    const progress = totalTasks > 0 ? (completedTasksCount / totalTasks) * 100 : 0;
-
-    const StageCard = ({ icon: Icon, title, description, completed, children }: { icon: React.ElementType, title: string, description: string, completed: boolean, children?: React.ReactNode }) => (
-        <Card className={`transition-all duration-500 ${completed ? 'bg-card/60' : 'bg-card'}`}>
-            <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                <div className={`p-3 rounded-full ${completed ? 'bg-green-100 dark:bg-green-900/30' : 'bg-primary/10'}`}>
-                    {completed ? <Check className="h-6 w-6 text-green-600"/> : <Icon className="h-6 w-6 text-primary"/>}
-                </div>
-                <div>
-                    <CardTitle>{title}</CardTitle>
-                    <CardDescription>{description}</CardDescription>
-                </div>
-            </CardHeader>
-            {children && !completed && (
-                 <CardContent>
-                    {children}
-                </CardContent>
-            )}
-        </Card>
-    );
-
-    const isStage1Complete = dailyPlan[0]?.tasks[0]?.completed ?? false;
-    const isStage2Complete = dailyPlan[1]?.tasks[0]?.completed ?? false;
+    useEffect(() => {
+        if (plant.trackedAt) {
+            const startDate = plant.trackedAt.toDate();
+            const today = new Date();
+            startDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            const diffTime = Math.abs(today.getTime() - startDate.getTime());
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            setTodayIndex(diffDays);
+        }
+    }, [plant.trackedAt]);
     
+    const taskTypeStyles = {
+        sowing: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 border-green-200 dark:border-green-800',
+        watering: 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 border-blue-200 dark:border-blue-800',
+        care: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 border-yellow-200 dark:border-yellow-800',
+        observation: 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 border-purple-200 dark:border-purple-800',
+        default: 'bg-muted/50 border-border'
+    };
+
+    const getDayTaskType = (day: DailyCarePlan) => {
+        if (!day.tasks || day.tasks.length === 0) return 'default';
+        return day.tasks[0].type || 'default';
+    };
+
+    const todaysTasks = todayIndex >= 0 && todayIndex < dailyPlan.length ? dailyPlan[todayIndex].tasks : [];
+
     return (
-        <div className="space-y-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Guía de Germinación para {plant.plantName}</CardTitle>
-                    <CardDescription>Sigue estos pasos para asegurar que tu semilla germine con éxito.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex items-center gap-4">
-                        <Progress value={progress} className="w-full" />
-                        <span className="text-sm font-semibold text-muted-foreground">{Math.round(progress)}%</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-2 text-center">
-                        {completedTasksCount} de {totalTasks} tareas completadas
-                    </p>
-                </CardContent>
-            </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Calendario de Germinación: {plant.plantName}</CardTitle>
+          <CardDescription>Sigue el plan de 7 días para que tu semilla germine con éxito.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-4 md:grid-cols-7 gap-2 text-center">
+            {dailyPlan.map((day, index) => (
+              <div
+                key={day.day}
+                className={cn(
+                  "p-2 rounded-lg border-2 transition-all",
+                  taskTypeStyles[getDayTaskType(day)],
+                  todayIndex === index ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''
+                )}
+              >
+                <div className="font-bold text-sm">Día {day.day}</div>
+                <div className="text-xs capitalize">{day.tasks[0]?.type || 'Cuidado'}</div>
+              </div>
+            ))}
+          </div>
 
-            <StageCard 
-                icon={ActivitySquare}
-                title="Etapa 1: Preparación y Siembra"
-                description="Prepara el terreno para tu futura planta."
-                completed={isStage1Complete}
-            >
-                <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-md border">
-                    <Checkbox 
-                        id="task-0-0" 
-                        checked={dailyPlan[0]?.tasks[0]?.completed}
-                        onCheckedChange={() => onTaskChange(0, 0)}
-                        aria-label={dailyPlan[0]?.tasks[0]?.text}
-                    />
-                    <Label htmlFor="task-0-0" className="flex-1 cursor-pointer text-sm">
-                        {dailyPlan[0]?.tasks[0]?.text}
-                    </Label>
-                </div>
-            </StageCard>
-
-            <StageCard 
-                icon={Droplets}
-                title="Etapa 2: Riego Inicial"
-                description="La hidratación es clave para despertar la semilla."
-                completed={isStage2Complete}
-            >
-                <div className={`transition-all duration-500 ${!isStage1Complete ? 'opacity-50 blur-sm' : ''}`}>
-                    <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-md border">
-                        <Checkbox 
-                            id="task-1-0" 
-                            checked={dailyPlan[1]?.tasks[0]?.completed}
-                            onCheckedChange={() => onTaskChange(1, 0)}
-                            aria-label={dailyPlan[1]?.tasks[0]?.text}
-                            disabled={!isStage1Complete}
-                        />
-                        <Label htmlFor="task-1-0" className={`flex-1 text-sm ${!isStage1Complete ? '' : 'cursor-pointer'}`}>
-                            {dailyPlan[1]?.tasks[0]?.text}
-                        </Label>
-                    </div>
-                </div>
-            </StageCard>
-            
-            <StageCard
-                icon={Sun}
-                title="Etapa 3: ¡A Esperar!"
-                description="Ahora toca ser paciente y dar los cuidados diarios."
-                completed={progress === 100}
-            >
-                <div className={`transition-all duration-500 ${!isStage2Complete ? 'opacity-50 blur-sm' : ''}`}>
-                     <p className="text-sm text-muted-foreground mb-4">Completa las siguientes tareas diarias. Cada día es un paso más cerca de la germinación.</p>
-                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {dailyPlan.slice(2).map((day, dayIndex) => (
-                             <div key={dayIndex} className="p-4 bg-muted/30 rounded-lg border">
-                                <h4 className="font-semibold mb-2">Día {day.day}</h4>
-                                <div className="space-y-2">
-                                     {day.tasks.map((task, taskIndex) => (
-                                         <div key={taskIndex} className="flex items-center space-x-3">
-                                            <Checkbox
-                                                id={`task-${dayIndex+2}-${taskIndex}`}
-                                                checked={task.completed}
-                                                onCheckedChange={() => onTaskChange(dayIndex + 2, taskIndex)}
-                                                disabled={!isStage2Complete}
-                                            />
-                                            <Label htmlFor={`task-${dayIndex+2}-${taskIndex}`} className={`flex-1 text-sm ${!isStage2Complete ? '' : 'cursor-pointer'}`}>
-                                                {task.text}
-                                            </Label>
-                                        </div>
-                                     ))}
-                                </div>
-                             </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+                <Badge variant="outline" className={cn("border-2", taskTypeStyles.sowing)}>Siembra</Badge>
+                <Badge variant="outline" className={cn("border-2", taskTypeStyles.watering)}>Riego</Badge>
+                <Badge variant="outline" className={cn("border-2", taskTypeStyles.care)}>Cuidado</Badge>
+                <Badge variant="outline" className={cn("border-2", taskTypeStyles.observation)}>Observación</Badge>
+            </div>
+          </div>
+          
+          <Card className="bg-card/50">
+             <CardHeader>
+                <CardTitle>
+                    {todayIndex >= 0 && todayIndex < 7
+                        ? `Tareas para Hoy (Día ${todayIndex + 1})`
+                        : "Plan de Germinación"
+                    }
+                </CardTitle>
+                <CardDescription>
+                     {todayIndex >= 0 && todayIndex < 7 
+                        ? `Estas son las acciones recomendadas para el día de hoy.`
+                        : `El plan de 7 días ha finalizado. ¡Esperamos que tu planta haya germinado!`
+                     }
+                </CardDescription>
+             </CardHeader>
+             <CardContent>
+                {todaysTasks.length > 0 ? (
+                    <div className="space-y-3">
+                        {todaysTasks.map((task, taskIndex) => (
+                           <div key={taskIndex} className="flex items-center space-x-3 p-3 bg-card rounded-md border hover:bg-muted/50 transition-colors">
+                                <Checkbox
+                                    id={`task-${todayIndex}-${taskIndex}`}
+                                    checked={task.completed}
+                                    onCheckedChange={() => onTaskChange(todayIndex, taskIndex)}
+                                    aria-label={`Marcar como completada: ${task.text}`}
+                                />
+                                <Label
+                                    htmlFor={`task-${todayIndex}-${taskIndex}`}
+                                    className={`flex-1 cursor-pointer text-sm ${task.completed ? 'line-through text-muted-foreground' : 'text-card-foreground'}`}
+                                >
+                                    {task.text}
+                                </Label>
+                            </div>
                         ))}
-                     </div>
-                </div>
-            </StageCard>
-
-             {progress === 100 && (
-                 <Card className="bg-green-100 dark:bg-green-900/30 border-green-200 dark:border-green-800 animate-in fade-in-50">
-                    <CardHeader className="text-center items-center">
-                        <Sprout className="h-12 w-12 text-green-600 mb-2"/>
-                        <CardTitle className="text-green-800 dark:text-green-200">¡Felicitaciones! ¡Tu planta ha germinado!</CardTitle>
-                        <CardDescription className="text-green-700 dark:text-green-300">
-                            Has completado la guía de germinación. Ahora puedes seguir cuidando tu nueva planta.
-                        </CardDescription>
-                    </CardHeader>
-                </Card>
-             )}
-        </div>
+                    </div>
+                ) : (
+                     <div className="text-center text-muted-foreground py-6">
+                        <p>No hay tareas programadas para hoy.</p>
+                        {todayIndex >= 7 && <p className="mt-2 text-sm">¡Tu planta debería haber germinado!</p>}
+                    </div>
+                )}
+             </CardContent>
+          </Card>
+           {plant.trackedAt && (
+             <p className="text-xs text-muted-foreground text-center">
+                Seguimiento iniciado el: {format(plant.trackedAt.toDate(), "d 'de' LLLL, yyyy", { locale: es })}
+             </p>
+            )}
+        </CardContent>
+      </Card>
     );
 }
-
 
 export default function TrackedPlantDetailPage() {
   const { user, loading: authLoading } = useAuth();
@@ -344,7 +318,7 @@ export default function TrackedPlantDetailPage() {
 
         <div className="lg:col-span-3 space-y-6">
             {isGerminationTracking ? (
-                <GerminationGuide plant={plant} dailyPlan={dailyPlan} onTaskChange={handleTaskChange} />
+                <GerminationCalendar plant={plant} dailyPlan={dailyPlan} onTaskChange={handleTaskChange} />
             ) : (
                 <>
                     <Card>
@@ -490,11 +464,3 @@ function DetailPageSkeleton() {
       </div>
     );
   }
-
-    
-
-    
-
-    
-
-    
