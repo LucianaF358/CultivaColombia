@@ -108,7 +108,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra directa.',
     tiempoCosecha: '4-5 meses.',
     plagasComunes: 'Roya de la corona, carbón.',
-    imageUrl: 'https://images.unsplash.com/photo-1563198083-7b353127893a?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1562306985-6cdb52e0555e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjdWx0aXZvJTIwZGUlMjBhdmVuYXxlbnwwfHx8fDE3NTM4MTQ5MTh8MA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'oat field'
   },
 
@@ -128,7 +128,7 @@ const crops: Crop[] = [
     tiempoSiembra: '3-4 semanas para brotar.',
     tiempoCosecha: '3-4 meses.',
     plagasComunes: 'Gota, polilla guatemalteca.',
-    imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba657?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1691466517945-0f9cc5b47539?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxOHx8Y3VsdGl2byUyMGRlJTIwcGFwYSUyMGNyaW9sbGF8ZW58MHx8fHwxNzUzODE0OTg3fDA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'yellow potatoes'
   },
   {
@@ -146,7 +146,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos.',
     tiempoCosecha: '5-6 meses.',
     plagasComunes: 'Gota (Phytophthora infestans), gusano blanco.',
-    imageUrl: 'https://images.unsplash.com/photo-1590165482129-1b8b21703d64?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1548209867-560f9f7da327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMXx8Y3VsdGl2byUyMGRlJTIwcGFwYSUyMHBhc3R1c2F8ZW58MHx8fHwxNzUzODE1MDczfDA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'potato harvest'
   },
   {
@@ -632,7 +632,7 @@ const crops: Crop[] = [
     region: 'Orinoquía', 
     clima: 'Cálido', 
     dificultad: 'Fácil',
-    descripcionDetallada: 'Planta de crecimiento rápido que produce frutos grandes y nutritivos. Sensible al encharcamiento y a los vientos fuertes.',
+    descripcionDetallada: 'Planta de crecimiento rápido que produce frutos grandes y nutritivos. Sensible al encharcamiento y a los vientos fortes.',
     temporada: 'Todo el año',
     tipoDeSuelo: 'Franco, profundo, rico en materia orgánica y con excelente drenaje.',
     tiempoSiembra: 'Por semilla.',
@@ -812,7 +812,7 @@ const crops: Crop[] = [
     region: 'Andina',
     clima: 'Templado',
     dificultad: 'Fácil',
-    descripcionDetallada: 'Cítrico de gran consumo. Los árboles requieren pleno sol y protección contra vientos fuertes.',
+    descripcionDetallada: 'Cítrico de gran consumo. Los árboles requieren pleno sol y protección contra vientos fortes.',
     temporada: 'Variable, picos de cosecha según la variedad.',
     tipoDeSuelo: 'Franco, profundo y bien drenado.',
     tiempoSiembra: 'Por injerto.',
