@@ -45,7 +45,16 @@ function MarkdownContent({ content }: { content: string | undefined }) {
   // The AI prompt is instructed to return HTML tags (<strong>, <ul>, <li>),
   // so we can render it directly. This is safer than complex regex.
   const createMarkup = (text: string) => {
-    return { __html: text };
+    // The prompt now uses `-` for lists, so we replace them with <li> for HTML display.
+    const listItems = text.split('\n').map(item => {
+        if (item.trim().startsWith('-')) {
+            return `<li>${item.trim().substring(1).trim()}</li>`;
+        }
+        return item;
+    }).join('');
+    // Wrap in <ul> if list items were found
+    const finalText = listItems.includes('<li>') ? `<ul>${listItems}</ul>` : listItems;
+    return { __html: finalText };
   };
 
   return (
