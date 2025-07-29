@@ -164,7 +164,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de tubérculos seleccionados.',
     tiempoCosecha: '6-7 meses.',
     plagasComunes: 'Gota, polilla guatemalteca, gusano blanco.',
-    imageUrl: 'https://images.unsplash.com/photo-1570478052934-4a74b0161a06?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1577744699820-7e83be43088e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxN3x8Y3VsdGl2byUyMHBhcGElMjBzYWJhbmVyYXxlbnwwfHx8fDE3NTM4MTUxOTF8MA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'red potatoes'
   },
   {
@@ -432,7 +432,7 @@ const crops: Crop[] = [
     region: 'Andina', 
     clima: 'Templado', 
     dificultad: 'Difícil',
-    descripcionDetallada: 'La especie de café más cultivada en Colombia, famosa por su acidez y complejidad de sabor. Crece en laderas de montañas con sombra parcial.',
+    descripcionDetallada: 'La especie de café más cultivada en Colombia, famosa por su acidez y complejidad de sabor. Cresce en laderas de montañas con sombra parcial.',
     temporada: 'Septiembre - Diciembre',
     tipoDeSuelo: 'Volcánico, profundo y con buen drenaje.',
     tiempoSiembra: '6-12 meses en vivero antes de trasplantar.',
