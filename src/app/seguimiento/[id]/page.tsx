@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import type { TrackedPlant, DailyCarePlan } from '@/types';
@@ -467,4 +468,5 @@ function DetailPageSkeleton() {
   }
 
     
+
 
