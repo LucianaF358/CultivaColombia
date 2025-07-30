@@ -74,29 +74,25 @@ function SidebarWrapper({ children }: { children: React.ReactNode }) {
           <SidebarMenu>
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Link
-                            href={item.href}
-                            data-active={pathname === item.href}
-                            className={cn(
-                                sidebarMenuButtonVariants({ size: "default" }),
-                                "group-data-[collapsible=icon]:justify-center"
-                            )}
-                        >
-                            <item.icon />
-                            <span>{item.label}</span>
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent
-                        side="right"
-                        align="center"
-                        hidden={state !== "collapsed" || isMobile}
-                        className="bg-primary text-primary-foreground"
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === item.href}
+                    className="group-data-[collapsible=icon]:justify-center"
+                    tooltip={{
+                        children: item.label,
+                        side: "right",
+                        align: "center",
+                        hidden: state !== "collapsed" || isMobile,
+                        className: "bg-primary text-primary-foreground"
+                    }}
+                  >
+                    <Link
+                        href={item.href}
                     >
-                       {item.label}
-                    </TooltipContent>
-                </Tooltip>
+                        <item.icon />
+                        <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>

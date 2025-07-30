@@ -73,81 +73,68 @@ export function SidebarUserMenu() {
                <>
                  {loggedInLinks.map((item) => (
                     <SidebarMenuItem key={item.href}>
-                      <Tooltip>
-                          <TooltipTrigger asChild>
-                              <Link
-                                  href={item.href}
-                                  data-active={pathname === item.href}
-                                  className={cn(
-                                      sidebarMenuButtonVariants({ size: "default" }),
-                                      "group-data-[collapsible=icon]:justify-center"
-                                  )}
-                              >
-                                  <item.icon />
-                                  <span>{item.label}</span>
-                              </Link>
-                          </TooltipTrigger>
-                          <TooltipContent
-                              side="right"
-                              align="center"
-                              hidden={state !== "collapsed" || isMobile}
-                              className="bg-primary text-primary-foreground"
+                      <SidebarMenuButton
+                        asChild
+                        isActive={pathname === item.href}
+                        className="group-data-[collapsible=icon]:justify-center"
+                        tooltip={{
+                            children: item.label,
+                            side: "right",
+                            align: "center",
+                            hidden: state !== "collapsed" || isMobile,
+                            className: "bg-primary text-primary-foreground"
+                        }}
+                      >
+                          <Link
+                              href={item.href}
                           >
-                            {item.label}
-                          </TooltipContent>
-                      </Tooltip>
+                              <item.icon />
+                              <span>{item.label}</span>
+                          </Link>
+                      </SidebarMenuButton>
                     </SidebarMenuItem>
                  ))}
                   <SidebarMenuItem>
-                      <Tooltip>
-                          <TooltipTrigger asChild>
-                            <SidebarMenuButton
-                                onClick={handleLogout}
-                                disabled={isPending}
-                                className="group-data-[collapsible=icon]:justify-center w-full"
-                            >
-                                {isPending ? <Loader2 className="animate-spin" /> : <LogOut />}
-                                <span>Cerrar Sesión</span>
-                            </SidebarMenuButton>
-                          </TooltipTrigger>
-                          <TooltipContent
-                                side="right"
-                                align="center"
-                                hidden={state !== "collapsed" || isMobile}
-                                className="bg-primary text-primary-foreground"
-                          >
-                            Cerrar Sesión
-                          </TooltipContent>
-                      </Tooltip>
+                      <SidebarMenuButton
+                        onClick={handleLogout}
+                        disabled={isPending}
+                        className="group-data-[collapsible=icon]:justify-center w-full"
+                        tooltip={{
+                            children: "Cerrar Sesión",
+                            side: "right",
+                            align: "center",
+                            hidden: state !== "collapsed" || isMobile,
+                            className: "bg-primary text-primary-foreground"
+                        }}
+                      >
+                          {isPending ? <Loader2 className="animate-spin" /> : <LogOut />}
+                          <span>Cerrar Sesión</span>
+                      </SidebarMenuButton>
                   </SidebarMenuItem>
                </>
              ) : (
                 <>
                     {loggedOutLinks.map((item) => (
                         <SidebarMenuItem key={item.href}>
-                             <Tooltip>
-                                <TooltipTrigger asChild>
+                             <SidebarMenuButton
+                                asChild
+                                isActive={pathname === item.href}
+                                className="group-data-[collapsible=icon]:justify-center"
+                                tooltip={{
+                                    children: item.label,
+                                    side: "right",
+                                    align: "center",
+                                    hidden: state !== "collapsed" || isMobile,
+                                    className: "bg-primary text-primary-foreground"
+                                }}
+                             >
                                   <Link
                                       href={item.href}
-                                      data-active={pathname === item.href}
-                                      className={cn(
-                                          sidebarMenuButtonVariants({ size: "default" }),
-                                          "group-data-[collapsible=icon]:justify-center"
-                                      )}
                                   >
                                       <item.icon />
                                       <span>{item.label}</span>
                                   </Link>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    side="right"
-                                    align="center"
-                                    hidden={state !== "collapsed" || isMobile}
-                                    className="bg-primary text-primary-foreground"
-                                >
-                                  {item.label}
-                                </TooltipContent>
-                            </Tooltip>
+                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
                 </>
