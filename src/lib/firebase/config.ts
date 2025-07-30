@@ -11,6 +11,15 @@ const firebaseConfig: FirebaseOptions = {
   appId: "1:24070420473:web:7d4574a90eb0e7e4066f28"
 };
 
+// =======================================================================================
+// !! IMPORTANT !!
+// The diagnosis feature will NOT work until you replace the placeholder below.
+// 1. Get your API key from Google AI Studio: https://aistudio.google.com/app/apikey
+// 2. Replace "YOUR_GEMINI_API_KEY" with your actual key.
+// =======================================================================================
+export const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
+
+
 // This function ensures that Firebase is initialized only once.
 let app: FirebaseApp;
 
