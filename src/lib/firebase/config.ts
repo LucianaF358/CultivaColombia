@@ -17,7 +17,7 @@ const firebaseConfig: FirebaseOptions = {
 // 1. Get your API key from Google AI Studio: https://aistudio.google.com/app/apikey
 // 2. Replace "YOUR_GEMINI_API_KEY" with your actual key.
 // =======================================================================================
-export const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
+export const GEMINI_API_KEY = "AIzaSyBa6boMo233Mj50O9MzImmB-GoeCGcdrQg";
 
 
 // This function ensures that Firebase is initialized only once.
