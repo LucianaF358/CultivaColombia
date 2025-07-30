@@ -467,13 +467,3 @@ export default function RecursosPage() {
     </div>
   );
 }
-
-    
-
-    
-
-
-
-    
-
-    
