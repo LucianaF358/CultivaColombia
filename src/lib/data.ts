@@ -182,7 +182,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por estacas.',
     tiempoCosecha: '8-12 meses.',
     plagasComunes: 'Ácaros, mosca blanca.',
-    imageUrl: 'https://images.unsplash.com/photo-1620366161343-3747b1899187?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1535567383223-4d3a219b9cd1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdWx0aXZvcyUyMGRlJTIweXVjYXxlbnwwfHx8fDE3NTM4OTQyNzB8MA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'cassava root'
   },
   {
@@ -200,7 +200,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Siembra de trozos del tubérculo.',
     tiempoCosecha: '8-10 meses.',
     plagasComunes: 'Antracnosis, cochinillas.',
-    imageUrl: 'https://images.unsplash.com/photo-1601659772215-1647ebb579d4?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1522263576558-75fad02133b7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHwlQzMlQjFhbWUlMjBjdWx0aXZvfGVufDB8fHx8MTc1Mzg5NDMyNnww&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'yam root'
   },
   {
@@ -218,7 +218,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Propagación por cormos.',
     tiempoCosecha: '10-14 meses.',
     plagasComunes: 'Gusanos trozadores, nematodos.',
-    imageUrl: 'https://placehold.co/600x401.png',
+    imageUrl: 'https://images.unsplash.com/photo-1688572708235-924eb62cc9a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhcnJhY2FjaGElMjB8ZW58MHx8fHwxNzUzODk0NDQ2fDA&ixlib=rb-4.1.0&q=80&w=1080',
     dataAiHint: 'arracacha root'
   },
   {
@@ -1036,7 +1036,7 @@ const crops: Crop[] = [
     tiempoSiembra: 'Plantación de dientes individuales.',
     tiempoCosecha: '6-8 meses.',
     plagasComunes: 'Roya, nematodos del tallo.',
-    imageUrl: 'https://images.unsplash.com/photo-1598555768591-3837a77b1e4c?q=80&w=600',
+    imageUrl: 'https://images.unsplash.com/photo-1598555768591-3837a72b1e4c?q=80&w=600',
     dataAiHint: 'garlic plant'
   },
   {
