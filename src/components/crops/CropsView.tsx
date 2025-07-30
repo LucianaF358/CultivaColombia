@@ -24,6 +24,7 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     climate: 'all',
     type: 'all',
   });
+  const [sortBy, setSortBy] = useState('default');
   const [favoriteCropIds, setFavoriteCropIds] = useState<Set<string>>(new Set());
   const { user } = useAuth();
   const [isPending, startTransition] = useTransition();
@@ -48,13 +49,23 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
 
   // Derived state for displayed crops based on filters
   const displayedCrops = useMemo(() => {
-    return initialCrops.filter(crop => {
+    const filtered = initialCrops.filter(crop => {
       const regionMatch = filters.region === 'all' || crop.region === filters.region;
       const climateMatch = filters.climate === 'all' || crop.clima === filters.climate;
       const typeMatch = filters.type === 'all' || crop.tipo === filters.type;
       return regionMatch && climateMatch && typeMatch;
     });
-  }, [filters, initialCrops]);
+
+    if (sortBy === 'az') {
+      return filtered.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }
+    if (sortBy === 'za') {
+      return filtered.sort((a, b) => b.nombre.localeCompare(a.nombre));
+    }
+    
+    return filtered;
+
+  }, [filters, sortBy, initialCrops]);
 
   const handleFilterChange = (filterName: keyof typeof filters) => (value: string) => {
     startTransition(() => {
@@ -62,11 +73,18 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     });
   };
 
+  const handleSortChange = (value: string) => {
+    startTransition(() => {
+      setSortBy(value);
+    });
+  };
+
+
   return (
     <section>
       <div className="mb-8 p-6 bg-card rounded-lg shadow-sm flex flex-col md:flex-row flex-wrap gap-6 items-center">
-        <h2 className="text-xl font-semibold text-card-foreground flex-shrink-0">Filtrar Cultivos</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full md:w-auto flex-grow">
+        <h2 className="text-xl font-semibold text-card-foreground flex-shrink-0">Filtrar y Ordenar</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full md:w-auto flex-grow">
           <div>
             <Label htmlFor="region-filter" className="text-sm font-medium text-muted-foreground">Región</Label>
             <Select value={filters.region} onValueChange={handleFilterChange('region')}>
@@ -100,6 +118,19 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
               <SelectContent>
                 <SelectItem value="all">Todos los tipos</SelectItem>
                 {types.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="sort-filter" className="text-sm font-medium text-muted-foreground">Ordenar por</Label>
+            <Select value={sortBy} onValueChange={handleSortChange}>
+              <SelectTrigger id="sort-filter" className="w-full mt-1">
+                <SelectValue placeholder="Ordenar..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">Por defecto</SelectItem>
+                <SelectItem value="az">Nombre (A-Z)</SelectItem>
+                <SelectItem value="za">Nombre (Z-A)</SelectItem>
               </SelectContent>
             </Select>
           </div>
