@@ -10,6 +10,8 @@ import { useAuth } from '@/lib/firebase/auth';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase/db';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '../ui/button';
+import { X } from 'lucide-react';
 
 interface CropsViewProps {
   initialCrops: Crop[];
@@ -79,10 +81,24 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
     });
   };
 
+  const handleClearFilters = () => {
+    startTransition(() => {
+      setFilters({
+        region: 'all',
+        climate: 'all',
+        type: 'all',
+      });
+      setSortBy('default');
+    });
+  };
+
+  const areFiltersActive = useMemo(() => {
+    return filters.region !== 'all' || filters.climate !== 'all' || filters.type !== 'all' || sortBy !== 'default';
+  }, [filters, sortBy]);
 
   return (
     <section>
-      <div className="mb-8 p-6 bg-card rounded-lg shadow-sm flex flex-col md:flex-row flex-wrap gap-6 items-center">
+      <div className="mb-8 p-6 bg-card rounded-lg shadow-sm flex flex-col md:flex-row flex-wrap gap-4 items-center">
         <h2 className="text-xl font-semibold text-card-foreground flex-shrink-0">Filtrar y Ordenar</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full md:w-auto flex-grow">
           <div>
@@ -135,6 +151,14 @@ export function CropsView({ initialCrops, regions, climates, types }: CropsViewP
             </Select>
           </div>
         </div>
+        {areFiltersActive && (
+          <div className="pt-2 md:pt-0 md:pl-2">
+            <Button variant="ghost" onClick={handleClearFilters}>
+              <X className="mr-2 h-4 w-4" />
+              Limpiar Filtros
+            </Button>
+          </div>
+        )}
       </div>
 
       {isPending ? (
