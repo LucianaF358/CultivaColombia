@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Video, FileText, Wrench, BookOpen, ExternalLink, Download } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 
 const videos = [
   {
@@ -451,6 +451,7 @@ export default function RecursosPage() {
           <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-3xl font-headline text-primary mb-4">{selectedArticle.title}</DialogTitle>
+              <DialogDescription className="sr-only">Contenido del artículo: {selectedArticle.title}</DialogDescription>
             </DialogHeader>
             <div className="space-y-4 prose dark:prose-invert max-w-none">
               {selectedArticle.content.map((paragraph, pIndex) => (
