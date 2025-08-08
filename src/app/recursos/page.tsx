@@ -451,7 +451,9 @@ export default function RecursosPage() {
           <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-3xl font-headline text-primary mb-4">{selectedArticle.title}</DialogTitle>
-              <DialogDescription className="sr-only">Contenido del artículo: {selectedArticle.title}</DialogDescription>
+              <DialogDescription>
+                Contenido del artículo: {selectedArticle.title}
+              </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 prose dark:prose-invert max-w-none">
               {selectedArticle.content.map((paragraph, pIndex) => (

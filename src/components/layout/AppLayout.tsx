@@ -23,6 +23,7 @@ import { Button } from "../ui/button";
 import { SidebarUserMenu } from "./SidebarUserMenu";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 
 
 const menuItems = [
@@ -34,8 +35,46 @@ const menuItems = [
 ];
 
 function SidebarWrapper({ children }: { children: React.ReactNode }) {
-    const { toggleSidebar, isMobile, state } = useSidebar();
+    const { toggleSidebar, isMobile, state, openMobile, setOpenMobile } = useSidebar();
     const pathname = usePathname();
+    
+    if(isMobile) {
+      return (
+        <Sheet open={openMobile} onOpenChange={setOpenMobile}>
+            <SheetContent side="left" className="w-[18rem] bg-card p-0">
+               <SheetHeader className="p-2">
+                 <SheetTitle className="sr-only">Navegación Principal</SheetTitle>
+                 <SheetDescription className="sr-only">Menú principal de la aplicación CultivaColombia.</SheetDescription>
+                  <div className="flex w-full items-center justify-between">
+                      <Link href="/" className="flex items-center gap-2 text-lg font-bold font-headline text-primary hover:text-primary/80 transition-colors">
+                          <CultivaColombiaIcon className="h-6 w-6" />
+                          <span>CultivaColombia</span>
+                      </Link>
+                  </div>
+               </SheetHeader>
+               <SidebarContent>
+                  <SidebarMenu>
+                    {menuItems.map((item) => (
+                      <SidebarMenuItem key={item.href}>
+                          <SidebarMenuButton
+                            asChild
+                            isActive={pathname === item.href}
+                            onClick={() => setOpenMobile(false)}
+                          >
+                            <Link href={item.href} >
+                                <item.icon />
+                                <span>{item.label}</span>
+                            </Link>
+                          </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarContent>
+                <SidebarUserMenu />
+            </SheetContent>
+        </Sheet>
+      )
+    }
 
     return (
         <Sidebar side="left" collapsible="icon" className="z-40">
