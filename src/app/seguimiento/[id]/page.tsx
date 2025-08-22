@@ -4,7 +4,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/lib/firebase/auth';
 import { useRouter, notFound, useParams } from 'next/navigation';
-import { getTrackedPlantById, updateTrackedPlantPlan, addNoteAndUpdatePlan } from '@/lib/firebase/seguimiento';
+import { getTrackedPlantById, updateTrackedPlantPlan, addNoteAndUpdatePlan, addNoteToGermination } from '@/lib/firebase/seguimiento';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -60,7 +60,7 @@ function GerminationCalendar({ plant, dailyPlan, onTaskChange }: { plant: Tracke
 
     const getDayTaskType = (day: DailyCarePlan) => {
         if (!day.tasks || day.tasks.length === 0) return 'default';
-        const taskType = day.tasks[0].type || 'default';
+        const taskType = day.tasks[0]?.type || 'default';
         return taskTypeStyles[taskType] ? taskType : 'default';
     };
 
@@ -161,6 +161,7 @@ export default function TrackedPlantDetailPage() {
   const [dailyPlan, setDailyPlan] = useState<DailyCarePlan[]>([]);
   const [newNote, setNewNote] = useState('');
   const [isUpdatingPlan, setIsUpdatingPlan] = useState(false);
+  const [isSavingNote, setIsSavingNote] = useState(false);
   const plantId = params.id as string;
 
   useEffect(() => {
@@ -219,8 +220,27 @@ export default function TrackedPlantDetailPage() {
         setDailyPlan(revertedPlan);
     }
   };
+  
+  const handleAddNoteToGermination = async () => {
+    if (!user || !plant || !newNote.trim()) {
+        toast({ title: "Nota vacía", description: "Por favor escribe una nota.", variant: "destructive" });
+        return;
+    }
+    setIsSavingNote(true);
+    try {
+        await addNoteToGermination(user.uid, plant.id, newNote);
+        setPlant(prev => prev ? { ...prev, notes: [...(prev.notes || []), { text: newNote, date: new Date().toISOString() }] } : null);
+        setNewNote('');
+        toast({ title: "Nota añadida", description: "Tu nota ha sido guardada." });
+    } catch (error) {
+        console.error("Error adding note to germination:", error);
+        toast({ title: "Error", description: "No se pudo guardar la nota.", variant: "destructive" });
+    } finally {
+        setIsSavingNote(false);
+    }
+  };
 
-  const handleAddNote = async () => {
+  const handleAddNoteAndUpdatePlan = async () => {
     if (!user || !plant || !newNote.trim()) {
         toast({ title: "Nota vacía", description: "Por favor escribe una nota.", variant: "destructive" });
         return;
@@ -249,7 +269,7 @@ export default function TrackedPlantDetailPage() {
     notFound();
   }
   
-  const isGerminationTracking = plant.isHealthy && !plant.diagnosis;
+  const isGerminationTracking = !!plant.isGermination;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -280,42 +300,52 @@ export default function TrackedPlantDetailPage() {
                 </CardContent>
             </Card>
 
-            {!isGerminationTracking && (
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Notas y Observaciones</CardTitle>
-                        <CardDescription>Añade notas para que la IA ajuste el plan de cuidados.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                            <Textarea 
-                                placeholder="Ej: 'Las manchas han empezado a reducirse, pero noté unas pequeñas moscas blancas...'"
-                                value={newNote}
-                                onChange={(e) => setNewNote(e.target.value)}
-                                rows={4}
-                            />
-                            <Button onClick={handleAddNote} disabled={isUpdatingPlan || !newNote.trim()} className="w-full">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Notas y Observaciones</CardTitle>
+                     <CardDescription>
+                        {isGerminationTracking 
+                            ? "Añade notas sobre el proceso de germinación." 
+                            : "Añade notas para que la IA ajuste el plan de cuidados."}
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                        <Textarea 
+                            placeholder={isGerminationTracking 
+                                ? "Ej: '¡Hoy vi el primer brote verde!'"
+                                : "Ej: 'Las manchas han empezado a reducirse...'"
+                            }
+                            value={newNote}
+                            onChange={(e) => setNewNote(e.target.value)}
+                            rows={4}
+                        />
+                         {isGerminationTracking ? (
+                            <Button onClick={handleAddNoteToGermination} disabled={isSavingNote || !newNote.trim()} className="w-full">
+                                {isSavingNote ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Guardando...</> : <><BookText className="mr-2 h-4 w-4" />Añadir Nota</>}
+                            </Button>
+                        ) : (
+                            <Button onClick={handleAddNoteAndUpdatePlan} disabled={isUpdatingPlan || !newNote.trim()} className="w-full">
                                 {isUpdatingPlan ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analizando y actualizando...</> : <><Lightbulb className="mr-2 h-4 w-4" />Añadir Nota y Actualizar Plan</>}
                             </Button>
-                        </div>
-
-                        {plant.notes && plant.notes.length > 0 && (
-                            <div className="space-y-3 pt-4 border-t">
-                                <h4 className="font-semibold text-sm">Historial de Notas</h4>
-                                <div className="max-h-40 overflow-y-auto space-y-3 pr-2">
-                                    {plant.notes.slice().reverse().map((note, index) => (
-                                        <div key={index} className="text-sm p-3 bg-muted/50 rounded-md border">
-                                            <p className="text-muted-foreground">{note.text}</p>
-                                            <p className="text-xs text-muted-foreground/80 mt-1">{format(new Date(note.date), "d 'de' LLLL, yyyy 'a las' HH:mm", { locale: es })}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
                         )}
-                    </CardContent>
-                </Card>
-            )}
+                    </div>
 
+                    {plant.notes && plant.notes.length > 0 && (
+                        <div className="space-y-3 pt-4 border-t">
+                            <h4 className="font-semibold text-sm">Historial de Notas</h4>
+                            <div className="max-h-40 overflow-y-auto space-y-3 pr-2">
+                                {plant.notes.slice().reverse().map((note, index) => (
+                                    <div key={index} className="text-sm p-3 bg-muted/50 rounded-md border">
+                                        <p className="text-muted-foreground">{note.text}</p>
+                                        <p className="text-xs text-muted-foreground/80 mt-1">{format(new Date(note.date), "d 'de' LLLL, yyyy 'a las' HH:mm", { locale: es })}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
         </div>
 
         <div className="lg:col-span-3 space-y-6">
@@ -438,6 +468,20 @@ function DetailPageSkeleton() {
                 <Skeleton className="h-4 w-5/6 mt-2" />
               </CardContent>
             </Card>
+            <Card>
+                 <CardHeader>
+                    <Skeleton className="h-6 w-1/2" />
+                    <Skeleton className="h-4 w-3/4 mt-2" />
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <Skeleton className="h-20 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <div className="pt-4 border-t">
+                        <Skeleton className="h-4 w-1/3 mb-3" />
+                        <Skeleton className="h-12 w-full" />
+                    </div>
+                </CardContent>
+            </Card>
           </div>
           <div className="lg:col-span-3 space-y-6">
             <Card>
@@ -468,5 +512,6 @@ function DetailPageSkeleton() {
   }
 
     
+
 
 

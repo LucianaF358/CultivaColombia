@@ -54,6 +54,7 @@ export interface TrackedPlant extends Omit<DiagnosePlantOutput, 'isPlant' | 'pla
     isPlant: boolean;
     plantName?: string;
     isHealthy?: boolean; // true for germination tracking, false for diagnosed problems
+    isGermination?: boolean; // Explicitly flag germination tracking
     
     // Image Data
     photoDataUri?: string; // From user upload for diagnosis

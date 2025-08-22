@@ -50,8 +50,8 @@ export default function SeguimientoPage() {
   }, [user, authLoading]);
 
   const { plantsInCare, plantsInGermination } = useMemo(() => {
-    const plantsInCare = trackedPlants.filter(p => !p.isHealthy);
-    const plantsInGermination = trackedPlants.filter(p => p.isHealthy);
+    const plantsInCare = trackedPlants.filter(p => !p.isGermination);
+    const plantsInGermination = trackedPlants.filter(p => p.isGermination);
     return { plantsInCare, plantsInGermination };
   }, [trackedPlants]);
 
@@ -85,7 +85,7 @@ export default function SeguimientoPage() {
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8">
         <h1 className="text-4xl font-bold font-headline text-primary">Seguimiento de Plantas</h1>
-        <p className="text-muted-foreground mt-2">Aquí están los diagnósticos que has guardado para monitorear.</p>
+        <p className="text-muted-foreground mt-2">Aquí están los diagnósticos y cultivos que has guardado para monitorear.</p>
       </header>
       
       <Tabs defaultValue="care" className="w-full">
@@ -153,7 +153,7 @@ function TrackedPlantCard({ plant }: { plant: TrackedPlant }) {
             <CardContent className="p-6 flex-grow">
                 <CardTitle>{plant.plantName || "Planta no identificada"}</CardTitle>
                 <CardDescription className="mt-2 line-clamp-2">
-                    {plant.isHealthy 
+                    {plant.isGermination 
                         ? `Añadido para seguimiento de germinación y crecimiento.` 
                         : `Problema: ${plant.diagnosis?.problem || "No especificado"}`
                     }

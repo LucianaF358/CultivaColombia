@@ -24,6 +24,7 @@ export async function saveDiagnosisForTracking(userId: string, data: DiagnosisDa
       isPlant: data.isPlant,
       plantName: data.plantName,
       isHealthy: data.isHealthy,
+      isGermination: false, // This is from a diagnosis
       diagnosis: data.diagnosis,
       photoDataUri: data.photoDataUri,
       description: data.description,
@@ -49,11 +50,12 @@ export async function startSowingCrop(userId: string, crop: Crop): Promise<void>
         const docData: Omit<TrackedPlant, 'id'> = {
             isPlant: true,
             plantName: crop.nombre,
-            isHealthy: true, // Started from a healthy state
-            imageUrl: crop.imageUrl, // Store the reference image URL
+            isHealthy: true, 
+            isGermination: true, // This is for germination tracking
+            imageUrl: crop.imageUrl,
             trackedAt: serverTimestamp() as any,
             description: `Seguimiento de siembra para ${crop.nombre}.`,
-            dailyPlan: [ // Interactive germination plan
+            dailyPlan: [ 
                 { day: 1, tasks: [{ text: `Preparar el sustrato y sembrar la semilla de ${crop.nombre}.`, completed: false, type: 'sowing' }] },
                 { day: 2, tasks: [{ text: "Realizar el primer riego con cuidado para no desenterrar la semilla.", completed: false, type: 'watering' }] },
                 { day: 3, tasks: [{ text: "Verificar la humedad del sustrato. Mantener húmedo pero no encharcado.", completed: false, type: 'care' }] },
@@ -61,7 +63,8 @@ export async function startSowingCrop(userId: string, crop: Crop): Promise<void>
                 { day: 5, tasks: [{ text: "Revisar en busca de los primeros signos de germinación.", completed: false, type: 'observation' }] },
                 { day: 6, tasks: [{ text: "Mantener la humedad constante con un riego suave si es necesario.", completed: false, type: 'watering' }] },
                 { day: 7, tasks: [{ text: `Vigilar la aparición de plántulas de ${crop.nombre}.`, completed: false, type: 'observation' }] },
-            ]
+            ],
+            notes: []
         };
         await addDoc(trackingCollectionRef, docData);
     } catch (error) {
@@ -112,6 +115,25 @@ export async function updateTrackedPlantPlan(userId: string, plantId: string, da
     } catch (error) {
         console.error("Error updating daily plan in Firestore: ", error);
         throw new Error("No se pudo actualizar el plan de tareas.");
+    }
+}
+
+export async function addNoteToGermination(userId: string, plantId: string, newNote: string): Promise<void> {
+    if (!userId) {
+        throw new Error("El usuario no está autenticado.");
+    }
+     const plantRef = doc(db, 'usuarios', userId, 'plantasSeguimiento', plantId);
+     const noteObject: Note = {
+        text: newNote,
+        date: new Date().toISOString(),
+    };
+    try {
+        await updateDoc(plantRef, {
+             notes: arrayUnion(noteObject),
+        });
+    } catch (error) {
+        console.error("Error adding note in Firestore: ", error);
+        throw new Error("No se pudo guardar la nota.");
     }
 }
 
