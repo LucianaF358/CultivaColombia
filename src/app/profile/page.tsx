@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { logout } from "@/lib/actions";
-import { sendPasswordReset, deleteUserAccount } from "@/lib/firebase/authActions";
+import { sendPasswordReset } from "@/lib/firebase/authActions";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, KeyRound, Trash2, ShieldAlert, LogOut } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signOut, deleteUser } from "firebase/auth";
 import { app } from "@/lib/firebase/config";
 
 export default function ProfilePage() {
@@ -64,28 +64,40 @@ export default function ProfilePage() {
 
   const handleDeleteAccount = async () => {
     if(deleteConfirmation !== 'ELIMINAR') return;
+    
+    const auth = getAuth(app);
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+         toast({
+            title: "Error de autenticación",
+            description: "No se pudo encontrar al usuario actual. Por favor, inicia sesión de nuevo.",
+            variant: "destructive",
+        });
+        return;
+    }
 
     setIsDeleting(true);
-    const result = await deleteUserAccount();
-    setIsDeleting(false);
-
-    if (result.success) {
-      toast({
-        title: "Cuenta Eliminada",
-        description: "Tu cuenta ha sido eliminada permanentemente.",
-      });
-      // The user is now logged out on the server, a client-side redirect completes the flow.
-      router.push('/');
-    } else {
-       let errorMessage = result.error || "No se pudo completar la operación.";
-       if (result.error === 'auth/requires-recent-login' || result.error === 'auth/no-current-user') {
-           errorMessage = "Esta es una operación sensible y requiere que inicies sesión recientemente. Por favor, cierra sesión y vuelve a entrar antes de intentarlo de nuevo.";
-       }
-       toast({
-        title: "Error al eliminar la cuenta",
-        description: errorMessage,
-        variant: "destructive",
-      });
+    try {
+        await deleteUser(currentUser);
+        await logout(); // Clear server session cookie
+        toast({
+            title: "Cuenta Eliminada",
+            description: "Tu cuenta ha sido eliminada permanentemente.",
+        });
+        router.push('/');
+    } catch (error: any) {
+        let errorMessage = "Ocurrió un error al eliminar la cuenta.";
+        if (error.code === 'auth/requires-recent-login') {
+            errorMessage = "Esta es una operación sensible. Por favor, cierra sesión y vuelve a entrar antes de intentarlo de nuevo.";
+        }
+        toast({
+            title: "Error al eliminar la cuenta",
+            description: errorMessage,
+            variant: "destructive",
+        });
+    } finally {
+        setIsDeleting(false);
     }
   }
 
