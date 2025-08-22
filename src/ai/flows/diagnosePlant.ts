@@ -80,6 +80,9 @@ const prompt = ai.definePrompt({
 **Contexto del Usuario:**
 Descripción: {{{description}}}
 Foto de la planta: {{media url=photoDataUri}}`,
+  config: {
+    temperature: 0,
+  }
 });
 
 const diagnosePlantFlow = ai.defineFlow(
