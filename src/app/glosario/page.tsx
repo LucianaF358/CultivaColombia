@@ -47,7 +47,7 @@ const terminosPlagas = [
   { term: "🌫️ Mildeo (Velloso o Polvoso)", definition: "Enfermedad causada por hongos que crea una capa de polvo blanco o grisáceo sobre las hojas." },
   { term: "🍫 Monilia", definition: "Hongo que ataca las mazorcas de cacao, pudriéndolas desde adentro." },
   { term: "🔬 Nematodos", definition: "Gusanos microscópicos que viven en el suelo y atacan las raíces de las plantas, debilitándolas." },
-  { term: "PowderyMildeo", definition: "Similar al mildeo, es un hongo que forma una capa de polvo blanco sobre hojas y tallos." },
+  { term: "🌫️ Oídio", definition: "Similar al mildeo, es un hongo que forma una capa de polvo blanco sobre hojas y tallos." },
   { term: "🌾 Piricularia", definition: "Hongo que causa una de las enfermedades más graves del arroz, provocando manchas en las hojas y el \"cuello\" de la espiga." },
   { term: "🟠 Roya", definition: "Enfermedad fúngica que produce pústulas de color anaranjado o marrón (similar al óxido) en las hojas." },
   { term: "🍌 Sigatoka Negra", definition: "Enfermedad fúngica muy agresiva que destruye las hojas del banano y el plátano, reduciendo la producción." },
@@ -142,7 +142,7 @@ function CategorySection({ title, emoji, icon: Icon, terms }: CategorySectionPro
                 <Accordion type="single" collapsible className="w-full">
                     {sortedTerms.map((item, index) => (
                         <AccordionItem key={item.term} value={`item-${index}`}>
-                            <AccordionTrigger className="py-4 text-base text-left hover:no-underline [&[data-state=open]]:font-bold">
+                            <AccordionTrigger className="py-4 text-base text-left hover:no-underline hover:font-bold [&[data-state=open]]:font-bold">
                                 {item.term}
                             </AccordionTrigger>
                             <AccordionContent className="pb-4 text-muted-foreground">
