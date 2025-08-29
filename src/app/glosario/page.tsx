@@ -142,7 +142,7 @@ function CategorySection({ title, emoji, icon: Icon, terms }: CategorySectionPro
                 <Accordion type="single" collapsible className="w-full">
                     {sortedTerms.map((item, index) => (
                         <AccordionItem key={item.term} value={`item-${index}`}>
-                            <AccordionTrigger className="py-4 text-base text-left hover:no-underline">
+                            <AccordionTrigger className="py-4 text-base text-left hover:no-underline [&[data-state=open]]:font-bold">
                                 {item.term}
                             </AccordionTrigger>
                             <AccordionContent className="pb-4 text-muted-foreground">
