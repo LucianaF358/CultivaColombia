@@ -1,9 +1,12 @@
 
 "use client";
 
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { GraduationCap, Bug, Flower } from 'lucide-react';
+import { GraduationCap, Bug, Flower, ArrowDownAZ, ArrowUpZA } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const terminosCultivo = [
   { term: "Acodo", definition: "Método para reproducir una planta haciendo que una rama desarrolle raíces mientras sigue unida a la planta madre." },
@@ -73,9 +76,9 @@ export default function GlosarioPage() {
       </header>
 
       <div className="max-w-4xl mx-auto space-y-8">
-        <CategorySection title="Términos de Cultivo y Suelos" icon={GraduationCap} terms={terminosCultivo} />
-        <CategorySection title="Plagas y Enfermedades Comunes" icon={Bug} terms={terminosPlagas} />
-        <CategorySection title="Partes de la Planta y Botánica" icon={Flower} terms={terminosBotanica} />
+        <CategorySection title="Términos de Cultivo y Suelos" emoji="🌱" icon={GraduationCap} terms={terminosCultivo} />
+        <CategorySection title="Plagas y Enfermedades Comunes" emoji="🐛" icon={Bug} terms={terminosPlagas} />
+        <CategorySection title="Partes de la Planta y Botánica" emoji="🌸" icon={Flower} terms={terminosBotanica} />
       </div>
     </div>
   );
@@ -83,24 +86,61 @@ export default function GlosarioPage() {
 
 interface CategorySectionProps {
     title: string;
+    emoji: string;
     icon: React.ElementType;
     terms: { term: string; definition: string }[];
 }
 
-function CategorySection({ title, icon: Icon, terms }: CategorySectionProps) {
+function CategorySection({ title, emoji, icon: Icon, terms }: CategorySectionProps) {
+    const [sortOrder, setSortOrder] = useState<'default' | 'asc' | 'desc'>('default');
+
+    const sortedTerms = useMemo(() => {
+        const sorted = [...terms];
+        if (sortOrder === 'asc') {
+            sorted.sort((a, b) => a.term.localeCompare(b.term));
+        } else if (sortOrder === 'desc') {
+            sorted.sort((a, b) => b.term.localeCompare(a.term));
+        }
+        return sorted;
+    }, [terms, sortOrder]);
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-2xl">
-                    <div className="p-2 bg-primary/10 rounded-full"><Icon className="h-6 w-6 text-primary"/></div>
-                    {title}
-                </CardTitle>
-                <CardDescription>Definiciones clave relacionadas con {title.toLowerCase()}.</CardDescription>
+                <div className="flex justify-between items-start">
+                    <div>
+                        <CardTitle className="flex items-center gap-3 text-2xl">
+                            <span className="text-3xl">{emoji}</span>
+                            <span>{title}</span>
+                        </CardTitle>
+                        <CardDescription>Definiciones clave relacionadas con {title.toLowerCase()}.</CardDescription>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button 
+                            variant="outline" 
+                            size="icon" 
+                            onClick={() => setSortOrder('asc')}
+                            className={cn(sortOrder === 'asc' && 'bg-accent')}
+                            aria-label="Ordenar A-Z"
+                        >
+                            <ArrowDownAZ className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                            variant="outline" 
+                            size="icon" 
+                            onClick={() => setSortOrder('desc')}
+                            className={cn(sortOrder === 'desc' && 'bg-accent')}
+                            aria-label="Ordenar Z-A"
+                        >
+                            <ArrowUpZA className="h-4 w-4" />
+                        </Button>
+                    </div>
+                </div>
             </CardHeader>
             <CardContent>
                 <Accordion type="single" collapsible className="w-full">
-                    {terms.map((item, index) => (
-                        <AccordionItem key={index} value={`item-${index}`}>
+                    {sortedTerms.map((item, index) => (
+                        <AccordionItem key={item.term} value={`item-${index}`}>
                             <AccordionTrigger className="py-4 text-base text-left hover:no-underline">
                                 {item.term}
                             </AccordionTrigger>
