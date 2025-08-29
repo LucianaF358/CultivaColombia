@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { CultivaColombiaIcon } from "@/components/icons";
 import { usePathname } from "next/navigation";
-import { Home, Leaf, Map, Book, ClipboardList } from "lucide-react";
+import { Home, Leaf, Map, Book, ClipboardList, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { Header } from "./Header";
 import { Button } from "../ui/button";
@@ -32,6 +32,7 @@ const menuItems = [
   { href: "/seguimiento", label: "Seguimiento", icon: ClipboardList },
   { href: "/mapa", label: "Mapa Interactivo", icon: Map },
   { href: "/recursos", label: "Recursos", icon: Book },
+  { href: "/glosario", label: "Glosario", icon: BookOpen },
 ];
 
 function SidebarWrapper({ children }: { children: React.ReactNode }) {
